@@ -1,2 +1,2 @@
 # CasseTete
-Résolution 3D de casse tête en C++/Qt/OpenGl
+Résolution de casse tête 3D en C++/Qt/OpenGl
