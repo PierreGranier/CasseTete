@@ -29,79 +29,8 @@ public:
     
      void setZ(int x){m_z=z;}
     int getZ(){return m_z;}
-};
- 
-#endif
-    
-    
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-        
-    }
-};
- 
-#endif
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
+
+
    
     
   int getValue(int x,int y,int z);
@@ -113,18 +42,7 @@ public:
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   
   
   
