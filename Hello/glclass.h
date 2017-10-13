@@ -38,8 +38,9 @@ public:
     //Variables de type cube
     Cube cube1;
     Cube cube2;
-
-
+    Cube cube3;
+    Cube cube4;
+    Cube cube5;
     //GLuint text; //identifiant de la texture
 
     //Variable de type camera
@@ -47,7 +48,7 @@ public:
 
     //Variable de type camera
     Transform3D m_transform;
-
+    Transform3D m_transform2;
 
 public slots:
     virtual void timeOutSlot();
