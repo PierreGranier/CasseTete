@@ -36,16 +36,16 @@ static const float transSpeed = 0.5f;
         {
         case Qt::Key_Escape: close();break;
         case Qt::Key_Up:translation += m_camera.forward(); break;
-        case Qt::Key_Down:translation -= m_camera.forward(); break;
-        case Qt::Key_Left:translation -= m_camera.right(); break;
-        case Qt::Key_Right:translation += m_camera.right(); break;
+        case Qt::Key_Down:translation -=m_camera.forward(); break;
+        case Qt::Key_Left:translation -=m_camera.right(); break;
+        case Qt::Key_Right:translation +=m_camera.right(); break;
         /*case Qt::Key_Z: cube2.y+=1; break;
         case Qt::Key_S: cube2.y-=1; break;
         case Qt::Key_D: cube2.x+=1; break;
         case Qt::Key_Q: cube2.x-=1; break;*/
         }
-m_camera.translate(transSpeed * translation);
-m_transform.rotate(1.0f, QVector3D(0.4f, 0.3f, 0.3f));
+cube1.m_camera.translate(transSpeed * translation);
+cube1.m_transform.rotate(1.0f, QVector3D(0.4f, 0.3f, 0.3f));
     paintGL();
 }
 
