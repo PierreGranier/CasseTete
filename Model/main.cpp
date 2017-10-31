@@ -24,8 +24,17 @@ int main (int argc, char *argv[]) {
 	
 	std::cout << std::endl;
 	
-	PieceRepresentation* pr2 = pr.rotateX(3);
-	pr2->print();
+	PieceRepresentation pr2 = pr.rotateX(3);
+	pr2.print();
+        PieceRepresentation pr3 = pr.rotateY(3);
+	pr3.print();
+
+
+ PieceRepresentation pry = pr.rotateY(1);
+	pry.print();
+
+PieceRepresentation pr4 = pr.rotateZ(2);
+	pr4.print();
 
 	return 0;
 }
