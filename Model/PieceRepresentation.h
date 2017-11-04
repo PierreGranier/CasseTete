@@ -62,7 +62,7 @@ public:
 	 * ne fonctionne pas avec les fonctions cos et sin de la librairie math
 	 * valeur mise en brut en fonction de la rotation
 	 */
-	PieceRepresentation rotateX(int rotation) {
+	PieceRepresentation* rotateX(int rotation) {
 		/* radian = degre * pi / 180
 		 * dans notre cas:
 		 * degre = 90 * rotation
@@ -74,10 +74,10 @@ public:
 		/* creation de la matrice de rotation
 		 * matrice 4 * 4
 		 * valeurs :
-		 * 1 0 			0 			0
+		 * 1 0			0 			0
 		 * 0 cos(angle) -sin(angle) 0
 		 * 0 sin(angle) cos(angle) 	0
-		 * 0 0 			0 			1
+		 * 0 0			0 			1
 		 */
 		int** matrix = new int*[4];
 		for (int i = 0; i < 4; ++i) {
@@ -151,22 +151,18 @@ public:
 		 */
 		PieceRepresentation* pr = new PieceRepresentation(new_x_size, new_y_size, new_z_size, v);
 		
-		return *pr;
+		return pr;
 	}
-	PieceRepresentation rotateY(int rotation) {
-
-
-
-
+	PieceRepresentation* rotateY(int rotation) {
 		//float angle = M_PI * rotation / 2;
 		
 		/* creation de la matrice de rotation Y
 		 * matrice 4 * 4
 		 * valeurs :
-		 * cos(angle) 0 			sin(angle)			0
-		 * 0 1 0 0
-		 * -sin(angle) 0 cos(angle) 	0
-		 * 0 0 			0 			1
+		 * cos(angle)	0 sin(angle)	0
+		 * 0			1 0				0
+		 * -sin(angle)	0 cos(angle)	0
+		 * 0			0 0				1
 		 */
 		int** matrix = new int*[4];
 		for (int i = 0; i < 4; ++i) {
@@ -240,19 +236,19 @@ public:
 		 */
 		PieceRepresentation* pr = new PieceRepresentation(new_x_size, new_y_size, new_z_size, v);
 		
-		return *pr;
-		
+		return pr;
 	}
-	PieceRepresentation rotateZ(int rotation) {
+	
+	PieceRepresentation* rotateZ(int rotation) {
 		//float angle = M_PI * rotation / 2;
 		
 		/* creation de la matrice de rotation Z
 		 * matrice 4 * 4
 		 * valeurs :
-		 * cos(angle) -sin(angle) 			0 			0
-		 * sin(angle) cos(angle) 0 0
-		 * 0 0 1 	0
-		 * 0 0 			0 			1
+		 * cos(angle) 	-sin(angle) 0 0
+		 * sin(angle) 	cos(angle)  0 0
+		 * 0 			0 			1 0
+		 * 0 			0			0 1
 		 */
 		int** matrix = new int*[4];
 		for (int i = 0; i < 4; ++i) {
@@ -325,11 +321,7 @@ public:
 		 */
 		PieceRepresentation* pr = new PieceRepresentation(new_x_size, new_y_size, new_z_size, v);
 		
-		return *pr;
-
-
-
-		
+		return pr;		
 	}
 	
 	int* multiplication(int* vector, int** matrix) {

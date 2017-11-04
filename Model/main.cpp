@@ -1,40 +1,16 @@
 #include "PieceRepresentation.h"
+#include "PieceAngle.h"
 
 int main (int argc, char *argv[]) {
-	int* c = new int[18];
+	PieceAngle pa;
 	
-	
-	/* Matrice suivante :
-	 *  z0 |  z1 |  z2
-	 * 1 0 | 1 0 | 1 0
-	 * 1 0 | 1 0 | 1 0
-	 * 1 1 | 1 0 | 1 0
-	 */
-	
-	for (int i = 0; i < 3; ++i) {
-		c[0 + i * 6] = 1;
-		c[1 + i * 6] = 1;
-		c[2 + i * 6] = 1;
-		c[3 + i * 6] = 0;
-		c[4 + i * 6] = 1;
-		c[5 + i * 6] = 0;
-	}
-	PieceRepresentation pr(2, 3, 3, c);
-	pr.print();
+	PieceRepresentation *pr = pa.rotate(0, 0, 0);
+	pr->print();
 	
 	std::cout << std::endl;
 	
-	PieceRepresentation pr2 = pr.rotateX(3);
-	pr2.print();
-        PieceRepresentation pr3 = pr.rotateY(3);
-	pr3.print();
-
-
- PieceRepresentation pry = pr.rotateY(1);
-	pry.print();
-
-PieceRepresentation pr4 = pr.rotateZ(2);
-	pr4.print();
+	pr = pa.rotate(1, 2, 1);
+	pr->print();
 
 	return 0;
 }
