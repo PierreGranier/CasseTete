@@ -13,7 +13,16 @@ SOURCES += \
     mywindow.cpp \
     cube.cpp \
     transform3d.cpp \
-    camera3d.cpp
+    camera3d.cpp \
+    pieceplus.cpp \
+    piecep.cpp \
+    pieceangle.cpp \
+    piecel.cpp \
+    piecet.cpp \
+    piecey.cpp \
+    pieced.cpp \
+    pieceg.cpp \
+    piecez.cpp
 
 HEADERS += \
     glclass.h \
@@ -21,9 +30,19 @@ HEADERS += \
     cube.h \
     vertex.h \
     transform3d.h \
-    camera3d.h
+    camera3d.h \
+    pieceplus.h \
+    piecep.h \
+    pieceangle.h \
+    piecel.h \
+    piecet.h \
+    piecey.h \
+    pieced.h \
+    pieceg.h \
+    piecez.h
 
 RESOURCES += \
+    textures.qrc \
     resources.qrc
 
 
