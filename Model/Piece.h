@@ -11,6 +11,9 @@ protected:
 	Position rotation;
 	
 public:
+	Piece() : position(0, 0, 0), rotation(0, 0, 0) {
+	};
+
 	void setPosition(Position pos) {
 	  position.setX(pos.getX());
 	  position.setY(pos.getY());
@@ -31,6 +34,8 @@ public:
 	Position getRotation() {
 		return rotation;
 	}
+	
+	virtual PieceRepresentation* rotate(int x, int y, int z) =0;
 };
 
 #endif
