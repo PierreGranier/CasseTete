@@ -21,7 +21,7 @@ public:
 	}
 	  
 	void print() {
-		for (int y = y_size - 1; y >= 0; --y) {
+		for (int y = 0; y < y_size; ++y) {
 			for (int z = 0; z < z_size; ++z) {
 				std::cout << " [ ";
 				for (int x = 0; x < x_size; ++x) {
@@ -153,6 +153,7 @@ public:
 		
 		return pr;
 	}
+	
 	PieceRepresentation* rotateY(int rotation) {
 		//float angle = M_PI * rotation / 2;
 		
