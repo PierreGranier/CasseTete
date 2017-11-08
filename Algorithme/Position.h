@@ -11,6 +11,8 @@ private:
   int p_z;
   
 public:
+	
+
   void set_x(int a)
   {
     p_x = a;

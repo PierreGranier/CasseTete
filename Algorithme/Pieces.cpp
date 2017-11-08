@@ -1,8 +1,11 @@
 #include <iostream>
-#include "position.h"
 
-struct Rotation
-{
+struct Position{
+  int x;
+  int y;
+  int z;
+} ;
+struct Rotation{
   int x;int y;int z;
 };
   
@@ -11,16 +14,19 @@ class pieces {
 
 private :
   
-  position p;
+  int position_x;
+  int position_y;
+  int position_z;
   int rotation_x;
   int rotation_y;
   int rotation_z;
+  
 public :
-   void set_position(position n)
+   void set_position(Position n)
    {
-      p.set_x(n.get_x());
-      p.set_y(n.get_y());
-      p.set_z(n.get_z());
+      position_x = n.x;
+      position_y = n.y;
+      position_z = n.z;
    }
    
    
@@ -32,14 +38,14 @@ public :
    }
    
    
-   position get_position()
+   Position get_position()
   
    {
-     position a;
+     Position a;
 	
-	a.set_x(p.get_x());
-	a.set_y(p.get_y());
-	a.set_z(p.get_z());
+	a.x = position_x;
+	a.y = position_y;
+	a.z = position_z;
 	
 	return a;
    }
@@ -50,11 +56,7 @@ public :
       a.x = rotation_x;
       a.y = rotation_y;
       a.z = rotation_z;
-	return a;
      
-    }
-     
-};
     };
      
   
