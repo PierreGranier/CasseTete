@@ -1,27 +1,37 @@
-#ifndef PIECEANGLE_H
-#define PIECEANGLE_H
+#ifndef PIECEP_H
+#define PIECEP_H
 
 #include "Piece.h"
 
-class PieceAngle : public Piece {
+
+
+/*
+	definition de la Matrice   
+*/
+
+
+class PieceP : public Piece {
 private:
 	PieceRepresentation* representation;
 	
 	
 public:
-	PieceAngle() : Piece() {
-		/* Matrice suivante :
+	PieceP() : Piece() {
+		/* Matrice de representation de la Piece  :
 		 *  z0
-		 * 1 0 0
-		 * 1 0 0
-		 * 1 1 1
+		 * 1 1
+		 * 1 1 
+		 * 1 0  
 		 */
-		int* c = new int[9];
-		for (int i = 0; i < 9; ++i) {
+		int* c = new int[6];
+		for (int i = 0; i < 6; ++i) {
 			c[i] = 0;
 		}
-		c[0] = c[3] = c[6] = c[7] = c[8] = 1;
-		representation = new PieceRepresentation(3, 3, 1, c);
+		c[0] = c[1] = c[2] = c[3] = c[4] = 1;
+		representation = new PieceRepresentation(2, 3, 1, c);
+
+
+		
 	}
 	
 	PieceRepresentation* rotate(int x, int y, int z) {
@@ -39,7 +49,7 @@ public:
 		return pr;
 	}
 
-	
+
 	/*
 		Differentes rotation de la pièces selon les axes :
 		 X -> rotationX()
@@ -50,6 +60,7 @@ public:
 	
 	void rotationX(int x){
 		representation= representation->rotateX(x);
+		
 
 	}
 	
@@ -62,13 +73,9 @@ public:
 	}
 
 	/*
-		Modifications des positions 
+		Modifications des positions après une rotation effectuée
 
 	*/
-
-	
-
-	
 
 	
 };

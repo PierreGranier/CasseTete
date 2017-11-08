@@ -10,9 +10,11 @@ protected:
 	Position position;
 	Position rotation;
 	
+	
 public:
 	Piece() : position(0, 0, 0), rotation(0, 0, 0) {
 	};
+
 
 	void setPosition(Position pos) {
 	  position.setX(pos.getX());

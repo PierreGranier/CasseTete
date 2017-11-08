@@ -94,7 +94,7 @@ public:
 		matrix[2][2] = (rotation == 1 || rotation == 3) ? 0 : -1;
 		matrix[3][3] = 1;
 		
-		/* creation du nouveau vecteur de position
+		/* creation du nouveau vecteur de 
 		 * on initialise a 0
 		 * on indique sa taille en x, y et z
 		 * si la rotation est de 90 ou 270 degre
