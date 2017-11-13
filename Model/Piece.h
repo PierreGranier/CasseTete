@@ -10,18 +10,15 @@ protected:
 	Position position;
 	Position rotation;
 	
-	
 public:
 	Piece() : position(0, 0, 0), rotation(0, 0, 0) {
 	};
-
 
 	void setPosition(Position pos) {
 	  position.setX(pos.getX());
 	  position.setY(pos.getY());
 	  position.setZ(pos.getZ());
 	}
-
 
 	void setRotation(int x, int y, int z) {
 	  rotation.setX(x);

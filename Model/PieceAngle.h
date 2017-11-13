@@ -7,10 +7,9 @@ class PieceAngle : public Piece {
 private:
 	PieceRepresentation* representation;
 	
-	
 public:
 	PieceAngle() : Piece() {
-		/* Matrice suivante :
+		/* Matrice de representation de la Piece :
 		 *  z0
 		 * 1 0 0
 		 * 1 0 0
@@ -39,38 +38,9 @@ public:
 		return pr;
 	}
 
-	
-	/*
-		Differentes rotation de la pièces selon les axes :
-		 X -> rotationX()
-		 Y -> rotatioY()
-		 Z -> rotationZ()
-
-	*/
-	
-	void rotationX(int x){
-		representation= representation->rotateX(x);
-
+	void print() {
+		representation->print();
 	}
-	
-	void rotationY(int y){
-		representation=representation->rotateY(y);
-	}
-
-	void rotationZ(int z){
-		representation= representation->rotateZ(z);
-	}
-
-	/*
-		Modifications des positions 
-
-	*/
-
-	
-
-	
-
-	
 };
 
 #endif
