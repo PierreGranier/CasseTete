@@ -31,17 +31,12 @@ public:
     void teardownGL();
 
 
-    //Informations d'état d'OpenGL
-    QOpenGLBuffer m_vertex;
-    QOpenGLBuffer m_vertex1;
-    QOpenGLShaderProgram *m_program;
-    QOpenGLShaderProgram *m_program1;
 
 protected slots:
       void update();
 private :
 
-      //GLuint texture[1];
+      GLuint textures[8];
 
      //Informations du Shader
      int u_modelToWorld;
