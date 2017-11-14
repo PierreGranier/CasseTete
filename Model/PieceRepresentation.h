@@ -337,6 +337,29 @@ public:
 		}
 		return v;
 	}
+
+
+	/*  Test d'egalité entre la representation de la pièce et l'autre prièce
+	    -Renvoi un booleen: "true" (1) si les deux pièces ont les memes dimensions en X, Y Z et une meme matrice de representation ou 			"false" (2)
+	*/
+	
+	bool equals(PieceRepresentation* pr){
+		bool result=true;
+		if(pr->getX()!=getX() || pr->getY()!=getY() || pr->getZ()!=getZ()){
+			result=false;	
+		}
+		else{	
+			int i=0;
+			while(i<getX()*getY()*getZ() && result!=false){
+				if (values[i]!=pr->values[i]){
+					result=false;
+				}
+				i++;				
+			}
+		}
+
+	return result;
+	}
 };
 
 #endif

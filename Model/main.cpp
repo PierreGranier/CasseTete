@@ -9,6 +9,9 @@
 #include "PieceD.h"
 #include "PiecePlus.h"
 
+#include <list>
+#include <iostream> 
+
 int main (int argc, char *argv[]) {
 	/*
 	 * Décommenter les deux lignes correspondant à la piece à tester
@@ -36,6 +39,7 @@ int main (int argc, char *argv[]) {
 	
 	
 	/** Pour chaque rotation possible, affiche la piece **/
+	/*
 	std::cout << "Rotations de la piece" << std::endl;
 	for (int x = 0; x < 4; ++x) {
 		for (int y = 0; y < 4; ++y) {
@@ -47,7 +51,27 @@ int main (int argc, char *argv[]) {
 			}
 		}
 	}
+	*/
 	
+	std::cout << "-----------------------------Test d'egalité entre deux piece -----------------------------" << std::endl;
+		std::cout <<" cas 1: deux instance de la meme pièce"<<std::endl;
+	PieceAngle pieceAngleA;
+	PieceAngle pieceAngleB;
+	PieceRepresentation *pra = pieceAngleA.rotate(0, 0, 0);	
+	PieceRepresentation *prb = pieceAngleB.rotate(0, 0, 0);
+	std::cout <<" Piece 1"<<std::endl;
+	pieceAngleA.print();
+	std::cout <<std::endl;
+	std::cout <<" Piece 2"<<std::endl;
+	prb->print();
+	bool result_test= pra->equals(prb);
+	std::cout << " resulat du test d'egalité t :"<< result_test <<std::endl;
+	std::cout <<" Après rotation 90 en X sur la piece 2"<<std::endl;
+	prb = pieceAngleB.rotate(1, 0, 0);
+	std::cout <<std::endl;
+	prb->print();
+	result_test= pra->equals(prb);
+	std::cout << " resulat du test d'egalité :"<< result_test <<std::endl;
 	
 	return 0;
 }
