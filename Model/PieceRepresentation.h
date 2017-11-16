@@ -55,7 +55,15 @@ public:
 	}
 
 	int getValue(int x, int y, int z) {
-		return values[x + y * x_size + z * x_size * y_size];
+		return values [x + y * x_size + z * x_size * y_size];
+	}
+	
+	int* getVal(){
+		return values;
+	}
+	
+	void setValue(int i,int val){
+		values[i]=val;
 	}
 
 	/* rotation vaut 1, 2 ou 3 
@@ -339,8 +347,8 @@ public:
 	}
 
 
-	/*  Test d'egalité entre la representation de la pièce et l'autre prièce
-	    -Renvoi un booleen: "true" (1) si les deux pièces ont les memes dimensions en X, Y Z et une meme matrice de representation ou 			"false" (2)
+	/*  Test d'egalité entre la representations de la pièce et l'autre prièce
+	    -Renvoi un booleen: "vrai" si les deux pièces ont les memes dimensions en X, Y Z et une meme matrice de representation
 	*/
 	
 	bool equals(PieceRepresentation* pr){
@@ -350,7 +358,7 @@ public:
 		}
 		else{	
 			int i=0;
-			while(i<getX()*getY()*getZ() && result!=false){
+			while(i<getX()*getY()*getZ() && result!=false ){
 				if (values[i]!=pr->values[i]){
 					result=false;
 				}
@@ -360,6 +368,7 @@ public:
 
 	return result;
 	}
+	
 };
 
 #endif
