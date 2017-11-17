@@ -3,6 +3,11 @@
 #include "PieceZ.h"
 #include "PieceY.h"
 #include "PieceP.h"
+#include "PieceD.h"
+#include "PieceG.h"
+#include "PiecePlus.h"
+#include "PieceL.h"
+#include "PieceT.h"
 
 int main (int argc, char *argv[]) {
 	/*
@@ -32,11 +37,11 @@ int main (int argc, char *argv[]) {
 	
 	/** Pour chaque rotation possible, affiche la piece **/
 	std::cout << "Rotations de la piece" << std::endl;
-	PieceAngle PA;
+	PiecePlus PL;
 	for (int x = 0; x < 4; ++x) {
 		for (int y = 0; y < 4; ++y) {
 			for (int z = 0; z < 4; ++z) {
-				PieceRepresentation* pr = PA.rotate(x, y, z);
+				PieceRepresentation* pr = PL.rotate(x, y, z);
 				std::cout << "Rotation avec x = " << (x * 90) << ", y = " << (y * 90) << ", z = " << (z * 90) << std::endl;
 				pr->print();
 				std::cout << std::endl;

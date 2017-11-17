@@ -15,7 +15,6 @@ public:
 		 * 0 1 0 
 		 * 0 1 0
 		 */
-<<<<<<< HEAD
 		
 		int* c = new int[9];
 		for (int i = 0; i < 9; ++i) {
@@ -23,10 +22,6 @@ public:
 		}
 		c[0] = c[1] = c[2] = c[4] = c[7] = 1;
 		representation = new PieceRepresentation(3, 3, 1, c);
-=======
-		 
-		// TO DO...
->>>>>>> origin/master
 	}
 	
 	PieceRepresentation* rotate(int x, int y, int z) {
