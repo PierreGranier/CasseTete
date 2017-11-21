@@ -21,7 +21,7 @@ public:
 	}
 	  
 	void print() {
-		for (int y = y_size - 1; y >= 0; --y) {
+		for (int y = 0; y < y_size; ++y) {
 			for (int z = 0; z < z_size; ++z) {
 				std::cout << " [ ";
 				for (int x = 0; x < x_size; ++x) {
@@ -55,14 +55,22 @@ public:
 	}
 
 	int getValue(int x, int y, int z) {
-		return values[x + y * x_size + z * x_size * y_size];
+		return values [x + y * x_size + z * x_size * y_size];
+	}
+	
+	int* getVal(){
+		return values;
+	}
+	
+	void setValue(int i,int val){
+		values[i]=val;
 	}
 
 	/* rotation vaut 1, 2 ou 3 
 	 * ne fonctionne pas avec les fonctions cos et sin de la librairie math
 	 * valeur mise en brut en fonction de la rotation
 	 */
-	PieceRepresentation rotateX(int rotation) {
+	PieceRepresentation* rotateX(int rotation) {
 		/* radian = degre * pi / 180
 		 * dans notre cas:
 		 * degre = 90 * rotation
@@ -74,10 +82,10 @@ public:
 		/* creation de la matrice de rotation
 		 * matrice 4 * 4
 		 * valeurs :
-		 * 1 0 			0 			0
+		 * 1 0			0 			0
 		 * 0 cos(angle) -sin(angle) 0
 		 * 0 sin(angle) cos(angle) 	0
-		 * 0 0 			0 			1
+		 * 0 0			0 			1
 		 */
 		int** matrix = new int*[4];
 		for (int i = 0; i < 4; ++i) {
@@ -94,7 +102,7 @@ public:
 		matrix[2][2] = (rotation == 1 || rotation == 3) ? 0 : -1;
 		matrix[3][3] = 1;
 		
-		/* creation du nouveau vecteur de position
+		/* creation du nouveau vecteur de 
 		 * on initialise a 0
 		 * on indique sa taille en x, y et z
 		 * si la rotation est de 90 ou 270 degre
@@ -151,22 +159,19 @@ public:
 		 */
 		PieceRepresentation* pr = new PieceRepresentation(new_x_size, new_y_size, new_z_size, v);
 		
-		return *pr;
+		return pr;
 	}
-	PieceRepresentation rotateY(int rotation) {
-
-
-
-
+	
+	PieceRepresentation* rotateY(int rotation) {
 		//float angle = M_PI * rotation / 2;
 		
 		/* creation de la matrice de rotation Y
 		 * matrice 4 * 4
 		 * valeurs :
-		 * cos(angle) 0 			sin(angle)			0
-		 * 0 1 0 0
-		 * -sin(angle) 0 cos(angle) 	0
-		 * 0 0 			0 			1
+		 * cos(angle)	0 sin(angle)	0
+		 * 0			1 0				0
+		 * -sin(angle)	0 cos(angle)	0
+		 * 0			0 0				1
 		 */
 		int** matrix = new int*[4];
 		for (int i = 0; i < 4; ++i) {
@@ -240,19 +245,19 @@ public:
 		 */
 		PieceRepresentation* pr = new PieceRepresentation(new_x_size, new_y_size, new_z_size, v);
 		
-		return *pr;
-		
+		return pr;
 	}
-	PieceRepresentation rotateZ(int rotation) {
+	
+	PieceRepresentation* rotateZ(int rotation) {
 		//float angle = M_PI * rotation / 2;
 		
 		/* creation de la matrice de rotation Z
 		 * matrice 4 * 4
 		 * valeurs :
-		 * cos(angle) -sin(angle) 			0 			0
-		 * sin(angle) cos(angle) 0 0
-		 * 0 0 1 	0
-		 * 0 0 			0 			1
+		 * cos(angle) 	-sin(angle) 0 0
+		 * sin(angle) 	cos(angle)  0 0
+		 * 0 			0 			1 0
+		 * 0 			0			0 1
 		 */
 		int** matrix = new int*[4];
 		for (int i = 0; i < 4; ++i) {
@@ -325,11 +330,7 @@ public:
 		 */
 		PieceRepresentation* pr = new PieceRepresentation(new_x_size, new_y_size, new_z_size, v);
 		
-		return *pr;
-
-
-
-		
+		return pr;		
 	}
 	
 	int* multiplication(int* vector, int** matrix) {
@@ -344,6 +345,30 @@ public:
 		}
 		return v;
 	}
+
+
+	/*  Test d'egalité entre la representations de la pièce et l'autre prièce
+	    -Renvoi un booleen: "vrai" si les deux pièces ont les memes dimensions en X, Y Z et une meme matrice de representation
+	*/
+	
+	bool equals(PieceRepresentation* pr){
+		bool result=true;
+		if(pr->getX()!=getX() || pr->getY()!=getY() || pr->getZ()!=getZ()){
+			result=false;	
+		}
+		else{	
+			int i=0;
+			while(i<getX()*getY()*getZ() && result!=false ){
+				if (values[i]!=pr->values[i]){
+					result=false;
+				}
+				i++;				
+			}
+		}
+
+	return result;
+	}
+	
 };
 
 #endif

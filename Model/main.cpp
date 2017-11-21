@@ -1,40 +1,145 @@
 #include "PieceRepresentation.h"
+#include "PieceAngle.h"
+#include "PieceZ.h"
+#include "PieceY.h"
+#include "PieceP.h"
+#include "Piece.h"
+#include "Solution.h"
+#include <stdlib.h>
+
+#include <list>
+#include <iostream> 
+
+void  fill_tab(char *t,int N, int K){
+
+	for(int i=0; i<N*K;i++){
+		char car_alea = (rand() % 26) + 'A';
+		std:: cout << car_alea <<std::endl;
+		t[N*K]=car_alea;
+
+	}
+	
+}
+
+
+//  Methode 1 :comparaison
+
+
+int compare(char* t, int N,int K){
+	int compteur_difference=0;
+	for(int idx_chaine =0; idx_chaine<N-1;++ idx_chaine){
+
+		for(int idx_caractere=0;idx_caractere<K;++idx_caractere){
+			std:: cout <<"comparaison entre"  << t[idx_chaine*idx_caractere]<< "et" <<t[(idx_chaine+1)*idx_caractere]<< std:: endl;
+			if(((t[idx_chaine*idx_caractere])-(t[(idx_chaine+1)*idx_caractere]))!=0){
+
+				compteur_difference=compteur_difference+1;
+			}
+
+		}
+
+	}
+	return compteur_difference;
+}
+
 
 int main (int argc, char *argv[]) {
-	int* c = new int[18];
-	
-	
-	/* Matrice suivante :
-	 *  z0 |  z1 |  z2
-	 * 1 0 | 1 0 | 1 0
-	 * 1 0 | 1 0 | 1 0
-	 * 1 1 | 1 0 | 1 0
+	/*
+	 * Décommenter les deux lignes correspondant à la piece à tester
 	 */
+
+	/** Test de la piece T **/
+//	std::cout << "Test de la piece T" << std::endl;
+//	PieceT piece;
 	
-	for (int i = 0; i < 3; ++i) {
-		c[0 + i * 6] = 1;
-		c[1 + i * 6] = 1;
-		c[2 + i * 6] = 1;
-		c[3 + i * 6] = 0;
-		c[4 + i * 6] = 1;
-		c[5 + i * 6] = 0;
-	}
-	PieceRepresentation pr(2, 3, 3, c);
-	pr.print();
+	/** Test de la piece L **/
+//	std::cout << "Test de la piece L" << std::endl;
+//	PieceL piece;
 	
-	std::cout << std::endl;
+	/** Test de la piece + **/
+//	std::cout << "Test de la piece +" << std::endl;
+//	PiecePlus piece;
 	
-	PieceRepresentation pr2 = pr.rotateX(3);
-	pr2.print();
-        PieceRepresentation pr3 = pr.rotateY(3);
-	pr3.print();
+	/** Test de la piece G **/
+//	std::cout << "Test de la piece G" << std::endl;
+//	PieceG piece;
+	
+	/** Test de la piece D **/
+//	std::cout << "Test de la piece D" << std::endl;
+//	PieceD piece;
+	
+	
+	/** Pour chaque rotation possible, affiche la piece **/
+	/*std::cout << "Rotations de la piece" << std::endl;
+	
+	for (int x = 0; x < 4; ++x) {
+		for (int y = 0; y < 4; ++y) {
+			for (int z = 0; z < 4; ++z) {
+				PieceRepresentation* pr = piece.rotate(x, y, z);
+				std::cout << "Rotation avec x = " << (x * 90) << ", y = " << (y * 90) << ", z = " << (z * 90) << std::endl;
+				pr->print();
+				std::cout << std::endl;
+			}
+		}
+	}*/
+		
+	
+	std::cout << "*************************Test d'egalité entre deux piece *****************" << std::endl;
+	
+	PieceAngle pieceAngleA;
+	PieceAngle pieceAngleB;	
+	PieceRepresentation *prb = pieceAngleB.rotate(0, 0, 0);
+	PieceRepresentation *pra = pieceAngleA.rotate(0, 0, 0);
+	bool result_test= pra->equals(prb);
+	std::cout << " resulat du test d'egalité :"<< result_test <<std::endl; 
 
+	std::cout << "*************************Test de la classe solution *****************" << std::endl;
+		
+	
+	// test Classe Solution
 
- PieceRepresentation pry = pr.rotateY(1);
-	pry.print();
+	Solution S;
+	PieceRepresentation *prS= S.getRepresentation();
+	std::cout <<"Etat de la solution "<<std::endl;
+	prS->print();
+	
+	std::cout <<"nombre de pieces dans la solution "<<S.getNbPiece() <<std::endl;
+	//PieceAngle *pa=new PieceAngle();
+	
+	PieceY *pa=new PieceY();
+	std::cout <<"Piece à rajouter "<<std::endl;
+	pa->print();
+	
+	Position pos(3,0,0);
+	pa->setPosition(pos);	
 
-PieceRepresentation pr4 = pr.rotateZ(2);
-	pr4.print();
+	S.ajoutPiece(pa);
+	std::cout <<"Etat de la solution "<<std::endl;
+	prS->print();	
+	std::cout <<"nombre de pieces dans la solution "<<S.getNbPiece() <<std::endl;
+	
+	
+	
+	Position pos2(2,0,0);
+	pa->setPosition(pos2);	
+	std::cout <<"Piece à rajouter "<<std::endl;
+	pa->print();
 
+	S.ajoutPiece(pa);
+	
+
+	std::cout <<"Etat de la solution "<<std::endl;
+	prS->print();
+	std::cout <<"nombre de pieces dans la solution "<<S.getNbPiece() <<std::endl;
+
+	PieceZ *pz=new PieceZ();
+	std::cout <<"Piece à rajouter "<<std::endl;
+	pz->print();
+
+	S.ajoutPiece(pz);
+	
+	prS->print();
+	
+	std::cout <<"nombre de pieces dans la solution "<<S.getNbPiece() <<std::endl;
 	return 0;
 }

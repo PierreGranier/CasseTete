@@ -25,6 +25,7 @@ void Glclass::keyPressEvent(QKeyEvent *keyEvent)
 {
 static const float transSpeed = 0.5f;
     static const float rotSpeed   = 0.5f;
+    float fraction = 0.1f;
 
     // Gérer les rotations
     m_camera.rotate(-rotSpeed * xinit, Camera3D::LocalUp);
@@ -35,17 +36,25 @@ static const float transSpeed = 0.5f;
         switch(keyEvent->key())
         {
         case Qt::Key_Escape: close();break;
-        case Qt::Key_Up:translation += m_camera.forward(); break;
-        case Qt::Key_Down:translation -=m_camera.forward(); break;
-        case Qt::Key_Left:translation -=m_camera.right(); break;
-        case Qt::Key_Right:translation +=m_camera.right(); break;
+        case Qt::Key_Up: x += lx * fraction; z += lz * fraction;break;
+        case Qt::Key_Down:x -= lx * fraction;z -= lz * fraction;break;
+        case Qt::Key_Left:angle -= 0.01f;lx = sin(angle);lz = -cos(angle);break;
+        case Qt::Key_Right:angle += 0.01f;lx = sin(angle);lz = -cos(angle);break;
         /*case Qt::Key_Z: cube2.y+=1; break;
         case Qt::Key_S: cube2.y-=1; break;
         case Qt::Key_D: cube2.x+=1; break;
         case Qt::Key_Q: cube2.x-=1; break;*/
         }
-cube1.m_camera.translate(transSpeed * translation);
+/*cube1.m_camera.translate(transSpeed * translation);
 cube1.m_transform.rotate(1.0f, QVector3D(0.4f, 0.3f, 0.3f));
+cube2.m_camera.translate(transSpeed * translation);
+cube2.m_transform.rotate(1.0f, QVector3D(0.4f, 0.3f, 0.3f));
+cube3.m_camera.translate(transSpeed * translation);
+cube3.m_transform.rotate(1.0f, QVector3D(0.4f, 0.3f, 0.3f));
+cube4.m_camera.translate(transSpeed * translation);
+cube4.m_transform.rotate(1.0f, QVector3D(0.4f, 0.3f, 0.3f));*/
+pz.m_camera.translate(transSpeed * translation);
+pz.m_transform.rotate(angle, QVector3D(0.4f, 0.3f, 0.3f));
     paintGL();
 }
 
