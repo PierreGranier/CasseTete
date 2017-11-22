@@ -15,10 +15,6 @@ public:
 		 * 0 1 0 
 		 * 0 1 0
 		 */
-<<<<<<< HEAD
-		
-=======
->>>>>>> 7d65479ae221c743bdb894dbdc76d156f96c4481
 		int* c = new int[9];
 		for (int i = 0; i < 9; ++i) {
 			c[i] = 0;
@@ -41,6 +37,11 @@ public:
 		
 		return pr;
 	}
+	
+	void setRepresentation( PieceRepresentation* pr){
+		representation=pr;	
+	}
+
 	
 	void print() {
 		representation->print();

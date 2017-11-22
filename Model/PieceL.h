@@ -17,7 +17,7 @@ public:
 		 * 1 1
 		 */
 		int* c = new int[8];
-		for (int i = 0; i < 12; ++i) {
+		for (int i = 0; i < 8; ++i) {
 			c[i] = 0;
 		}
 		c[0] = c[2] = c[4] = c[6] = c[7] = 1;
@@ -38,6 +38,11 @@ public:
 		
 		return pr;
 	}
+	
+	void setRepresentation( PieceRepresentation* pr){
+		representation=pr;	
+	}
+
 	
 	void print() {
 		representation->print();
