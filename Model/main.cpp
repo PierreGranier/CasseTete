@@ -82,6 +82,9 @@ int main (int argc, char *argv[]) {
 		for (int y = 0; y < 4; ++y) {
 			for (int z = 0; z < 4; ++z) {
 				PieceRepresentation* pr = PL.rotate(x, y, z);
+			}
+		}
+	}
 				
 /*std::cout << "Rotations de la piece" << std::endl;
 	
