@@ -38,6 +38,10 @@ public:
 		return pr;
 	}
 
+	void setRepresentation( PieceRepresentation* pr){
+		representation=pr;	
+	}
+
 	void print() {
 		representation->print();
 	}

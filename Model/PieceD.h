@@ -14,16 +14,20 @@ public:
 		 * 1 1		0 1
 		 * 0 0 		0 1
 		 * 0 0		0 1
+<<<<<<< HEAD
 		 * 
 		*/
 		 
+=======
+		 */ 
+>>>>>>> 097a5adfc27e8e02079b71cfabc70d0824e9f0c3
 		int* c = new int[12];
 		for (int i = 0; i < 12; ++i) {
 			c[i] = 0;
 		}
 		c[0] = c[1] = c[7] = c[9] = c[11] = 1;
 		representation = new PieceRepresentation(2, 3, 2, c);
-	}
+	}	
 	
 	PieceRepresentation* rotate(int x, int y, int z) {
 		PieceRepresentation* pr = representation;
@@ -39,6 +43,11 @@ public:
 		
 		return pr;
 	}
+
+	void setRepresentation( PieceRepresentation* pr){
+		representation=pr;	
+	}
+
 	
 	void print() {
 		representation->print();

@@ -34,7 +34,13 @@ public:
 		return rotation;
 	}
 	
+	/** fonctions virtuelles pures permettant de:
+		-Recuperer la representation de la pièce
+		-Faire un affichage de la Piece
+	*/
 	virtual PieceRepresentation* rotate(int x, int y, int z) =0;
+
+	virtual void print()=0;
 };
 
 #endif
