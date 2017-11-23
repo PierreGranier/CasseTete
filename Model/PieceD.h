@@ -14,10 +14,14 @@ public:
 		 * 1 1		0 1
 		 * 0 0 		0 1
 		 * 0 0		0 1
+<<<<<<< HEAD
 		 * 
 		*/
 		 
 
+=======
+		 */ 
+>>>>>>> 6b2d802b109976c10b96cd351fc6946d618ef48c
 		int* c = new int[12];
 		for (int i = 0; i < 12; ++i) {
 			c[i] = 0;
@@ -48,6 +52,15 @@ public:
 	
 	void print() {
 		representation->print();
+	}
+	
+	PieceD* copy() {
+		PieceD* p = new PieceD;
+		Position pos(position.getX(), position.getY(), position.getZ());
+		p->setPosition(pos);
+		p->setRotation(rotation.getX(), rotation.getY(), rotation.getZ());
+		
+		return p;
 	}
 };
 

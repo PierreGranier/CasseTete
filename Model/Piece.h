@@ -40,7 +40,9 @@ public:
 	*/
 	virtual PieceRepresentation* rotate(int x, int y, int z) =0;
 
-	virtual void print()=0;
+	virtual void print() =0;
+	
+	virtual Piece* copy() =0;
 };
 
 #endif

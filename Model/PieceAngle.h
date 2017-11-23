@@ -45,6 +45,15 @@ public:
 	void print() {
 		representation->print();
 	}
+	
+	PieceAngle* copy() {
+		PieceAngle* p = new PieceAngle;
+		Position pos(position.getX(), position.getY(), position.getZ());
+		p->setPosition(pos);
+		p->setRotation(rotation.getX(), rotation.getY(), rotation.getZ());
+		
+		return p;
+	}
 };
 
 #endif
