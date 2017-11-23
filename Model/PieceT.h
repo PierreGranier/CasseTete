@@ -15,10 +15,7 @@ public:
 		 * 0 1 0 
 		 * 0 1 0
 		 */
-<<<<<<< HEAD
 
-=======
->>>>>>> 097a5adfc27e8e02079b71cfabc70d0824e9f0c3
 		int* c = new int[9];
 		for (int i = 0; i < 9; ++i) {
 			c[i] = 0;

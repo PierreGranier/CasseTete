@@ -14,13 +14,10 @@ public:
 		 * 1 1		0 1
 		 * 0 0 		0 1
 		 * 0 0		0 1
-<<<<<<< HEAD
 		 * 
 		*/
 		 
-=======
-		 */ 
->>>>>>> 097a5adfc27e8e02079b71cfabc70d0824e9f0c3
+
 		int* c = new int[12];
 		for (int i = 0; i < 12; ++i) {
 			c[i] = 0;

@@ -37,27 +37,41 @@
 class Solution{
 	
 	private:
-		
+		int x;
+		int y;
+		int z;
 		std::map<std::string,Piece*> listePiece; // ensemble des pièce de la solution	
 		PieceRepresentation* representation;  // represention
-		int nombrePieces; 			// nombre de pieces dans la solution
+	
 		
 	public:
 		
-		Solution()/*: listePiece(0)*/ {
-	
+		Solution(PieceRepresentation* P)/*: listePiece(0)*/ {
+			
+			this->x=P->getX();
+			this->y=P->getY();
+			this->z=P->getX();
+			
 			int* c = new int[40];
 				for (int i = 0; i <40; ++i) {
 				c[i] = 0;
 			}
-			representation=new PieceRepresentation(5,4,2,c);
-			nombrePieces=0;
+			representation=new PieceRepresentation(x,y,z,c);
+			
 		};
 
-
-
-		
 		/*-------------------------- 	Getter et Setter---------------------------------------------------- */
+		
+		int get_X(){
+		  return this->x;
+		}
+		int get_Y(){
+		  return this->y;
+		}
+		int get_Z(){
+		  return this->z;
+		}
+		
 
 		 PieceRepresentation * getRepresentation(){
 		

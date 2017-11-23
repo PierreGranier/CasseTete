@@ -21,10 +21,6 @@ public:
 		}
 		c[0] = c[1] = c[6] = c[8] = c[10] = 1;
 		representation = new PieceRepresentation(2, 3, 2, c);
-<<<<<<< HEAD
-
-=======
->>>>>>> 097a5adfc27e8e02079b71cfabc70d0824e9f0c3
 	}
 	
 	PieceRepresentation* rotate(int x, int y, int z) {
