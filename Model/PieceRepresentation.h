@@ -15,7 +15,17 @@ private:
 	int* values;
  
 public:
-	PieceRepresentation(int x, int y, int z, int *v) : x_size(x), y_size(y), z_size(z), values(v) {};
+	PieceRepresentation(int x, int y, int z, int *v) : x_size(x), y_size(y), z_size(z), values(v) {}
+	PieceRepresentation(PieceRepresentation* pr) {
+		x_size = pr->getX();
+		y_size = pr->getY();
+		z_size = pr->getZ();
+		values = new int[pr->getSize()];
+		for (int i = 0; i < pr->getSize(); ++i) {
+			values[i] = pr->getValue(i);
+		}
+	}
+	
 	~PieceRepresentation() {
 		delete[] values;
 	}
@@ -32,7 +42,11 @@ public:
 			std::cout << std::endl;
 		}
 	}
-
+	
+	int getSize() {
+		return x_size * y_size * z_size;
+	}
+	
 	void setX(int x) {
 		x_size = x;
 	}
@@ -55,15 +69,15 @@ public:
 	}
 
 	int getValue(int x, int y, int z) {
-		return values [x + y * x_size + z * x_size * y_size];
+		return values[x + y * x_size + z * x_size * y_size];
 	}
 	
-	int* getVal(){
-		return values;
+	int getValue(int i) {
+		return values[i];
 	}
 	
-	void setValue(int i,int val){
-		values[i]=val;
+	void setValue(int x, int y, int z, int value) {
+		values[x + y * x_size + z * x_size * y_size] = value;
 	}
 
 	/* rotation vaut 1, 2 ou 3 
@@ -351,22 +365,17 @@ public:
 	    -Renvoi un booleen: "vrai" si les deux pièces ont les memes dimensions en X, Y Z et une meme matrice de representation
 	*/
 	
-	bool equals(PieceRepresentation* pr){
-		bool result=true;
-		if(pr->getX()!=getX() || pr->getY()!=getY() || pr->getZ()!=getZ()){
-			result=false;	
+	bool equals(PieceRepresentation* pr) {
+		if (pr->getX() != x_size || pr->getY() != y_size || pr->getZ() != z_size){
+			return false;	
 		}
-		else{	
-			int i=0;
-			while(i<getX()*getY()*getZ() && result!=false ){
-				if (values[i]!=pr->values[i]){
-					result=false;
-				}
-				i++;				
+		for (int i = 0; i < x_size * y_size * z_size; ++i) {
+			if (values[i] != pr->getValue(i)) {
+				return false;
 			}
 		}
-
-	return result;
+		
+		return true;
 	}
 	
 };

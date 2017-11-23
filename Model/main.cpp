@@ -1,641 +1,170 @@
 #include "PieceRepresentation.h"
+#include "Piece.h"
 #include "PieceAngle.h"
 #include "PieceZ.h"
 #include "PieceY.h"
 #include "PieceP.h"
-#include "Piece.h"
+#include "PieceT.h"
+#include "PieceL.h"
+#include "PieceG.h"
+#include "PieceD.h"
+#include "PiecePlus.h"
 #include "Solution.h"
 #include <stdlib.h>
-#include <map>
 
+#include <vector>
+#include <string>
+#include <iostream>
 
-#include <list>
-#include<string>
-#include <iostream> 
-
-
-/* ensemble de Pieces Angle */
-std::map<int,PieceAngle*> ensembleAngle(PieceAngle* pa){
-
-	Solution S;
-	PieceRepresentation *prS= S.getRepresentation();
-	int nombre_totale=0;
-	std::map<int,PieceAngle*> pieces;
-	//S.suppressionPiece("PieceAngle");
-	for(int i=0; i<prS->getX();++i){ // pour tout les X
-		for(int j=0; j<prS->getY(); ++j){ // Pour tous les Y
-			for(int k=0;k<prS->getZ(); ++k){ // Pour tous les Z
-				for (int rotx=0;rotx<4;++rotx){  // pour tout les rotx
-					for (int roty=0;roty<4;++roty){ // pour toute les rotation en y
-						for (int rotz=0;rotz<4;++rotz){ // pour toutes les rotation en z
-							if ((rotx!=0 && roty==0 && rotz==0) || (rotx==0 && roty!=0 && rotz==0) || (rotx==0 && roty==0 && rotz!=0) || (rotx==0 && roty==0 && rotz==0) ){
-								Position posI(i,j,k);
-								pa->setPosition(posI); // Modification de la position
-											// modification de la rotation
-								//pa->rotate(rotx,roty,rotz);
-								PieceRepresentation* p=pa->rotate(rotx,roty,rotz);
-								pa->setRepresentation(p);
-								if(S.ajoutPiecePossible(pa)==true){
-									nombre_totale=nombre_totale+1;
-									//S.ajoutPiece(pa);
-									//Piece* pi=pa;
-									pieces[nombre_totale]=pa; // ajout de la piece paI dans la liste de solution
-									//std::cout <<"Etat de la solution "<<std::endl;
-									//prS->print();
-									//S.suppressionPiece("PieceAngle");
-								}
-							}
-						pa= new PieceAngle();	
-						}
-					}
-				}
-			}
-				
+/*
+ * Recherche si une rotation donnant une représentation identique a déjà été ajoutée dans la liste de srotations de la pièce
+ * Renvoie vrai si la représentation peut être ajouté, non sinon
+ */
+bool canAdd(std::vector<PieceRepresentation*>* v, PieceRepresentation* pr) {
+	for (int i = 0; i < v->size(); ++i) {
+		if (v->at(i)->equals(pr)) {
+			return false;
 		}
 	}
-	return pieces;
+	return true;
 }
 
-/* ensemble de Pieces Z */
-std::map<int,PieceZ*> ensembleAngle(PieceZ* pa){
-
-	Solution S;
-	PieceRepresentation *prS= S.getRepresentation();
-	int nombre_totale=0;
-	std::map<int,PieceZ*> pieces;
-	//S.suppressionPiece("PieceAngle");
-	for(int i=0; i<prS->getX();++i){ // pour tout les X
-		for(int j=0; j<prS->getY(); ++j){ // Pour tous les Y
-			for(int k=0;k<prS->getZ(); ++k){ // Pour tous les Z
-				for (int rotx=0;rotx<4;++rotx){  // pour tout les rotx
-					for (int roty=0;roty<4;++roty){ // pour toute les rotation en y
-						for (int rotz=0;rotz<4;++rotz){ // pour toutes les rotation en z
-							if ((rotx!=0 && roty==0 && rotz==0) || (rotx==0 && roty!=0 && rotz==0) || (rotx==0 && roty==0 && rotz!=0) || (rotx==0 && roty==0 && rotz==0) ){
-								Position posI(i,j,k);
-								pa->setPosition(posI); // Modification de la position
-											// modification de la rotation
-								//pa->rotate(rotx,roty,rotz);
-								PieceRepresentation* p=pa->rotate(rotx,roty,rotz);
-								pa->setRepresentation(p);
-								if(S.ajoutPiecePossible(pa)==true){
-									nombre_totale=nombre_totale+1;
-									//S.ajoutPiece(pa);
-									//Piece* pi=pa;
-									pieces[nombre_totale]=pa; // ajout de la piece paI dans la liste de solution
-									//std::cout <<"Etat de la solution "<<std::endl;
-									//prS->print();
-									//S.suppressionPiece("PieceAngle");
-								}
-							}
-						pa= new PieceZ();	
-						}
-					}
-				}
-			}
-				
-		}
-	}
-	return pieces;
-}
-
-/* ensemble de Pieces Y */
-std::map<int,PieceY*> ensembleAngle(PieceY* pa){
-
-	Solution S;
-	PieceRepresentation *prS= S.getRepresentation();
-	int nombre_totale=0;
-	std::map<int,PieceY*> pieces;
-	//S.suppressionPiece("PieceAngle");
-	for(int i=0; i<prS->getX();++i){ // pour tout les X
-		for(int j=0; j<prS->getY(); ++j){ // Pour tous les Y
-			for(int k=0;k<prS->getZ(); ++k){ // Pour tous les Z
-				for (int rotx=0;rotx<4;++rotx){  // pour tout les rotx
-					for (int roty=0;roty<4;++roty){ // pour toute les rotation en y
-						for (int rotz=0;rotz<4;++rotz){ // pour toutes les rotation en z
-							if ((rotx!=0 && roty==0 && rotz==0) || (rotx==0 && roty!=0 && rotz==0) || (rotx==0 && roty==0 && rotz!=0) || (rotx==0 && roty==0 && rotz==0) ){
-								Position posI(i,j,k);
-								pa->setPosition(posI); // Modification de la position
-											// modification de la rotation
-								//pa->rotate(rotx,roty,rotz);
-								PieceRepresentation* p=pa->rotate(rotx,roty,rotz);
-								pa->setRepresentation(p);
-								if(S.ajoutPiecePossible(pa)==true){
-									nombre_totale=nombre_totale+1;
-									//S.ajoutPiece(pa);
-									//Piece* pi=pa;
-									pieces[nombre_totale]=pa; // ajout de la piece paI dans la liste de solution
-									//std::cout <<"Etat de la solution "<<std::endl;
-									//prS->print();
-									//S.suppressionPiece("PieceAngle");
-								}
-							}
-						pa= new PieceY();	
-						}
-					}
-				}
-			}
-				
-		}
-	}
-	return pieces;
-}
-
-/* ensemble de Pieces P */
-std::map<int,PieceP*> ensembleAngle(PieceP* pa){
-
-	Solution S;
-	PieceRepresentation *prS= S.getRepresentation();
-	int nombre_totale=0;
-	std::map<int,PieceP*> pieces;
-	//S.suppressionPiece("PieceAngle");
-	for(int i=0; i<prS->getX();++i){ // pour tout les X
-		for(int j=0; j<prS->getY(); ++j){ // Pour tous les Y
-			for(int k=0;k<prS->getZ(); ++k){ // Pour tous les Z
-				for (int rotx=0;rotx<4;++rotx){  // pour tout les rotx
-					for (int roty=0;roty<4;++roty){ // pour toute les rotation en y
-						for (int rotz=0;rotz<4;++rotz){ // pour toutes les rotation en z
-							if ((rotx!=0 && roty==0 && rotz==0) || (rotx==0 && roty!=0 && rotz==0) || (rotx==0 && roty==0 && rotz!=0) || (rotx==0 && roty==0 && rotz==0) ){
-								Position posI(i,j,k);
-								pa->setPosition(posI); // Modification de la position
-											// modification de la rotation
-								//pa->rotate(rotx,roty,rotz);
-								PieceRepresentation* p=pa->rotate(rotx,roty,rotz);
-								pa->setRepresentation(p);
-								if(S.ajoutPiecePossible(pa)==true){
-									nombre_totale=nombre_totale+1;
-									//S.ajoutPiece(pa);
-									//Piece* pi=pa;
-									pieces[nombre_totale]=pa; // ajout de la piece paI dans la liste de solution
-									//std::cout <<"Etat de la solution "<<std::endl;
-									//prS->print();
-									//S.suppressionPiece("PieceAngle");
-								}
-							}
-						pa= new PieceP();	
-						}
-					}
-				}
-			}
-				
-		}
-	}
-	return pieces;
-}
-
-/* ensemble de Pieces D */
-std::map<int,PieceD*> ensembleAngle(PieceD* pa){
-
-	Solution S;
-	PieceRepresentation *prS= S.getRepresentation();
-	int nombre_totale=0;
-	std::map<int,PieceD*> pieces;
-	//S.suppressionPiece("PieceAngle");
-	for(int i=0; i<prS->getX();++i){ // pour tout les X
-		for(int j=0; j<prS->getY(); ++j){ // Pour tous les Y
-			for(int k=0;k<prS->getZ(); ++k){ // Pour tous les Z
-				for (int rotx=0;rotx<4;++rotx){  // pour tout les rotx
-					for (int roty=0;roty<4;++roty){ // pour toute les rotation en y
-						for (int rotz=0;rotz<4;++rotz){ // pour toutes les rotation en z
-							if ((rotx!=0 && roty==0 && rotz==0) || (rotx==0 && roty!=0 && rotz==0) || (rotx==0 && roty==0 && rotz!=0) || (rotx==0 && roty==0 && rotz==0) ){
-								Position posI(i,j,k);
-								pa->setPosition(posI); // Modification de la position
-											// modification de la rotation
-								//pa->rotate(rotx,roty,rotz);
-								PieceRepresentation* p=pa->rotate(rotx,roty,rotz);
-								pa->setRepresentation(p);
-								if(S.ajoutPiecePossible(pa)==true){
-									nombre_totale=nombre_totale+1;
-									//S.ajoutPiece(pa);
-									//Piece* pi=pa;
-									pieces[nombre_totale]=pa; // ajout de la piece paI dans la liste de solution
-									//std::cout <<"Etat de la solution "<<std::endl;
-									//prS->print();
-									//S.suppressionPiece("PieceAngle");
-								}
-							}
-						pa= new PieceD();	
-						}
-					}
-				}
-			}
-				
-		}
-	}
-	return pieces;
-}
-
-/* ensemble de Pieces G */
-std::map<int,PieceG*> ensembleAngle(PieceG* pa){
-
-	Solution S;
-	PieceRepresentation *prS= S.getRepresentation();
-	int nombre_totale=0;
-	std::map<int,PieceG*> pieces;
-	//S.suppressionPiece("PieceAngle");
-	for(int i=0; i<prS->getX();++i){ // pour tout les X
-		for(int j=0; j<prS->getY(); ++j){ // Pour tous les Y
-			for(int k=0;k<prS->getZ(); ++k){ // Pour tous les Z
-				for (int rotx=0;rotx<4;++rotx){  // pour tout les rotx
-					for (int roty=0;roty<4;++roty){ // pour toute les rotation en y
-						for (int rotz=0;rotz<4;++rotz){ // pour toutes les rotation en z
-							if ((rotx!=0 && roty==0 && rotz==0) || (rotx==0 && roty!=0 && rotz==0) || (rotx==0 && roty==0 && rotz!=0) || (rotx==0 && roty==0 && rotz==0) ){
-								Position posI(i,j,k);
-								pa->setPosition(posI); // Modification de la position
-											// modification de la rotation
-								//pa->rotate(rotx,roty,rotz);
-								PieceRepresentation* p=pa->rotate(rotx,roty,rotz);
-								pa->setRepresentation(p);
-								if(S.ajoutPiecePossible(pa)==true){
-									nombre_totale=nombre_totale+1;
-									//S.ajoutPiece(pa);
-									//Piece* pi=pa;
-									pieces[nombre_totale]=pa; // ajout de la piece paI dans la liste de solution
-									//std::cout <<"Etat de la solution "<<std::endl;
-									//prS->print();
-									//S.suppressionPiece("PieceAngle");
-								}
-							}
-						pa= new PieceG();	
-						}
-					}
-				}
-			}
-				
-		}
-	}
-	return pieces;
-}
-
-/* ensemble de Pieces L */
-std::map<int,PieceL*> ensembleAngle(PieceL* pa){
-
-	Solution S;
-	PieceRepresentation *prS= S.getRepresentation();
-	int nombre_totale=0;
-	std::map<int,PieceL*> pieces;
-	//S.suppressionPiece("PieceAngle");
-	for(int i=0; i<prS->getX();++i){ // pour tout les X
-		for(int j=0; j<prS->getY(); ++j){ // Pour tous les Y
-			for(int k=0;k<prS->getZ(); ++k){ // Pour tous les Z
-				for (int rotx=0;rotx<4;++rotx){  // pour tout les rotx
-					for (int roty=0;roty<4;++roty){ // pour toute les rotation en y
-						for (int rotz=0;rotz<4;++rotz){ // pour toutes les rotation en z
-							if ((rotx!=0 && roty==0 && rotz==0) || (rotx==0 && roty!=0 && rotz==0) || (rotx==0 && roty==0 && rotz!=0) || (rotx==0 && roty==0 && rotz==0) ){
-								Position posI(i,j,k);
-								pa->setPosition(posI); // Modification de la position
-											// modification de la rotation
-								//pa->rotate(rotx,roty,rotz);
-								PieceRepresentation* p=pa->rotate(rotx,roty,rotz);
-								pa->setRepresentation(p);
-								if(S.ajoutPiecePossible(pa)==true){
-									nombre_totale=nombre_totale+1;
-									//S.ajoutPiece(pa);
-									//Piece* pi=pa;
-									pieces[nombre_totale]=pa; // ajout de la piece paI dans la liste de solution
-									//std::cout <<"Etat de la solution "<<std::endl;
-									//prS->print();
-									//S.suppressionPiece("PieceAngle");
-								}
-							}
-						pa= new PieceL();	
-						}
-					}
-				}
-			}
-				
-		}
-	}
-	return pieces;
-}
-
-/* ensemble de Pieces T */
-std::map<int,PieceT*> ensembleAngle(PieceT* pa){
-
-	Solution S;
-	PieceRepresentation *prS= S.getRepresentation();
-	int nombre_totale=0;
-	std::map<int,PieceT*> pieces;
-	//S.suppressionPiece("PieceAngle");
-	for(int i=0; i<prS->getX();++i){ // pour tout les X
-		for(int j=0; j<prS->getY(); ++j){ // Pour tous les Y
-			for(int k=0;k<prS->getZ(); ++k){ // Pour tous les Z
-				for (int rotx=0;rotx<4;++rotx){  // pour tout les rotx
-					for (int roty=0;roty<4;++roty){ // pour toute les rotation en y
-						for (int rotz=0;rotz<4;++rotz){ // pour toutes les rotation en z
-							if ((rotx!=0 && roty==0 && rotz==0) || (rotx==0 && roty!=0 && rotz==0) || (rotx==0 && roty==0 && rotz!=0) || (rotx==0 && roty==0 && rotz==0) ){
-								Position posI(i,j,k);
-								pa->setPosition(posI); // Modification de la position
-											// modification de la rotation
-								//pa->rotate(rotx,roty,rotz);
-								PieceRepresentation* p=pa->rotate(rotx,roty,rotz);
-								pa->setRepresentation(p);
-								if(S.ajoutPiecePossible(pa)==true){
-									nombre_totale=nombre_totale+1;
-									//S.ajoutPiece(pa);
-									//Piece* pi=pa;
-									pieces[nombre_totale]=pa; // ajout de la piece paI dans la liste de solution
-									//std::cout <<"Etat de la solution "<<std::endl;
-									//prS->print();
-									//S.suppressionPiece("PieceAngle");
-								}
-							}
-						pa= new PieceT();	
-						}
-					}
-				}
-			}
-				
-		}
-	}
-	return pieces;
-}
-
-
-int main (int argc, char *argv[]) {
-	/*
-	 * Décommenter les deux lignes correspondant à la piece à tester
-	 */
-
-	/** Test de la piece T **/
-//	std::cout << "Test de la piece T" << std::endl;
-//	PieceT piece;
-	
-	/** Test de la piece L **/
-//	std::cout << "Test de la piece L" << std::endl;
-//	PieceL piece;
-	
-	/** Test de la piece + **/
-//	std::cout << "Test de la piece +" << std::endl;
-//	PiecePlus piece;
-	
-	/** Test de la piece G **/
-//	std::cout << "Test de la piece G" << std::endl;
-//	PieceG piece;
-	
-	/** Test de la piece D **/
-//	std::cout << "Test de la piece D" << std::endl;
-//	PieceD piece;
-	
-	
-	/** Pour chaque rotation possible, affiche la piece **/
-	/*std::cout << "Rotations de la piece" << std::endl;
-	
+/*
+ * Renvoie la liste des rotations (x, y, z) sans doublon pour la pièce
+ */
+std::vector<Position*> getRotations(Piece* p) {
+	std::vector<PieceRepresentation*> v;
+	std::vector<Position*>pos;
 	for (int x = 0; x < 4; ++x) {
 		for (int y = 0; y < 4; ++y) {
 			for (int z = 0; z < 4; ++z) {
-				PieceRepresentation* pr = piece.rotate(x, y, z);
-				std::cout << "Rotation avec x = " << (x * 90) << ", y = " << (y * 90) << ", z = " << (z * 90) << std::endl;
-				pr->print();
-				std::cout << std::endl;
-			}
-		}
-	}*/
-		/*
-	
-	std::cout << "*************************Test d'egalité entre deux piece *****************" << std::endl;
-	
-	PieceAngle pieceAngleA;
-	PieceAngle pieceAngleB;	
-	PieceRepresentation *prb = pieceAngleB.rotate(0, 0, 0);
-	PieceRepresentation *pra = pieceAngleA.rotate(0, 0, 0);
-	bool result_test= pra->equals(prb);
-	std::cout << " resulat du test d'egalité :"<< result_test <<std::endl; */
-
-	std::cout << "*************************Test de la classe solution *****************" << std::endl;
-
-	std::map<std::string,Piece*> pp;
-
-
-	// test 2 de la  Classe Solution
-	
-	Solution S;
-	PieceRepresentation *prS= S.getRepresentation();
-	std::cout <<"Etat de la solution "<<std::endl;
-	prS->print();
-	
-	std::cout <<"nombre de pieces dans la solution "<<S.getNbPiece() <<std::endl;
-	//PieceAngle *pa=new PieceAngle();
-	
-	PieceAngle *pa=new PieceAngle();
-	std::cout <<"Piece à rajouter "<<std::endl;
-	pa->print();
-	
-	Position pos(3,0,0);
-	pa->setPosition(pos);	
-
-	S.ajoutPiece(pa);
-	std::cout <<"Etat de la solution "<<std::endl;
-	prS->print();	
-	std::cout <<"nombre de pieces dans la solution "<<S.getNbPiece() <<std::endl;
-	
-	
-	
-	Position pos2(2,0,0);
-	pa->setPosition(pos2);	
-	std::cout <<"Piece à rajouter "<<std::endl;
-	pa->print();
-
-	S.ajoutPiece(pa);
-	
-
-	std::cout <<"Etat de la solution "<<std::endl;
-	prS->print();
-	std::cout <<"nombre de pieces dans la solution "<<S.getNbPiece() <<std::endl;
-
-	PieceZ *pz=new PieceZ();
-	
-	//Position pos3(1,0,0);
-	//pz->setPosition(pos3);
-	std::cout <<"Piece à rajouter "<<std::endl;
-	pz->print();
-
-	S.ajoutPiece(pz);
-	std::cout <<"Etat de la solution "<<std::endl;
-	prS->print();
-	
-	std::cout <<"nombre de pieces dans la solution "<<S.getNbPiece() <<std::endl;
-
-	
-	S.suppressionPiece("PieceZ");
-	std::cout <<"Etat de la solution "<<std::endl;
-	prS->print();
-
-	std::cout <<"nombre de pieces dans la solution "<<S.getNbPiece() <<std::endl; 
-
-	/*
-	
-	PieceAngle *pa=new PieceAngle();
-	std::map<int,PieceAngle*> pieces= ensembleAngle(pa);
-	//std::cout <<"taille Angle= "<<pieces.size()<<std::endl;
-
-	PieceZ *pz=new PieceZ();
-	std::map<int,PieceZ*> piecesZ= ensembleAngle(pz);
-	//std::cout <<"taille Z= "<<piecesZ.size()<<std::endl;
-
-	PieceY *py=new PieceY();
-	std::map<int,PieceY*> piecesY= ensembleAngle(py);
-	//std::cout <<"taille Y= "<<piecesY.size()<<std::endl; 
-
-
-	PieceP *ppp=new PieceP();
-	std::map<int,PieceP*> piecesP= ensembleAngle(ppp);
-	//std::cout <<"taille P= "<<piecesP.size()<<std::endl;
-
-	PieceG *pg=new PieceG();
-	std::map<int,PieceG*> piecesG= ensembleAngle(pg);
-	//std::cout <<"taille G= "<<piecesG.size()<<std::endl;
-
-	PieceD *pd=new PieceD();
-	std::map<int,PieceD*> piecesD= ensembleAngle(pd);
-	//std::cout <<"taille D= "<<piecesD.size()<<std::endl;
-
-	
-	PieceT *pt=new PieceT();
-	std::map<int,PieceT*> piecesT= ensembleAngle(pt);
-	//std::cout <<"taille T= "<<piecesT.size()<<std::endl;
-
-	PieceL *pl=new PieceL();
-	std::map<int,PieceL*> piecesL= ensembleAngle(pl);
-	//std::cout <<"taille L= "<<piecesL.size()<<std::endl;
-	*/
-
-	std::map<int,Solution*> ensembleSol;
-
-	//boucle des combinaisons
-
-	/*
-
-	for(int angle=1;angle<(pieces.size()+1);++angle){
-		for(int z=1;z<piecesZ.size()+1;++z){
-			for(int y=1;y<piecesY.size()+1;++y){
-				for(int p=1;p<piecesP.size()+1;++p){
-					for(int d=1;d<piecesD.size()+1;++d){
-						for(int g=1;g<piecesG.size()+1;++g){
-							for(int l=1;l<piecesL.size()+1;++l){
-								for(int t=1;t<piecesT.size()+1;++t){
-								
-									Solution* S=new Solution();
-									//Piece * p=pieces.find(angle)->second;
-									 S->ajoutPiece(pieces.find(angle)->second);
-									 S->ajoutPiece(piecesZ.find(z)->second);
-									 S->ajoutPiece(piecesY.find(y)->second);
-								 	 S->ajoutPiece(piecesP.find(p)->second);
-									 S->ajoutPiece(piecesD.find(d)->second);
-									 S->ajoutPiece(piecesG.find(g)->second);
-									 S->ajoutPiece(piecesL.find(l)->second);
-									 S->ajoutPiece(piecesT.find(t)->second);	
-								
-									if (S->getNbPiece()==8){
-										ensembleSol[1]=S;				
-									}
-	
-								}
-	
-							}
-	
-						}
-	
-					}
-				
-	
+				PieceRepresentation* pr = p->rotate(x, y, z);
+				if (canAdd(&v, pr)) {
+					v.push_back(pr);
+					pos.push_back(new Position(x, y, z));
 				}
-	
 			}
-		
-	
 		}
-		
-	
-	} */
+	}
+	return pos;
+}
 
+/*
+ * Problème à résoudre
+ * Solution courante
+ * Liste des solutions trouvées
+ * Liste des pièces
+ */
+PieceRepresentation* probleme;
+Solution* solution_courante;
+std::vector<Solution*> liste_solutions;
+std::vector<Piece*> liste_pieces;
 
-	//*   Avec BOUCLE While
-	
-	/*
-	bool ok =false;
-	int angle=1;
-	int compteur=0;
-	while(angle<(pieces.size()+1) && ok==false){
-		int z=1;
-		while(z<piecesZ.size()+1 && ok==false){
-			int y=1;
-			while(y<piecesY.size()+1 && ok==false){
-				int p=1;
-				while(p<piecesP.size()+1 && ok==false){
-					int d=1;
-					while(d<piecesD.size()+1 && ok==false){
-						int g=1;
-						while(g<piecesG.size()+1 && ok==false){
-							int l=1;
-							while(l<piecesL.size()+1 && ok==false){
-								int t=1;
-								while(t<piecesT.size()+1 && ok==false){
-									compteur=compteur+1;			
-									Solution* S=new Solution();
-									std::cout <<angle<<"-"<<z<<"-"<<y<<"-"<<p<<"-"<<d<<"-"<<g<<"-"<<l<<"-"<<t <<std::endl;
-									if (S->ajoutPiecePossible(pieces.find(angle)->second)==true){S->ajoutPiece(pieces.find(angle)->second);
-										if(S->ajoutPiecePossible(piecesZ.find(z)->second)==true){ S->ajoutPiece(piecesZ.find(z)->second);			
-											if(S->ajoutPiecePossible(piecesY.find(y)->second)==true){ S->ajoutPiece(piecesY.find(y)->second);
-												if(S->ajoutPiecePossible(piecesP.find(p)->second)==true){S->ajoutPiece(piecesP.find(p)->second);
-													if(S->ajoutPiecePossible(piecesD.find(d)->second)==true){ S->ajoutPiece(piecesD.find(d)->second);
-														if(S->ajoutPiecePossible(piecesG.find(g)->second)==true){S->ajoutPiece(piecesG.find(g)->second);
-														if(S->ajoutPiecePossible(piecesL.find(l)->second)==true){
-															S->ajoutPiece(piecesL.find(l)->second);
-															S->ajoutPiece(piecesT.find(t)->second);}
-																
-														}
-													}
-												}
-												
-											}
-											
-										}
-										
-									}
-									
-
-									
-									// S->ajoutPiece(piecesZ.find(z)->second);
-									// S->ajoutPiece(piecesY.find(y)->second);
-								 	// S->ajoutPiece(piecesP.find(p)->second);
-									// S->ajoutPiece(piecesD.find(d)->second);
-									// S->ajoutPiece(piecesG.find(g)->second);
-									// S->ajoutPiece(piecesL.find(l)->second);
-									// S->ajoutPiece(piecesT.find(t)->second);
-									std::cout <<"taille solution="<< S->getNbPiece()<<std::endl;
-									if (S->getNbPiece()==8){
-										ensembleSol[1]=S;
-										
-										ok=true;
-									   std::cout <<"TROUVE "<<std::endl;
-																	
-									}
-									delete S;
-									t=t+1;
-								}
-							l=l+1;
-							}
-						g=g+1;
-						}
-					d=d+1;
+/*
+ * Fonction récursive de recherche de solution
+ * On passe en paramètre la case dans la solution à partir de laquelle on commence la recherche
+ * Si la solution courante est égale au problème, on ajoute une copie de la solution dans la liste des solutions trouvées et on signifie qu'on ne recherche pas plus loin dans cette branche
+ * Si la position courante n'est pas dans la solution, on signifie que l'on ne recherche pas plus loin dans cette branche
+ * Pour chaque case dans la solution à partir de la position courante
+ * Pour chaque pièce
+ * Si la pièce n'est pas utilisée dans la solution
+ * Pour chaque rotation sans doublon
+ * Si on peut ajouter la pièce dans la solution à la position courante et avec la rotation donnée
+ * On ajoute la pièce à la solution
+ * On appelle la fonction récursive en incrémentant la case courante
+ * On supprime la pièce de la solution courante
+ */
+void recursive(int r) {
+	if (solution_courante->getRepresentation()->equals(probleme)) {
+		liste_solutions.push_back(new Solution(solution_courante));
+		return;
+	}
+	else if (r >= solution_courante->getRepresentation()->getSize()) {
+		return;
+	}
+	for (int i = r; i < solution_courante->getRepresentation()->getSize(); ++i) {
+		for (int j = 0; j < liste_pieces.size(); ++j) {
+			if (!solution_courante->hasPiece(liste_pieces[j])) {
+				int x = i % solution_courante->getX();
+				int y = i / solution_courante->getX() % solution_courante->getY();
+				int z = i / (solution_courante->getX() * solution_courante->getY()) % solution_courante->getZ();
+				Position pos(x, y, z);
+				liste_pieces[j]->setPosition(pos);
+				std::vector<Position*> rotations = getRotations(liste_pieces[j]);
+				for (int k = 0; k < rotations.size(); ++k) {
+					liste_pieces[j]->setRotation(rotations[k]->getX(), rotations[k]->getY(), rotations[k]->getZ());
+					if (solution_courante->ajoutPiecePossible(liste_pieces[j])) {
+						solution_courante->ajoutPiece(liste_pieces[j]);
+						recursive(r + 1);
+						solution_courante->enlevePiece();
 					}
-				
-				p=p+1;
 				}
-			y=y+1;
 			}
-		
-			z=z+1;
 		}
-		
-	angle=angle+1;
-	} 
+	}
+}
 
-
-	std::cout <<"nombre de Solution= "<<ensembleSol.size()<<std::endl; */
-
-	return 0;
-
-
+int main (int argc, char *argv[]) {
+	/** Liste pieces **/
+	PieceAngle* pa = new PieceAngle();
+	PieceZ* pz = new PieceZ();
+	PieceY* py = new PieceY();
+	PieceP* pp = new PieceP();
+	PieceT* pt = new PieceT();
+	PieceL* pl = new PieceL();
+	PiecePlus* ppl = new PiecePlus();
+	PieceG* pg = new PieceG();
+	PieceD* pd = new PieceD();
 	
+	liste_pieces.push_back(pa);
+	liste_pieces.push_back(pz);
+	liste_pieces.push_back(py);
+	liste_pieces.push_back(pp);
+	liste_pieces.push_back(pt);
+	liste_pieces.push_back(pl);
+	liste_pieces.push_back(ppl);
+	liste_pieces.push_back(pg);
+	liste_pieces.push_back(pd);
+	
+	/** Probleme **/
+	/** Test qui fait planter mon pc **/
+/*
+	int* c = new int[27];
+	for (int i = 0; i < 27; ++i) {
+		c[i] = -1;
+	}
+	c[0] = c[1] = c[2] = c[3] = c[4] = c[6] = c[7] = c[10] = c[12] = c[13] = c[15] = c[16] = c[18] = c[19] = c[20] = c[22] = c[23] = c[24] = c[25] = c[26] = 1;
+*/
+	/** Pas testé **/
+/*
+	int* c = new int[18];
+	for (int i = 0; i < 18; ++i) {
+		c[i] = -1;
+	}
+	c[0] = c[1] = c[2] = c[3] = c[4] = c[5] = c[7] = c[8] = c[10] = c[11] = c[12] = c[13] = c[14] = c[16] = c[17] = 1;
+	probleme = new PieceRepresentation(3, 3, 2, c);
+*/
+	/** Test concluant et rapide **/
+	int* c = new int[18];
+	for (int i = 0; i < 18; ++i) {
+		c[i] = -1;
+	}
+	c[0] = c[1] = c[2] = c[4] = c[7] = c[9] = c[12] = c[15] = c[16] = c[17] = 1;
+	probleme = new PieceRepresentation(3, 3, 2, c);
+	probleme->print();
+	
+	/** Solution courante **/
+	solution_courante = new Solution(probleme);
+	
+	recursive(0);
+	std::cout << "Nombre de solutions " << liste_solutions.size() << std::endl;
+	for (int i = 0; i < liste_solutions.size(); ++i) {
+		liste_solutions[i]->getRepresentation()->print();
+		for (int j = 0; j < liste_solutions[i]->getListePieces().size(); ++j) {
+			std::cout << typeid(*liste_solutions[i]->getListePieces()[j]).name() << std::endl;
+		}
+		std::cout << std::endl;
+	}
+	
+	return 0;	
 }

@@ -46,6 +46,15 @@ public:
 	void print() {
 		representation->print();
 	}
+	
+	PieceT* copy() {
+		PieceT* p = new PieceT;
+		Position pos(position.getX(), position.getY(), position.getZ());
+		p->setPosition(pos);
+		p->setRotation(rotation.getX(), rotation.getY(), rotation.getZ());
+		
+		return p;
+	}
 };
 
 #endif
