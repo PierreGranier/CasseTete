@@ -7,6 +7,7 @@
 #include <QtOpenGL>
 #include <QGLWidget>
 #include "cube.h"
+#include "input.h"
 #include "pieceplus.h"
 #include "piecep.h"
 #include "piecel.h"
@@ -32,23 +33,20 @@ public:
     virtual void paintGL() = 0;
 
     //Evenements
-    virtual void keyPressEvent( QKeyEvent *keyEvent );
-    virtual void mouseMoveEvent(QMouseEvent *event);
+    /*virtual void keyPressEvent( QKeyEvent *keyEvent );
+    virtual void keyReleaseEvent(QKeyEvent *event);
     virtual void mousePressEvent(QMouseEvent *event);
-    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);*/
     //virtual void QWheelEvent(const QPoint & pos, int delta, Qt::MouseButtons buttons, Qt::KeyboardModifiers modifiers, Qt::Orientation orient = Qt::Vertical);
 
     //Variables de traitement
     bool pressed=false;
-    float xinit,xfin;
-    float yinit,yfin;
-    float dx,dy;
     // angle of rotation for the camera direction
     float angle=45.0;
     // actual vector representing the camera's direction
     float lx=0.0f,lz=-1.0f;
     // XZ position of the camera
-    float x=0.0f,z=5.0f;
+    float x=0.0f,y=0.0f,z=5.0f;
 
     //Variables de type cube
     PieceP pp;
@@ -60,6 +58,7 @@ public:
     PieceG pg;
     PieceD pd;
     PieceZ pz;
+
 
     //Cube pieceY;
     GLuint text; //identifiant de la texture
@@ -73,6 +72,7 @@ public:
 
 public slots:
     virtual void timeOutSlot();
+
 
 private:
     QTimer *t_Timer;

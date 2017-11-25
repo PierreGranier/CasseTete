@@ -95,6 +95,7 @@ static const Vertex ppy[] = {
 class PieceY
 {
 public:
+    bool visible = true;
     //Variable pour définir l'angle
     GLfloat angle;
 

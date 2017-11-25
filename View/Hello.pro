@@ -22,7 +22,9 @@ SOURCES += \
     piecey.cpp \
     pieced.cpp \
     pieceg.cpp \
-    piecez.cpp
+    piecez.cpp \
+    input.cpp \
+    fenetre.cpp
 
 HEADERS += \
     glclass.h \
@@ -39,7 +41,9 @@ HEADERS += \
     piecey.h \
     pieced.h \
     pieceg.h \
-    piecez.h
+    piecez.h \
+    input.h \
+    fenetre.h
 
 RESOURCES += \
     textures.qrc \

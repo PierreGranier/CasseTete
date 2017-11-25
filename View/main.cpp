@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "mywindow.h"
+#include "fenetre.h"
 
 
 
@@ -7,7 +7,10 @@ int main(int argc, char *argv[])
 {
 
            QApplication app(argc, argv);
-           mywindow mywin;
-           mywin.show();
+           Fenetre window;
+         //  window.setFormat(format);
+           window.resize(QSize(800, 600));
+           window.show();
+
            return app.exec();
 }

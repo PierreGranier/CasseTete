@@ -99,6 +99,7 @@ static const Vertex ang[] = {
 class PieceAngle
 {
 public:
+    bool visible = true;
     //Variable pour définir l'angle
     GLfloat angle;
 

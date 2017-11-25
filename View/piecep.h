@@ -4,6 +4,7 @@
 #include <QtOpenGL>
 #include <QGLWidget>
 #include <vertex.h>
+#include <input.h>
 #include <transform3d.h>
 #include <camera3d.h>
 
@@ -96,6 +97,7 @@ static const Vertex p[] = {
 class PieceP
 {
 public:
+    bool visible=true;
     //Variable pour définir l'angle
     GLfloat angle;
     GLuint textures[8];
@@ -105,13 +107,17 @@ public:
     QOpenGLBuffer m_vertex;
 
 
+    // actual vector representing the camera's direction
+    float lx=0.0f,lz=-1.0f;
+    // XZ position of the camera
+    float x=0.0f,y=0.0f,z=5.0f;
     //Informations du Shader
     int u_modelToWorld;
     int u_worldToView;
     int u_worldToCamera;
     int u_cameraToView;
     QMatrix4x4 m_projection;
-
+    QOpenGLTexture *texture[9];
     //Variable de transformation
     Transform3D m_transform;
 
@@ -122,9 +128,15 @@ public:
     PieceP();
 
     //Requetes
-    void dessinerP(Camera3D *c);
+    void dessinerP();
+    virtual void keyPressEvent( QKeyEvent *keyEvent );
+    virtual void keyReleaseEvent(QKeyEvent *event);
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
 
-
+public slots:
+    //virtual void timeOutSlot();
+    void update();
 
 };
 

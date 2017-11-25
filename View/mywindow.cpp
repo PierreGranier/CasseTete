@@ -11,6 +11,7 @@
 #include"piecez.h"
 #include"vertex.h"
 #include <QOpenGLShaderProgram>
+#include <QOpenGLTexture>
 
 //Constructeur
 mywindow::mywindow(QWidget *parent) : Glclass(60, parent, "Casse tete 3D")
@@ -34,6 +35,8 @@ mywindow::mywindow(QWidget *parent) : Glclass(60, parent, "Casse tete 3D")
     pd.m_transform.rotate(90.0f,1.0f,0.0f,0.0f);
     pz.m_transform.translate(8.0f, -2.0f, -14.0f);
     pz.m_transform.rotate(90.0f,1.0f,0.0f,0.0f);
+  memset(texture, 0, sizeof(texture));
+
 }
 
 
@@ -42,19 +45,33 @@ void mywindow::initializeGL()
 {
   // Initialisation de l'arriere de la scène
      initializeOpenGLFunctions();
+     for (int j = 0; j < 9; ++j)
+         texture[j] = new QOpenGLTexture(QImage(QString(":/images/%1.jpg").arg(j + 1)).mirrored());
+
     /* QTimer *timer = new QTimer(this);
      connect(timer, SIGNAL(timeout()), this, SLOT(update()));
      timer->start(100);*/
 
      // Set global information
-     //glEnable(GL_DEPTH_TEST);
 
-     //loadTexture("images/1.jpg");
-     glEnable(GL_TEXTURE_2D);
 
      glEnable(GL_CULL_FACE);
+     glEnable(GL_CULL_FACE);
+
      glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
      // Application-specific initialization
+#define PROGRAM_VERTEX_ATTRIBUTE 0
+#define PROGRAM_TEXCOORD_ATTRIBUTE 1
+     QOpenGLShader *fshader = new QOpenGLShader(QOpenGLShader::Fragment, this);
+     const char *fsrc =
+         "uniform sampler2D texture;\n"
+         "varying mediump vec4 texc;\n"
+         "void main(void)\n"
+         "{\n"
+         "    gl_FragColor = texture2D(texture, texc.st);\n"
+         "}\n";
+     fshader->compileSourceCode(fsrc);
+
 
        // Create Shader (Do not release until VAO is created)
        pp.m_program = new QOpenGLShaderProgram();
@@ -62,7 +79,7 @@ void mywindow::initializeGL()
        pp.m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/simple.frag");
        pp.m_program->link();
        pp.m_program->bind();
-       //pp.m_program->setUniformValue("textures", 0);
+       pp.m_program->setUniformValue("textures", 0);
 
 
 
@@ -470,64 +487,76 @@ void mywindow::resizeGL(int width, int height)
 
 //Dessin des objets sur la scène
 void mywindow::paintGL(){
+
    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
    glLoadIdentity();
-   gluLookAt(x, 1.0f, z, x+lx, 1.0f,  z+lz,0.0f, 1.0f,  0.0f);
+
+   if(pp.visible == true)
+    pp.dessinerP();
 
 
-   glRotatef(angle,0.0f,1.0f,0.0f);
-   //glBindTexture(GL_TEXTURE_2D, textures[0]);
-    pp.dessinerP(&m_camera);
-
+   if(plus.visible == true)
+   {
     plus.m_transform.setTranslation(-3.0f, 0.0f, -8.0f);
     plus.dessinerPlus(&m_camera);
-
-    pt.m_transform.setTranslation(0.0f, 0.0f, -10.0f);
-    pt.dessinerT(&m_camera);
+    }
 
 
-    pl.m_transform.setTranslation(4.0f, 0.0f, -12.0f);
-    pl.dessinerL(&m_camera);
+    if(pt.visible == true)
+    {
+     pt.m_transform.setTranslation(0.0f, 0.0f, -10.0f);
+     pt.dessinerT(&m_camera);
+    }
 
 
-    pangle.m_transform.setTranslation(8.0f, 0.0f, -14.0f);
-    pangle.dessinerAngle(&m_camera);
 
-    py.m_transform.setTranslation(-3.0f, -2.0f, -8.0f);
-    py.dessinerY(&m_camera);
+    if(pl.visible == true)
+    {
+     pl.m_transform.setTranslation(4.0f, 0.0f, -12.0f);
+     pl.dessinerL(&m_camera);
+    }
 
 
+    if(pangle.visible == true)
+    {
+     pangle.m_transform.setTranslation(8.0f, 0.0f, -14.0f);
+     pangle.dessinerAngle(&m_camera);
+    }
+
+
+
+    if(py.visible == true)
+    {
+     py.m_transform.setTranslation(-3.0f, -2.0f, -8.0f);
+     py.dessinerY(&m_camera);
+    }
+
+
+
+   if(pg.visible == true)
+   {
    pg.m_transform.setTranslation(0.0f, -2.0f, -10.0f);
    pg.dessinerG(&m_camera);
+   }
 
+   if(pd.visible == true)
+   {
    pd.m_transform.setTranslation(4.0f, -2.0f, -12.0f);
    pd.dessinerD(&m_camera);
+   }
 
+
+   if(pz.visible == true)
+   {
    pz.m_transform.setTranslation(8.0f, -2.0f, -14.0f);
    pz.dessinerZ(&m_camera);
+   }
+
 
 }
 
 
-void mywindow::loadTexture(QString textureName)
-{
-    QImage qim_Texture;
-    QImage qim_TempTexture;
-    qim_TempTexture.load(textureName);
-    qim_Texture = QGLWidget::convertToGLFormat( qim_TempTexture );
-    glGenTextures( 1, &textures[8] );
-    glBindTexture( GL_TEXTURE_2D, textures[8] );
-    glTexImage2D( GL_TEXTURE_2D, 0, 3, qim_Texture.width(), qim_Texture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, qim_Texture.bits() );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-}
 
-void mywindow::update()
-{
-  // Update instance information
-  py.m_transform.rotate(1.0f, QVector3D(0.4f, 0.3f, 0.3f));
 
-  // Schedule a redraw
-  //QOpenGLWindow::update();
-}
+
 
