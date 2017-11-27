@@ -19,24 +19,25 @@ class mywindow : public Glclass,protected QOpenGLFunctions
 {
     Q_OBJECT
 
+
+
 public:
     //Constructeur
     explicit mywindow(QWidget *parent = 0);
+
 
     //Requête
     void initializeGL();
     void resizeGL(int width, int height);
     void paintGL();
-    void loadTexture(QString textureName);
     void teardownGL();
 
+    QOpenGLTexture *texture[9];
 
 
-protected slots:
-      void update();
 private :
 
-      GLuint textures[8];
+
 
      //Informations du Shader
      int u_modelToWorld;

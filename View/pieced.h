@@ -98,6 +98,7 @@ static const Vertex ppd[] = {
 class PieceD
 {
 public:
+    bool visible = true;
     //Variable pour définir l'angle
     GLfloat angle;
 
