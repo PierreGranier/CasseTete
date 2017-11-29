@@ -32,7 +32,9 @@
 	Class Solution: qui represente une solution à un Casse-tete 3D
 		
 */
-class Solution{	
+class Solution{
+
+
 private:
 	std::vector<Piece*> liste_pieces; // ensemble des pièce de la solution	
 	PieceRepresentation* representation;  // represention
@@ -174,5 +176,7 @@ public:
 			}
 		liste_pieces.pop_back();
 	}
+ void afficherTest(){  std::cout << "Je suis une solution temporaire";}
+
 };
 #endif

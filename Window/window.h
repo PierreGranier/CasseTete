@@ -24,6 +24,7 @@
 #include <QtDebug>
 #include <QIcon>
 #include <QApplication>
+#include "../Model/Solution.h"
 
 
 
@@ -45,13 +46,15 @@ public:
    
 private slots:
 
+ void afficherTest();
+
 
     
 
 private:
     void createActions();
     void createMenus();
-    
+    Solution *sol;
     
   
 
@@ -83,9 +86,9 @@ private:
     //Les layouts nécessaires :
     QVBoxLayout *sideBarLayout;
     QHBoxLayout *layoutPiece;
-    
     QGridLayout *page1GridLayout;
     QGridLayout *centralLayout;
+    
 
   
 
