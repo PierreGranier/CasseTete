@@ -15,21 +15,14 @@ public:
 		 * 1 1 1 
 		 * 0 1 0
 		 */
-<<<<<<< HEAD
 
-=======
->>>>>>> 6b2d802b109976c10b96cd351fc6946d618ef48c
 		int* c = new int[9];
 		for (int i = 0; i < 9; ++i) {
 			c[i] = 0;
 		}
 		c[1] = c[3] = c[4] = c[5] = c[7] = 1;
 		representation = new PieceRepresentation(3, 3, 1, c);
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 6b2d802b109976c10b96cd351fc6946d618ef48c
 	}
 	
 	PieceRepresentation* rotate(int x, int y, int z) {

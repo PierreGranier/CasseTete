@@ -32,7 +32,7 @@
 	Class Solution: qui represente une solution à un Casse-tete 3D
 		
 */
-<<<<<<< HEAD
+
 class Solution{
 	
 	private:
@@ -461,7 +461,7 @@ class Solution{
 				
 			
 				
-=======
+
 class Solution{	
 private:
 	std::vector<Piece*> liste_pieces; // ensemble des pièce de la solution	
@@ -477,7 +477,7 @@ public:
 			else if (probleme->getValue(i) == 1) {
 				c[i] = 0;
 			}
->>>>>>> 6b2d802b109976c10b96cd351fc6946d618ef48c
+
 		}
 		representation = new PieceRepresentation(probleme->getX(), probleme->getY(), probleme->getZ(),c);
 	}
