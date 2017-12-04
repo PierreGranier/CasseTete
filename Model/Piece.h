@@ -9,10 +9,15 @@ class Piece {
 protected:
 	Position position;
 	Position rotation;
+
 	
 public:
 	Piece() : position(0, 0, 0), rotation(0, 0, 0) {
 	};
+
+	virtual Piece* Clone()= 0; 
+
+	
 
 	void setPosition(Position pos) {
 	  position.setX(pos.getX());
@@ -34,15 +39,18 @@ public:
 		return rotation;
 	}
 	
+	virtual int  getType()=0;  /* entier representatant le type de la Piece*/
+
 	/** fonctions virtuelles pures permettant de:
 		-Recuperer la representation de la pièce
 		-Faire un affichage de la Piece
 	*/
 	virtual PieceRepresentation* rotate(int x, int y, int z) =0;
 
-	virtual void print() =0;
-	
-	virtual Piece* copy() =0;
+	virtual void setRepresentation( PieceRepresentation* pr)=0;
+	virtual PieceRepresentation* getRepresentation()=0;
+
+	virtual void print()=0;
 };
 
 #endif

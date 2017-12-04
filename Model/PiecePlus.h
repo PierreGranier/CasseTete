@@ -6,6 +6,7 @@
 class PiecePlus : public Piece {
 private:
 	PieceRepresentation* representation;
+	int numPiece;
 	
 public:
 	PiecePlus() : Piece() {
@@ -22,8 +23,16 @@ public:
 		}
 		c[1] = c[3] = c[4] = c[5] = c[7] = 1;
 		representation = new PieceRepresentation(3, 3, 1, c);
+<<<<<<< HEAD
 
+=======
+		numPiece=10;
+		
+>>>>>>> 0d7a734730bcfd8c0e2df9821285282b9dd58785
 	}
+	Piece* Clone(){  
+       	 	return new PiecePlus( *this ); 
+ 	  } 	
 	
 	PieceRepresentation* rotate(int x, int y, int z) {
 		PieceRepresentation* pr = representation;
@@ -44,18 +53,17 @@ public:
 		representation=pr;	
 	}
 
+	int getType(){
+	
+		return numPiece;
+	}
+	
+	PieceRepresentation* getRepresentation(){
+		return representation;
+	}
 	
 	void print() {
 		representation->print();
-	}
-	
-	PiecePlus* copy() {
-		PiecePlus* p = new PiecePlus;
-		Position pos(position.getX(), position.getY(), position.getZ());
-		p->setPosition(pos);
-		p->setRotation(rotation.getX(), rotation.getY(), rotation.getZ());
-		
-		return p;
 	}
 };
 

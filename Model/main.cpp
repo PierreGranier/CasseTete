@@ -1,170 +1,443 @@
 #include "PieceRepresentation.h"
-#include "Piece.h"
 #include "PieceAngle.h"
 #include "PieceZ.h"
 #include "PieceY.h"
 #include "PieceP.h"
-#include "PieceT.h"
-#include "PieceL.h"
-#include "PieceG.h"
-#include "PieceD.h"
-#include "PiecePlus.h"
+#include "Piece.h"
 #include "Solution.h"
 #include <stdlib.h>
+#include <map>
+#include <time.h>
 
-#include <vector>
-#include <string>
+#include <list>
+#include<string>
 #include <iostream>
+#include<omp.h>
+#include<typeinfo>
 
-/*
- * Recherche si une rotation donnant une représentation identique a déjà été ajoutée dans la liste de srotations de la pièce
- * Renvoie vrai si la représentation peut être ajouté, non sinon
- */
-bool canAdd(std::vector<PieceRepresentation*>* v, PieceRepresentation* pr) {
-	for (int i = 0; i < v->size(); ++i) {
-		if (v->at(i)->equals(pr)) {
-			return false;
-		}
-	}
-	return true;
-}
 
-/*
- * Renvoie la liste des rotations (x, y, z) sans doublon pour la pièce
- */
-std::vector<Position*> getRotations(Piece* p) {
-	std::vector<PieceRepresentation*> v;
-	std::vector<Position*>pos;
-	for (int x = 0; x < 4; ++x) {
-		for (int y = 0; y < 4; ++y) {
-			for (int z = 0; z < 4; ++z) {
-				PieceRepresentation* pr = p->rotate(x, y, z);
-				if (canAdd(&v, pr)) {
-					v.push_back(pr);
-					pos.push_back(new Position(x, y, z));
-				}
-			}
-		}
-	}
-	return pos;
-}
 
-/*
- * Problème à résoudre
- * Solution courante
- * Liste des solutions trouvées
- * Liste des pièces
+/** Calcul de combinaisons possible 
+	Renvoi l'ensemble des forme Possible d'une piece (type) dans un problème donné
  */
-PieceRepresentation* probleme;
-Solution* solution_courante;
-std::vector<Solution*> liste_solutions;
-std::vector<Piece*> liste_pieces;
+std::map<int,Piece*> formesPossibles(Piece* pa, Solution sol){
 
-/*
- * Fonction récursive de recherche de solution
- * On passe en paramètre la case dans la solution à partir de laquelle on commence la recherche
- * Si la solution courante est égale au problème, on ajoute une copie de la solution dans la liste des solutions trouvées et on signifie qu'on ne recherche pas plus loin dans cette branche
- * Si la position courante n'est pas dans la solution, on signifie que l'on ne recherche pas plus loin dans cette branche
- * Pour chaque case dans la solution à partir de la position courante
- * Pour chaque pièce
- * Si la pièce n'est pas utilisée dans la solution
- * Pour chaque rotation sans doublon
- * Si on peut ajouter la pièce dans la solution à la position courante et avec la rotation donnée
- * On ajoute la pièce à la solution
- * On appelle la fonction récursive en incrémentant la case courante
- * On supprime la pièce de la solution courante
- */
-void recursive(int r) {
-	if (solution_courante->getRepresentation()->equals(probleme)) {
-		liste_solutions.push_back(new Solution(solution_courante));
-		return;
-	}
-	else if (r >= solution_courante->getRepresentation()->getSize()) {
-		return;
-	}
-	for (int i = r; i < solution_courante->getRepresentation()->getSize(); ++i) {
-		for (int j = 0; j < liste_pieces.size(); ++j) {
-			if (!solution_courante->hasPiece(liste_pieces[j])) {
-				int x = i % solution_courante->getX();
-				int y = i / solution_courante->getX() % solution_courante->getY();
-				int z = i / (solution_courante->getX() * solution_courante->getY()) % solution_courante->getZ();
-				Position pos(x, y, z);
-				liste_pieces[j]->setPosition(pos);
-				std::vector<Position*> rotations = getRotations(liste_pieces[j]);
-				for (int k = 0; k < rotations.size(); ++k) {
-					liste_pieces[j]->setRotation(rotations[k]->getX(), rotations[k]->getY(), rotations[k]->getZ());
-					if (solution_courante->ajoutPiecePossible(liste_pieces[j])) {
-						solution_courante->ajoutPiece(liste_pieces[j]);
-						recursive(r + 1);
-						solution_courante->enlevePiece();
+	Solution S=sol;
+	//PieceRepresentation* pr=pa->getRepresentation();
+	PieceRepresentation* prS=sol.getRepresentation();
+	int nombre_totale=0;
+
+
+	std::map<int,Piece*> pieces;
+	//S.suppressionPiece("PieceAngle");
+	for(int i=0; i<prS->getX();++i){ // pour tout les X
+		for(int j=0; j<prS->getY(); ++j){ // Pour tous les Y
+			for(int k=0;k<prS->getZ(); ++k){ // Pour tous les Z
+				for (int rotx=0;rotx<4;++rotx){  // pour tout les rotx
+					for (int roty=0;roty<4;++roty){ // pour toute les rotation en y
+						for (int rotz=0;rotz<4;++rotz){ // pour toutes les rotation en z
+						int angleX=0; int angleY=0; int angleZ=0;
+							if ((rotx!=0 && roty==0 && rotz==0) || (rotx==0 && roty!=0 && rotz==0) || (rotx==0 && roty==0 && rotz!=0) || (rotx==0 && roty==0 && rotz==0) ){
+
+								Position posI(i,j,k);
+								pa->setPosition(posI); // Modification de la position
+											// modification de la rotation
+								int angleX=0; int angleY=0; int angleZ=0;
+								if(rotx>0){
+									 angleX=4-rotx;
+								}
+
+								if(roty>0){
+									 angleY=4-roty;
+								}
+
+								if(rotz>0){
+									 angleZ=4-rotz;
+								}
+
+								PieceRepresentation* p=pa->rotate(rotx,roty,rotz);
+								pa->setRepresentation(p);
+								if(S.ajoutPiecePossible(pa)==true){
+									nombre_totale=nombre_totale+1;
+									Piece *pt=pa->Clone();
+									pieces[nombre_totale]=pt; 
+
+								}
+
+								PieceRepresentation* pi=pa->rotate(angleX,angleY,angleZ);
+
+								pa->setRepresentation(pi);
+
+								Position posJ(0,0,0);
+								pa->setPosition(posJ);
+
+
+							}
+
+						}
 					}
 				}
 			}
+
 		}
+	}
+	return pieces;
+}
+
+
+
+/** Mise à jour des indices suivants */
+
+void maj_suivants(int indice_actuel, int* indices, int taille){
+	for(int i=indice_actuel+1; i<taille;i++){
+		indices[i]=1;
 	}
 }
 
+
+ /* calcul de temps d'execution */
+void duree(time_t _begin, time_t _end)
+{
+  double temp;
+  double hours=0, min=0, sec=0;
+  double dureeCalc = difftime(_end, _begin);
+  temp = modf(dureeCalc/3600., &hours);
+  temp = modf(temp*60., &min);
+  temp = modf(temp*60., &sec);
+  std::cout<<"Duree du calcul : "<<hours<<" h "<<min<<" min "<<sec<<" sec"<<std::endl;
+}
+
+
+
+std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece*>> vectPieces,int nb_pieces_solution,PieceRepresentation* probleme){
+
+	std::vector<Solution*> liste_solutions;
+	int nombre_types_pieces=vectPieces.size(); // nombre de pieces;
+	int* indice= new int[nombre_types_pieces]; // tout les entier sont à 1
+
+		/**
+		1) Initialisation des position à 1
+		*/
+	for(int i=0;i< nombre_types_pieces;++i){
+		indice[i]=1;	
+	}
+	int ok= false; 
+	
+	int* taille_ensemblePieces=new int[nombre_types_pieces];
+		/**
+		 2) Mises des tailles des ensembles de type De Pieces
+		*/
+
+	for(int i=0;i<nombre_types_pieces; ++i){
+		taille_ensemblePieces[i]=vectPieces.find(i)->second.size();
+			
+	}
+
+	if( nombre_types_pieces==nb_pieces_solution){
+		
+		// On rentre dans la boucle
+		while(ok==false){
+			Solution* S= new Solution(probleme);
+
+			/*for(int i=0;i< nombre_types_pieces;++i){
+				std::cout<<indice[i];
+				std::cout<<"--";
+				 
+			}
+			std::cout<<std::endl;*/
+
+			for(int i=0; i<nombre_types_pieces;++i){
+				
+				if(i==0 && nombre_types_pieces>1){		// si nous sommes au premier type de pièce
+					
+					if (indice[i]<(taille_ensemblePieces[i]+1) &&  S->ajoutPiecePossible(vectPieces.find(i)->second.find(indice[i])->second)==true){
+						S->ajoutPiece(vectPieces.find(i)->second.find(indice[i])->second);
+						
+					}
+					
+					else {  if (indice[i]<(taille_ensemblePieces[i]+1))  {
+							
+							indice[i]=indice[i]+1;maj_suivants(i, indice,nombre_types_pieces);  
+							
+						}else{
+							ok=true; std::cout<<"aucun resultat"<<std::endl;
+						} 
+					
+					break;
+					}
+				}
+				
+				// cas 2 Pieces entre le deuxième et l'avant dernière pièce
+
+				if(i>0 && i<nombre_types_pieces-1){ 
+					if (indice[i]<(taille_ensemblePieces[i]+1) &&  S->ajoutPiecePossible(vectPieces.find(i)->second.find(indice[i])->second)==true){
+						S->ajoutPiece(vectPieces.find(i)->second.find(indice[i])->second);
+					}else {
+						if (indice[i]<taille_ensemblePieces[i]+1) {
+							indice[i]=indice[i]+1;
+							maj_suivants(i, indice,nombre_types_pieces); 
+						} else {
+							indice[i-1]=indice[i-1]+1;
+							indice[i]=1;
+							maj_suivants(i+1, indice,nombre_types_pieces); 
+						} 
+					break;	
+					}
+					
+				}
+
+				/* Cas 3  dernier type de Piece */
+
+				if(i==nombre_types_pieces-1){
+					if (indice[i]<(taille_ensemblePieces[i]+1) &&  S->ajoutPiecePossible(vectPieces.find(i)->second.find(indice[i])->second)==true){
+						S->ajoutPiece(vectPieces.find(i)->second.find(indice[i])->second);
+					}else {
+						if (indice[i]<taille_ensemblePieces[i]+1) {indice[i]=indice[i]+1;  
+						}else {
+							indice[i-1]=indice[i-1]+1; indice[i]=1;
+						} 
+					break;	
+					}	
+
+				}
+
+			//fin boucle for
+			}
+
+
+			if (S->getNbPiece()==nb_pieces_solution){
+				S->getRepresentation()->print();
+				liste_solutions.push_back(S);
+				ok=true;  // Commenter cette ligne ou la supprimer si on veut rechercher toute les solutions
+  		 		
+			}
+			delete S;
+			
+		//fin while
+		}
+
+	//fin if 
+	}
+
+return liste_solutions;	
+}
+
+
+
+/**
+	Algorithme de recherche de solution. 
+		Paramètres: 
+			-probleme: de type pieces Representation
+			-pieces_utiles: Un tableau d'entier de taille 9  dans lequel chaque valeurs (0 ou 1) defini si une pieces est utilisée ou pas.	
+
+				piecesplus -> 0
+				piecesangle -> 1
+				pieceZ -> 2
+				pieceY -> 3
+				pieceP ->4
+				pieceD ->5
+				pieceG -> 6
+				pieceL ->7
+				pieceT ->8
+
+			 Ex : si la Piece Plus est utilisée, pieces_utiles[0]=1. ET pieces_utiles[0]=0 si elle n'est pas utilisée
+
+		Cet aglorithme  renvoi un Vector de solution . 
+			
+
+
+*/
+
+std::vector<Solution*> recrcherche_solution(PieceRepresentation* probleme,int* pieces_utiles){
+
+	std::vector<Solution*> liste_solutions; // l'ensemble de solutions
+
+	std::cout << " Recherche en cours......." << std::endl;	
+
+	Solution a= new Solution(probleme);
+
+	/*Instances de chaque type de Pieces */
+	Piece* pa= new PieceAngle();
+	Piece *pz=new PieceZ();
+	Piece *py= new PieceY();
+	Piece *pp= new PieceP();
+	Piece *pd= new PieceD();
+	Piece *pg= new PieceG();
+	Piece *pl= new PieceL();
+	Piece *pt= new PieceT();
+	Piece *pplus= new PiecePlus();
+	
+	/* Map representant l'ensemble des formes possibles (que chaque Pieces peut avoir dans la solution : en fonction de la position et la rotation) */
+	std::map<int,Piece*> piecesAngle;
+	std::map<int,Piece*> piecesT;
+	std::map<int,Piece*> piecesZ;
+	std::map<int,Piece*> piecesY;
+	std::map<int,Piece*> piecesP;
+	std::map<int,Piece*> piecesD;
+	std::map<int,Piece*> piecesL;
+	std::map<int,Piece*> piecesPlus;
+	std::map<int,Piece*> piecesG;
+
+	/* Remplissages des conteneurs (Map) dans  quand la Piece est utilisée dans la solution */
+
+	std::map<int, std::map<int,Piece*>> vectPieces;
+
+	int ind_type_piece=-1;
+
+	if (pieces_utiles[0]==1){piecesPlus= formesPossibles(pplus,a);} if(piecesPlus.size()>0){ind_type_piece=ind_type_piece+1; vectPieces[ind_type_piece]=piecesPlus; }
+	if (pieces_utiles[1]==1){piecesAngle=formesPossibles(pa,a);}	if(piecesAngle.size()>0){ind_type_piece=ind_type_piece+1; vectPieces[ind_type_piece]=piecesAngle; }
+	if (pieces_utiles[2]==1){piecesZ= formesPossibles(pz,a);}	if(piecesZ.size()>0){ind_type_piece=ind_type_piece+1; vectPieces[ind_type_piece]=piecesZ; }
+	if (pieces_utiles[3]==1){piecesY= formesPossibles(py,a);}	if(piecesY.size()>0){ind_type_piece=ind_type_piece+1; vectPieces[ind_type_piece]=piecesY; }
+	if (pieces_utiles[4]==1){piecesP= formesPossibles(pp,a);}	if(piecesP.size()>0){ind_type_piece=ind_type_piece+1; vectPieces[ind_type_piece]=piecesP; } 	  
+	if (pieces_utiles[5]==1){piecesD= formesPossibles(pd,a);}	if(piecesD.size()>0){ind_type_piece=ind_type_piece+1; vectPieces[ind_type_piece]=piecesD; }
+	if (pieces_utiles[6]==1){piecesG= formesPossibles(pg,a);}	if(piecesG.size()>0){ind_type_piece=ind_type_piece+1; vectPieces[ind_type_piece]=piecesG; }
+	if (pieces_utiles[7]==1){piecesL= formesPossibles(pl,a);}	if(piecesL.size()>0){ind_type_piece=ind_type_piece+1; vectPieces[ind_type_piece]=piecesL; }
+	if (pieces_utiles[8]==1){piecesT= formesPossibles(pt,a);}	if(piecesT.size()>0){ind_type_piece=ind_type_piece+1; vectPieces[ind_type_piece]=piecesT; }
+
+
+	/* Calcul du nombre de type  pièces finalment disponible à utiliser pour la recherche de solution*/
+
+	int nb_pieces_solution=vectPieces.size();
+
+
+	/* Calcul du nombre de type de Pieces dont la solution à besoin  */
+
+	int nb_pieces_besoin= a.getNbPiecesBesoins();
+	
+	if (nb_pieces_solution<nb_pieces_besoin){
+
+		std::cout<<"Pas le solution Possible. Le nombre de pièces utilsées est inferieur au nombre de pieces à utiliser pour resoudre ce probleme"<<std::endl;
+	}
+	else{
+		 if(nb_pieces_solution==nb_pieces_besoin){
+			liste_solutions=solution_auxiliaire(vectPieces ,nb_pieces_solution,probleme);	
+		}
+
+	}
+
+	return liste_solutions;	
+}
+
+
+
 int main (int argc, char *argv[]) {
-	/** Liste pieces **/
-	PieceAngle* pa = new PieceAngle();
-	PieceZ* pz = new PieceZ();
-	PieceY* py = new PieceY();
-	PieceP* pp = new PieceP();
-	PieceT* pt = new PieceT();
-	PieceL* pl = new PieceL();
-	PiecePlus* ppl = new PiecePlus();
-	PieceG* pg = new PieceG();
-	PieceD* pd = new PieceD();
-	
-	liste_pieces.push_back(pa);
-	liste_pieces.push_back(pz);
-	liste_pieces.push_back(py);
-	liste_pieces.push_back(pp);
-	liste_pieces.push_back(pt);
-	liste_pieces.push_back(pl);
-	liste_pieces.push_back(ppl);
-	liste_pieces.push_back(pg);
-	liste_pieces.push_back(pd);
-	
-	/** Probleme **/
-	/** Test qui fait planter mon pc **/
-/*
-	int* c = new int[27];
-	for (int i = 0; i < 27; ++i) {
-		c[i] = -1;
+
+
+	std::cout << "*************************Test de la classe solution *****************" << std::endl;
+
+	/* Cretaion des problème Poblème */
+
+
+
+		/*---------------------Probleme 1: le cas 5*4*2, sans la piece Plus ---------------------------------*/
+
+	int* vect= new int[40];
+
+	for(int i=0;i<40;++i){
+		vect[i]=1;
+
 	}
-	c[0] = c[1] = c[2] = c[3] = c[4] = c[6] = c[7] = c[10] = c[12] = c[13] = c[15] = c[16] = c[18] = c[19] = c[20] = c[22] = c[23] = c[24] = c[25] = c[26] = 1;
-*/
-	/** Pas testé **/
-/*
-	int* c = new int[18];
-	for (int i = 0; i < 18; ++i) {
-		c[i] = -1;
-	}
-	c[0] = c[1] = c[2] = c[3] = c[4] = c[5] = c[7] = c[8] = c[10] = c[11] = c[12] = c[13] = c[14] = c[16] = c[17] = 1;
-	probleme = new PieceRepresentation(3, 3, 2, c);
-*/
-	/** Test concluant et rapide **/
+
+	PieceRepresentation *probleme= new PieceRepresentation(5,4,2,vect);
+
+
+		/*---------------------Probleme 2: Un cas simple : avec 2 pieces : ( Angle et T)  ou (G & Y) /  @Maxime-----------------------*/
+
+
+	/*
 	int* c = new int[18];
 	for (int i = 0; i < 18; ++i) {
 		c[i] = -1;
 	}
 	c[0] = c[1] = c[2] = c[4] = c[7] = c[9] = c[12] = c[15] = c[16] = c[17] = 1;
-	probleme = new PieceRepresentation(3, 3, 2, c);
-	probleme->print();
-	
-	/** Solution courante **/
-	solution_courante = new Solution(probleme);
-	
-	recursive(0);
-	std::cout << "Nombre de solutions " << liste_solutions.size() << std::endl;
-	for (int i = 0; i < liste_solutions.size(); ++i) {
-		liste_solutions[i]->getRepresentation()->print();
-		for (int j = 0; j < liste_solutions[i]->getListePieces().size(); ++j) {
-			std::cout << typeid(*liste_solutions[i]->getListePieces()[j]).name() << std::endl;
-		}
-		std::cout << std::endl;
+
+	PieceRepresentation *probleme = new PieceRepresentation(3, 3, 2, c);
+
+	*/
+
+		/*--------------------- Probleme 9: le cas 5*5*2, avec l'une d'entre elle representrée en negatif-----------------------*/
+
+	/*
+	int* c= new int[50];
+
+	for(int i=0;i<50;++i){
+		c[i]=1;
+
 	}
 	
-	return 0;	
+	c[25]=c[26]=c[27]=c[28]=c[30]=-1;
+	PieceRepresentation *probleme= new PieceRepresentation(5,5,2,c);
+
+	probleme->print();
+	 */
+
+
+					/*---------------------Probleme 24: -----------------------*/
+
+	/*
+	
+	int* c= new int[84];
+
+	for(int i=0;i<42;++i){
+		c[i]=1;
+
+	}
+
+	for(int i=42;i<84;++i){
+		c[i]=-1;
+
+	}
+	
+	c[50]=c[52]=c[54]=1;
+	PieceRepresentation *probleme= new PieceRepresentation(7,6,2,c);
+
+	probleme->print();	
+
+	*/
+
+				/*************** recherche de Solution Pour un problème defini********************************** */
+
+
+
+	/**  Code representant les pieces dans le vecteur  d'utilité des Pièces
+		piecesplus -> 0
+		piecesangle -> 1
+		pieceZ -> 2
+		pieceY -> 3
+		pieceP ->4
+		pieceD ->5
+		pieceG -> 6
+		pieceL ->7
+		pieceT ->8
+	 */
+
+	
+	int* pieces_utilisation = new int[9];
+	for(int i=0;i<9;++i){
+		pieces_utilisation[i]=1;
+	}
+
+	/**
+		Pour les pieces nom utilisées dans la solution, il faut les desactiver dans la recherche de solution
+			 : ex: pieces_utilisation[0] desactive la pieces <<plus>>
+	*/
+
+	pieces_utilisation[0]=0;
+	/** 
+	La Piece <plus> est non utilisée . 
+	En faire de meme si le probleme tester comporte d'autres et plusieurs pièces nom utilisées
+	 */
+
+		
+	time_t begin=time(NULL);
+
+	std::vector<Solution*> liste_solutions=recrcherche_solution(probleme,pieces_utilisation);
+
+	time_t end=time(NULL);
+
+	duree(begin,end);
+
+	std::cout<<" Le nombre de solution trouvées est égal à "<<liste_solutions.size()<< std::endl;
+
+	return 0;
 }

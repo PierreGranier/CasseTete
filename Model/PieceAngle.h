@@ -6,6 +6,7 @@
 class PieceAngle : public Piece {
 private:
 	PieceRepresentation* representation;
+	int numPiece;
 	
 public:
 	PieceAngle() : Piece() {
@@ -21,7 +22,13 @@ public:
 		}
 		c[0] = c[3] = c[6] = c[7] = c[8] = 1;
 		representation = new PieceRepresentation(3, 3, 1, c);
+
+		numPiece=2;
 	}
+
+	Piece* Clone(){ 
+       	 	return new PieceAngle( *this ); 
+ 	  } 
 	
 	PieceRepresentation* rotate(int x, int y, int z) {
 		PieceRepresentation* pr = representation;
@@ -42,17 +49,17 @@ public:
 		representation=pr;	
 	}
 
+	PieceRepresentation* getRepresentation(){
+		return representation;
+	}
+
 	void print() {
 		representation->print();
 	}
+
+	int getType(){
 	
-	PieceAngle* copy() {
-		PieceAngle* p = new PieceAngle;
-		Position pos(position.getX(), position.getY(), position.getZ());
-		p->setPosition(pos);
-		p->setRotation(rotation.getX(), rotation.getY(), rotation.getZ());
-		
-		return p;
+		return numPiece;
 	}
 };
 

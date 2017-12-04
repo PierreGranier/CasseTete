@@ -26,6 +26,7 @@
 #include "mywindow.h"
 #include "glclass.h"
 
+
 class QAction;
 class QLabel;
 class QFrame;
