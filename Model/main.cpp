@@ -423,49 +423,82 @@ int main (int argc, char *argv[]) {
 			 : ex: pieces_utilisation[0] desactive la pieces <<plus>>
 	*/
 
-	pieces_utilisation[0]=0;
-	/** 
-	La Piece <plus> est non utilisée . 
-	En faire de meme si le probleme tester comporte d'autres et plusieurs pièces nom utilisées
-	 */
+	pieces_utilisation[0]=0;  /** 
+				La Piece <plus> est non utilisée . 
+				En faire de meme si le probleme tester comporte d'autres et plusieurs pièces nom utilisées
+				 */
 
 		
 	time_t begin=time(NULL);
 
-	std::vector<Solution*> liste_solutions=recrcherche_solution(probleme,pieces_utilisation);
-	
-	  std::map<int,Piece*> l;
-	 Solution* s;
-	 s =liste_solutions.front();
-	 l=s->getListePiece();
-	  Piece* p;
-	  Position T(0,0,0);
-	  Position R(0,0,0);
-	  for(int i=1;i<=l.size();i++){
-	  p=l.find(i)->second;
-	  R= p->getRotation();
-	  T= p->getPosition();
-	  
-	  int x=T.getX();
-	  int z=T.getZ();
-	  int y=T.getY();
-	  
-	  int x1=R.getX();
-	  int z1=R.getZ();
-	  int y1=R.getY();
-	  
-	  
-	  std::cout<< "la piece "<<p->getType()<<"est dans la position : (" << x <<"," << y <<"," << z <<") ; "<<"sa rotation est : ("<<x1<<","<<y1<<","<<z1<<")"<< std::endl;
-	  }
-	 
+	//std::vector<Solution*> liste_solutions=recrcherche_solution(probleme,pieces_utilisation);  // ( Appel de la recherche de solution)
 
 	time_t end=time(NULL);
 
 	duree(begin,end);
 
-	std::cout<<" Le nombre de solution trouvées est égal à "<<liste_solutions.size()<< std::endl;
-	std::cout<<l.size()<<std::endl;
-	//std::cout<< "la piece "<<p->getType()<<"est dans la position :"<<std::endl <<"  x= " << x <<std::endl<<"  y= " << y <<std::endl<<"  z= " << z <<std::endl;
+	//std::cout<<" Le nombre de Pieces trouvées est égal à "<<liste_solutions.size()<< std::endl;
+
+
+	
+	std::cout << "**********Details et explications sur la classe <<Solution>> et le conteneur(Vecteur) de Solution renvoyés par l'ago de recherche ******" << std::endl;
+	
+
+	std::vector<Solution*> mon_vecteur_solution;   /* Creation de mon ensemble de solution ( Representé par un vector regroupant l'ensembled es solution */ 
+
+	Solution* ma_solution= new Solution (probleme); /*  Creation d'une solution ( qui ne contient aucune piece au depart ) */
+	std::cout<<"Affichage de la solution"<<std::endl;
+	ma_solution->print();
+	
+	Piece* pa =new PieceAngle();  /*   Creation d'une nouvele instance d'une pièce piece : de Position (0,0,0) et et rotation(0,0,0) au depart*/
+	
+	std::cout<<"Ajout de la piece Angle  dans la solution "<<std::endl;
+	
+	ma_solution->ajoutPiece(pa);
+	
+	std::cout<<"Reaffichage de la solution après l'ajout de la Piece dans la solution "<<std::endl;
+	ma_solution->print();
+
+
+	std::cout<<"Nombre d'element dans l'ensemble de solution= "<< mon_vecteur_solution.size()<<std::endl; 
+	std::cout<<"Ajout de la solution dans l'ensemble de solution"<< std::endl; 
+	mon_vecteur_solution.push_back(ma_solution);
+	std::cout<<"Nombre d'element dans l'ensemble de solution= "<< mon_vecteur_solution.size()<<std::endl; 
+
+	/**
+	  L'accès/recuperation à un element (1er element dans cet exemple) de  l'ensemble/vecteur de solution
+	  se fait via la methode "font()" de la class std::vector
+	*/
+	Solution* first_solution=mon_vecteur_solution.front();
+	std::cout<<"Reaffichage de la solution après l'ajout de la Piece dans la solution "<<std::endl;
+	first_solution->print();
+
+	std::cout<<"Nombre de Pieces dans la solution= "<< first_solution->getNbPiece() <<std::endl;
+
+	/**
+	  L'accès/recuperation à un element la Solution (exemple :piece Angle ajoutée dans la Solution)  se fait via la methode "getListePiece()" (cf. classe Soluton)
+	*/
+	
+	std::map<int,Piece*> enseblePiece=first_solution->getListePiece();
+
+	/**
+	  Parcours de l'ensemble des pieces de la solution et leur affichage
+	*/
+	
+	std::cout<<"Parours de l'ensemble des Pieces de la solution" <<std::endl;
+	int cpt_element=1;
+	for(std::map<int,Piece*>::iterator i=enseblePiece.begin(); i!=enseblePiece.end(); ++i) {
+			Piece* pieceI= i->second;	//recuperation de la Piece d'indice "i"
+			std::cout<<"	Piece " <<cpt_element<<":"<<std::endl;
+			std::cout<<"		-IdentifiantPiece= "<<i->first<<std::endl; //recuperation de la Piece d'indice se fait aussi par la methode "getType()" de la classe Piece
+			Position posI(0,0,0);
+			posI= pieceI->getPosition();  //recuperation de la position de la Piece: methode "getPosition()" de la classe Piece
+			std::cout<<"		-Coordonée = ("<<posI.getX()<<","<< posI.getY()<<","<<posI.getZ()<<")" <<std::endl; // affichage des position en X, Y et Z
+			Position rotI(0,0,0);
+			rotI= pieceI->getPosition();  //recuperation de la roatation effectué sur sur à la Piece à partir de l'origine (0,0,0)
+			std::cout<<"		-affichage de la Piece"<<std::endl;
+			pieceI->print();
+	}
 	
 
 	return 0;
