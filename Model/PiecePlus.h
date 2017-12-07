@@ -16,19 +16,14 @@ public:
 		 * 1 1 1 
 		 * 0 1 0
 		 */
-
 		int* c = new int[9];
 		for (int i = 0; i < 9; ++i) {
 			c[i] = 0;
 		}
 		c[1] = c[3] = c[4] = c[5] = c[7] = 1;
 		representation = new PieceRepresentation(3, 3, 1, c);
-<<<<<<< HEAD
-
-=======
-		numPiece=10;
+		numPiece=0;
 		
->>>>>>> 0d7a734730bcfd8c0e2df9821285282b9dd58785
 	}
 	Piece* Clone(){  
        	 	return new PiecePlus( *this ); 
@@ -45,6 +40,8 @@ public:
 		if (z != 0) {
 			pr = pr->rotateZ(z);
 		}
+		
+		setRotation(x,y,z);
 		
 		return pr;
 	}

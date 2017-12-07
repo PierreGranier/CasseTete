@@ -15,14 +15,14 @@ public:
 		 * 1 1		0 1
 		 * 0 0 		0 1
 		 * 0 0		0 1
-		*/
+		 */ 
 		int* c = new int[12];
 		for (int i = 0; i < 12; ++i) {
 			c[i] = 0;
 		}
 		c[0] = c[1] = c[7] = c[9] = c[11] = 1;
 		representation = new PieceRepresentation(2, 3, 2, c);
-		numPiece=6;
+		numPiece=5;
 	}	
 
 	 Piece* Clone() { 
@@ -40,7 +40,7 @@ public:
 		if (z != 0) {
 			pr = pr->rotateZ(z);
 		}
-		
+		setRotation(x,y,z);
 		return pr;
 	}
 

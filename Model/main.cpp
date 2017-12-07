@@ -70,6 +70,7 @@ std::map<int,Piece*> formesPossibles(Piece* pa, Solution sol){
 
 								Position posJ(0,0,0);
 								pa->setPosition(posJ);
+								pa->setRotation(0,0,0);
 
 
 							}
@@ -109,7 +110,7 @@ void duree(time_t _begin, time_t _end)
 
 
 
-std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece*>> vectPieces,int nb_pieces_solution,PieceRepresentation* probleme){
+std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece* > > vectPieces,int nb_pieces_solution,PieceRepresentation* probleme){
 
 	std::vector<Solution*> liste_solutions;
 	int nombre_types_pieces=vectPieces.size(); // nombre de pieces;
@@ -248,9 +249,9 @@ return liste_solutions;
 
 */
 
-std::vector<Solution*> recrcherche_solution(PieceRepresentation* probleme,int* pieces_utiles){
+std::vector<Solution* > recrcherche_solution(PieceRepresentation* probleme,int* pieces_utiles){
 
-	std::vector<Solution*> liste_solutions; // l'ensemble de solutions
+	std::vector<Solution* > liste_solutions; // l'ensemble de solutions
 
 	std::cout << " Recherche en cours......." << std::endl;	
 
@@ -280,7 +281,7 @@ std::vector<Solution*> recrcherche_solution(PieceRepresentation* probleme,int* p
 
 	/* Remplissages des conteneurs (Map) dans  quand la Piece est utilisée dans la solution */
 
-	std::map<int, std::map<int,Piece*>> vectPieces;
+	std::map<int, std::map< int,Piece* > > vectPieces;
 
 	int ind_type_piece=-1;
 
@@ -432,12 +433,40 @@ int main (int argc, char *argv[]) {
 	time_t begin=time(NULL);
 
 	std::vector<Solution*> liste_solutions=recrcherche_solution(probleme,pieces_utilisation);
+	
+	  std::map<int,Piece*> l;
+	 Solution* s;
+	 s =liste_solutions.front();
+	 l=s->getListePiece();
+	  Piece* p;
+	  Position T(0,0,0);
+	  Position R(0,0,0);
+	  for(int i=1;i<=l.size();i++){
+	  p=l.find(i)->second;
+	  R= p->getRotation();
+	  T= p->getPosition();
+	  
+	  int x=T.getX();
+	  int z=T.getZ();
+	  int y=T.getY();
+	  
+	  int x1=R.getX();
+	  int z1=R.getZ();
+	  int y1=R.getY();
+	  
+	  
+	  std::cout<< "la piece "<<p->getType()<<"est dans la position : (" << x <<"," << y <<"," << z <<") ; "<<"sa rotation est : ("<<x1<<","<<y1<<","<<z1<<")"<< std::endl;
+	  }
+	 
 
 	time_t end=time(NULL);
 
 	duree(begin,end);
 
 	std::cout<<" Le nombre de solution trouvées est égal à "<<liste_solutions.size()<< std::endl;
+	std::cout<<l.size()<<std::endl;
+	//std::cout<< "la piece "<<p->getType()<<"est dans la position :"<<std::endl <<"  x= " << x <<std::endl<<"  y= " << y <<std::endl<<"  z= " << z <<std::endl;
+	
 
 	return 0;
 }
