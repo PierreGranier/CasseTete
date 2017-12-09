@@ -41,7 +41,6 @@ public:
 			pr = pr->rotateZ(z);
 		}
 		
-		setRotation(x,y,z);
 		
 		return pr;
 	}

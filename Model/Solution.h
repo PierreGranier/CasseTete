@@ -218,6 +218,8 @@ class Solution{
 				//listePiece.push_back(P); 
 				int type= P->getType();
 				listePiece[type]=P;
+			
+			
 
 		}
 
@@ -279,6 +281,9 @@ class Solution{
 		
 					}
 				}
+				delete prP;
+				delete P;
+				
 
 			}
 

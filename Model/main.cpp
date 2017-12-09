@@ -57,12 +57,14 @@ std::map<int,Piece*> formesPossibles(Piece* pa, Solution sol){
 
 								PieceRepresentation* p=pa->rotate(rotx,roty,rotz);
 								pa->setRepresentation(p);
+								
 								if(S.ajoutPiecePossible(pa)==true){
 									nombre_totale=nombre_totale+1;
+									pa->setRotation(rotx,roty,rotz);
 									Piece *pt=pa->Clone();
 									pieces[nombre_totale]=pt; 
-
 								}
+		
 
 								PieceRepresentation* pi=pa->rotate(angleX,angleY,angleZ);
 
@@ -82,6 +84,8 @@ std::map<int,Piece*> formesPossibles(Piece* pa, Solution sol){
 
 		}
 	}
+
+	
 	return pieces;
 }
 
@@ -147,11 +151,12 @@ std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece* >
 			}
 			std::cout<<std::endl;*/
 
-			for(int i=0; i<nombre_types_pieces;++i){
+			for(int i=0; i<nombre_types_pieces+1;++i){
 				
 				if(i==0 && nombre_types_pieces>1){		// si nous sommes au premier type de pièce
 					
 					if (indice[i]<(taille_ensemblePieces[i]+1) &&  S->ajoutPiecePossible(vectPieces.find(i)->second.find(indice[i])->second)==true){
+						S->suppressionPiece(vectPieces.find(i)->second.find(indice[i])->second->getType());
 						S->ajoutPiece(vectPieces.find(i)->second.find(indice[i])->second);
 						
 					}
@@ -161,7 +166,7 @@ std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece* >
 							indice[i]=indice[i]+1;maj_suivants(i, indice,nombre_types_pieces);  
 							
 						}else{
-							ok=true; std::cout<<"aucun resultat"<<std::endl;
+							ok=true; std::cout<<"Fin de recherche de solutions"<<std::endl;
 						} 
 					
 					break;
@@ -172,6 +177,7 @@ std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece* >
 
 				if(i>0 && i<nombre_types_pieces-1){ 
 					if (indice[i]<(taille_ensemblePieces[i]+1) &&  S->ajoutPiecePossible(vectPieces.find(i)->second.find(indice[i])->second)==true){
+						S->suppressionPiece(vectPieces.find(i)->second.find(indice[i])->second->getType());
 						S->ajoutPiece(vectPieces.find(i)->second.find(indice[i])->second);
 					}else {
 						if (indice[i]<taille_ensemblePieces[i]+1) {
@@ -191,6 +197,7 @@ std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece* >
 
 				if(i==nombre_types_pieces-1){
 					if (indice[i]<(taille_ensemblePieces[i]+1) &&  S->ajoutPiecePossible(vectPieces.find(i)->second.find(indice[i])->second)==true){
+						S->suppressionPiece(vectPieces.find(i)->second.find(indice[i])->second->getType());
 						S->ajoutPiece(vectPieces.find(i)->second.find(indice[i])->second);
 					}else {
 						if (indice[i]<taille_ensemblePieces[i]+1) {indice[i]=indice[i]+1;  
@@ -205,11 +212,10 @@ std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece* >
 			//fin boucle for
 			}
 
-
 			if (S->getNbPiece()==nb_pieces_solution){
 				S->getRepresentation()->print();
 				liste_solutions.push_back(S);
-				ok=true;  // Commenter cette ligne ou la supprimer si on veut rechercher toute les solutions
+				ok=true;  // Commenter cette ligne ou la supprimer si on veut rechercher toutes les solutions
   		 		
 			}
 			delete S;
@@ -431,7 +437,26 @@ int main (int argc, char *argv[]) {
 		
 	time_t begin=time(NULL);
 
-	//std::vector<Solution*> liste_solutions=recrcherche_solution(probleme,pieces_utilisation);  // ( Appel de la recherche de solution)
+	
+	std::vector<Solution*> liste_solutions;
+	//liste_solutions=recrcherche_solution(probleme,pieces_utilisation);  // ( Appel de la recherche de solution)
+	if (liste_solutions.size()>0){
+		Solution* s =liste_solutions.front();
+		std::map<int,Piece*> ensemblePiece=s->getListePiece();
+		for(std::map<int,Piece*>::iterator i=ensemblePiece.begin(); i!=ensemblePiece.end(); ++i) {
+				Piece* pieceI= i->second;	//recuperation de la Piece d'indice "i"
+				std::cout<<"	Piece " <<i->first<<":"<<std::endl;
+				std::cout<<"		-IdentifiantPiece= "<<i->first<<std::endl; //recuperation de la Piece d'indice se fait aussi par la methode "getType()" de la classe Piece
+				Position posI(0,0,0);
+				posI= pieceI->getPosition();  //recuperation de la position de la Piece: methode "getPosition()" de la classe Piece
+				std::cout<<"		-Coordonée = ("<<posI.getX()<<","<< posI.getY()<<","<<posI.getZ()<<")" <<std::endl; // affichage des position en X, Y et Z
+				Position rotI(0,0,0);
+				rotI= pieceI->getRotation();  //recuperation de la roatation effectué sur sur à la Piece à partir de l'origine (0,0,0)
+				std::cout<<"		-Rotation = ("<<rotI.getX()<<","<< rotI.getY()<<","<<rotI.getZ()<<")" <<std::endl; // affichage des rotations autour des axes en X, Y et Z
+				std::cout<<"		-affichage de la Piece"<<std::endl;
+				pieceI->print();
+		}
+	}
 
 	time_t end=time(NULL);
 

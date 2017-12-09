@@ -40,7 +40,6 @@ public:
 		if (z != 0) {
 			pr = pr->rotateZ(z);
 		}
-		setRotation(x,y,z);
 		return pr;
 	}
 
