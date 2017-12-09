@@ -46,15 +46,15 @@ public:
    
 private slots:
 
- void afficherTest();
+// void afficherTest();
+void solution();
 
 
     
 
 private:
-    void createActions();
-    void createMenus();
-    Solution *sol;
+ 
+   // Solution *sol;
     
   
 

@@ -36,7 +36,7 @@ static const uint qt_meta_data_MainWindow[] = {
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0afficherTest()\0"
+    "MainWindow\0\0solution()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -45,7 +45,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
-        case 0: _t->afficherTest(); break;
+        case 0: _t->solution(); break;
         default: ;
         }
     }

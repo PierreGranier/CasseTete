@@ -24,13 +24,16 @@
 #include <QIcon>
 #include <QApplication>
 #include "mywindow.h"
-#include "glclass.h"
+//#include "../Model/main.cpp"
+//#include "../Model/Solution.h"
 
 
-class QAction;
+
+
+//class QAction;
 class QLabel;
 class QFrame;
-class QMenu;
+//class QMenu;
 
 
 class Fenetre : public QMainWindow
@@ -54,8 +57,8 @@ private slots:
    void afficher8();
    void afficher9();
 private:
-    void createActions();
-    void createMenus();
+
+   
    mywindow *affichage;
 
 

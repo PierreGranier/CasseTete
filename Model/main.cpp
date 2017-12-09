@@ -248,7 +248,7 @@ return liste_solutions;
 
 */
 
-std::vector<Solution*> recrcherche_solution(PieceRepresentation* probleme,int* pieces_utiles){
+std::vector<Solution*> recherche_solution(PieceRepresentation* probleme,int* pieces_utiles){
 
 	std::vector<Solution*> liste_solutions; // l'ensemble de solutions
 
@@ -431,7 +431,7 @@ int main (int argc, char *argv[]) {
 		
 	time_t begin=time(NULL);
 
-	std::vector<Solution*> liste_solutions=recrcherche_solution(probleme,pieces_utilisation);
+	std::vector<Solution*> liste_solutions=recherche_solution(probleme,pieces_utilisation);
 
 	time_t end=time(NULL);
 

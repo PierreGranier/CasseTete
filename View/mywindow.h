@@ -4,7 +4,7 @@
 #ifndef MYWINDOW_H
 #define MYWINDOW_H
 #include <QImage>
-#include "Glclass.h"
+#include "glclass.h"
 #include <GL/glu.h>
 #include <math.h>
 #include <QDebug>
