@@ -151,7 +151,7 @@ std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece* >
 			}
 			std::cout<<std::endl;*/
 
-			for(int i=0; i<nombre_types_pieces+1;++i){
+			for(int i=0; i<nombre_types_pieces;++i){
 				
 				if(i==0 && nombre_types_pieces>1){		// si nous sommes au premier type de pièce
 					
