@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
     page1pushbutton1->setPalette(palette);
     page1pushbutton1->setFixedSize(200,30);
     page1pushbutton1->setStyleSheet("background-color: blue;");
-    page1label3 = new QLabel("Temps d'excution:");
+    page1label3 = new QLabel("Temps d'execution:");
     page1label3->setStyleSheet("background-color: grey;");
     page1label4 = new QLabel("Nombre de solutions:");
      page1label4->setStyleSheet("background-color: grey;");
@@ -57,9 +57,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     QPushButton *page1WidgetA = new QPushButton("Zoom Avant", this);
+    page1WidgetA->setStyleSheet("background-color: blue;");
     QPushButton *page1WidgetB = new QPushButton("rotation gauche", this);
+page1WidgetB->setStyleSheet("background-color: blue;");
     QPushButton *page1WidgetC = new QPushButton("rotation droite", this);
+page1WidgetC->setStyleSheet("background-color: blue;");
     QPushButton *page1WidgetD = new QPushButton("zoom arriere", this); 
+page1WidgetD->setStyleSheet("background-color: blue;");
 
 
     QPushButton *piece1 = new QPushButton("piece1", this);

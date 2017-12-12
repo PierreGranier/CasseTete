@@ -57,12 +57,14 @@ std::map<int,Piece*> formesPossibles(Piece* pa, Solution sol){
 
 								PieceRepresentation* p=pa->rotate(rotx,roty,rotz);
 								pa->setRepresentation(p);
+								
 								if(S.ajoutPiecePossible(pa)==true){
 									nombre_totale=nombre_totale+1;
+									pa->setRotation(rotx,roty,rotz);
 									Piece *pt=pa->Clone();
 									pieces[nombre_totale]=pt; 
-
 								}
+		
 
 								PieceRepresentation* pi=pa->rotate(angleX,angleY,angleZ);
 
@@ -70,6 +72,7 @@ std::map<int,Piece*> formesPossibles(Piece* pa, Solution sol){
 
 								Position posJ(0,0,0);
 								pa->setPosition(posJ);
+								pa->setRotation(0,0,0);
 
 
 							}
@@ -81,6 +84,8 @@ std::map<int,Piece*> formesPossibles(Piece* pa, Solution sol){
 
 		}
 	}
+
+	
 	return pieces;
 }
 
@@ -109,7 +114,7 @@ void duree(time_t _begin, time_t _end)
 
 
 
-std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece*>> vectPieces,int nb_pieces_solution,PieceRepresentation* probleme){
+std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece* > > vectPieces,int nb_pieces_solution,PieceRepresentation* probleme){
 
 	std::vector<Solution*> liste_solutions;
 	int nombre_types_pieces=vectPieces.size(); // nombre de pieces;
@@ -151,6 +156,7 @@ std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece*>>
 				if(i==0 && nombre_types_pieces>1){		// si nous sommes au premier type de pièce
 					
 					if (indice[i]<(taille_ensemblePieces[i]+1) &&  S->ajoutPiecePossible(vectPieces.find(i)->second.find(indice[i])->second)==true){
+						S->suppressionPiece(vectPieces.find(i)->second.find(indice[i])->second->getType());
 						S->ajoutPiece(vectPieces.find(i)->second.find(indice[i])->second);
 						
 					}
@@ -160,7 +166,7 @@ std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece*>>
 							indice[i]=indice[i]+1;maj_suivants(i, indice,nombre_types_pieces);  
 							
 						}else{
-							ok=true; std::cout<<"aucun resultat"<<std::endl;
+							ok=true; std::cout<<"Fin de recherche de solutions"<<std::endl;
 						} 
 					
 					break;
@@ -171,6 +177,7 @@ std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece*>>
 
 				if(i>0 && i<nombre_types_pieces-1){ 
 					if (indice[i]<(taille_ensemblePieces[i]+1) &&  S->ajoutPiecePossible(vectPieces.find(i)->second.find(indice[i])->second)==true){
+						S->suppressionPiece(vectPieces.find(i)->second.find(indice[i])->second->getType());
 						S->ajoutPiece(vectPieces.find(i)->second.find(indice[i])->second);
 					}else {
 						if (indice[i]<taille_ensemblePieces[i]+1) {
@@ -190,6 +197,7 @@ std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece*>>
 
 				if(i==nombre_types_pieces-1){
 					if (indice[i]<(taille_ensemblePieces[i]+1) &&  S->ajoutPiecePossible(vectPieces.find(i)->second.find(indice[i])->second)==true){
+						S->suppressionPiece(vectPieces.find(i)->second.find(indice[i])->second->getType());
 						S->ajoutPiece(vectPieces.find(i)->second.find(indice[i])->second);
 					}else {
 						if (indice[i]<taille_ensemblePieces[i]+1) {indice[i]=indice[i]+1;  
@@ -204,11 +212,10 @@ std::vector<Solution*>  solution_auxiliaire( std::map<int, std::map<int,Piece*>>
 			//fin boucle for
 			}
 
-
 			if (S->getNbPiece()==nb_pieces_solution){
 				S->getRepresentation()->print();
 				liste_solutions.push_back(S);
-				ok=true;  // Commenter cette ligne ou la supprimer si on veut rechercher toute les solutions
+				ok=true;  // Commenter cette ligne ou la supprimer si on veut rechercher toutes les solutions
   		 		
 			}
 			delete S;
@@ -248,9 +255,13 @@ return liste_solutions;
 
 */
 
+<<<<<<< HEAD
 std::vector<Solution*> recherche_solution(PieceRepresentation* probleme,int* pieces_utiles){
+=======
+std::vector<Solution* > recrcherche_solution(PieceRepresentation* probleme,int* pieces_utiles){
+>>>>>>> 300278c79124df8f2669efb5db6a7dcc6a5df44a
 
-	std::vector<Solution*> liste_solutions; // l'ensemble de solutions
+	std::vector<Solution* > liste_solutions; // l'ensemble de solutions
 
 	std::cout << " Recherche en cours......." << std::endl;	
 
@@ -280,7 +291,7 @@ std::vector<Solution*> recherche_solution(PieceRepresentation* probleme,int* pie
 
 	/* Remplissages des conteneurs (Map) dans  quand la Piece est utilisée dans la solution */
 
-	std::map<int, std::map<int,Piece*>> vectPieces;
+	std::map<int, std::map< int,Piece* > > vectPieces;
 
 	int ind_type_piece=-1;
 
@@ -422,22 +433,106 @@ int main (int argc, char *argv[]) {
 			 : ex: pieces_utilisation[0] desactive la pieces <<plus>>
 	*/
 
-	pieces_utilisation[0]=0;
-	/** 
-	La Piece <plus> est non utilisée . 
-	En faire de meme si le probleme tester comporte d'autres et plusieurs pièces nom utilisées
-	 */
+	pieces_utilisation[0]=0;  /** 
+				La Piece <plus> est non utilisée . 
+				En faire de meme si le probleme tester comporte d'autres et plusieurs pièces nom utilisées
+				 */
 
 		
 	time_t begin=time(NULL);
 
+<<<<<<< HEAD
 	std::vector<Solution*> liste_solutions=recherche_solution(probleme,pieces_utilisation);
+=======
+	
+	std::vector<Solution*> liste_solutions;
+	//liste_solutions=recrcherche_solution(probleme,pieces_utilisation);  // ( Appel de la recherche de solution)
+	if (liste_solutions.size()>0){
+		Solution* s =liste_solutions.front();
+		std::map<int,Piece*> ensemblePiece=s->getListePiece();
+		for(std::map<int,Piece*>::iterator i=ensemblePiece.begin(); i!=ensemblePiece.end(); ++i) {
+				Piece* pieceI= i->second;	//recuperation de la Piece d'indice "i"
+				std::cout<<"	Piece " <<i->first<<":"<<std::endl;
+				std::cout<<"		-IdentifiantPiece= "<<i->first<<std::endl; //recuperation de la Piece d'indice se fait aussi par la methode "getType()" de la classe Piece
+				Position posI(0,0,0);
+				posI= pieceI->getPosition();  //recuperation de la position de la Piece: methode "getPosition()" de la classe Piece
+				std::cout<<"		-Coordonée = ("<<posI.getX()<<","<< posI.getY()<<","<<posI.getZ()<<")" <<std::endl; // affichage des position en X, Y et Z
+				Position rotI(0,0,0);
+				rotI= pieceI->getRotation();  //recuperation de la roatation effectué sur sur à la Piece à partir de l'origine (0,0,0)
+				std::cout<<"		-Rotation = ("<<rotI.getX()<<","<< rotI.getY()<<","<<rotI.getZ()<<")" <<std::endl; // affichage des rotations autour des axes en X, Y et Z
+				std::cout<<"		-affichage de la Piece"<<std::endl;
+				pieceI->print();
+		}
+	}
+>>>>>>> 300278c79124df8f2669efb5db6a7dcc6a5df44a
 
 	time_t end=time(NULL);
 
 	duree(begin,end);
 
-	std::cout<<" Le nombre de solution trouvées est égal à "<<liste_solutions.size()<< std::endl;
+	//std::cout<<" Le nombre de Pieces trouvées est égal à "<<liste_solutions.size()<< std::endl;
+
+
+	
+	std::cout << "**********Details et explications sur la classe <<Solution>> et le conteneur(Vecteur) de Solution renvoyés par l'ago de recherche ******" << std::endl;
+	
+
+	std::vector<Solution*> mon_vecteur_solution;   /* Creation de mon ensemble de solution ( Representé par un vector regroupant l'ensembled es solution */ 
+
+	Solution* ma_solution= new Solution (probleme); /*  Creation d'une solution ( qui ne contient aucune piece au depart ) */
+	std::cout<<"Affichage de la solution"<<std::endl;
+	ma_solution->print();
+	
+	Piece* pa =new PieceAngle();  /*   Creation d'une nouvele instance d'une pièce piece : de Position (0,0,0) et et rotation(0,0,0) au depart*/
+	
+	std::cout<<"Ajout de la piece Angle  dans la solution "<<std::endl;
+	
+	ma_solution->ajoutPiece(pa);
+	
+	std::cout<<"Reaffichage de la solution après l'ajout de la Piece dans la solution "<<std::endl;
+	ma_solution->print();
+
+
+	std::cout<<"Nombre d'element dans l'ensemble de solution= "<< mon_vecteur_solution.size()<<std::endl; 
+	std::cout<<"Ajout de la solution dans l'ensemble de solution"<< std::endl; 
+	mon_vecteur_solution.push_back(ma_solution);
+	std::cout<<"Nombre d'element dans l'ensemble de solution= "<< mon_vecteur_solution.size()<<std::endl; 
+
+	/**
+	  L'accès/recuperation à un element (1er element dans cet exemple) de  l'ensemble/vecteur de solution
+	  se fait via la methode "font()" de la class std::vector
+	*/
+	Solution* first_solution=mon_vecteur_solution.front();
+	std::cout<<"Reaffichage de la solution après l'ajout de la Piece dans la solution "<<std::endl;
+	first_solution->print();
+
+	std::cout<<"Nombre de Pieces dans la solution= "<< first_solution->getNbPiece() <<std::endl;
+
+	/**
+	  L'accès/recuperation à un element la Solution (exemple :piece Angle ajoutée dans la Solution)  se fait via la methode "getListePiece()" (cf. classe Soluton)
+	*/
+	
+	std::map<int,Piece*> enseblePiece=first_solution->getListePiece();
+
+	/**
+	  Parcours de l'ensemble des pieces de la solution et leur affichage
+	*/
+	
+	std::cout<<"Parours de l'ensemble des Pieces de la solution" <<std::endl;
+	int cpt_element=1;
+	for(std::map<int,Piece*>::iterator i=enseblePiece.begin(); i!=enseblePiece.end(); ++i) {
+			Piece* pieceI= i->second;	//recuperation de la Piece d'indice "i"
+			std::cout<<"	Piece " <<cpt_element<<":"<<std::endl;
+			std::cout<<"		-IdentifiantPiece= "<<i->first<<std::endl; //recuperation de la Piece d'indice se fait aussi par la methode "getType()" de la classe Piece
+			Position posI(0,0,0);
+			posI= pieceI->getPosition();  //recuperation de la position de la Piece: methode "getPosition()" de la classe Piece
+			std::cout<<"		-Coordonée = ("<<posI.getX()<<","<< posI.getY()<<","<<posI.getZ()<<")" <<std::endl; // affichage des position en X, Y et Z
+			Position rotI(0,0,0);
+			rotI= pieceI->getPosition();  //recuperation de la roatation effectué sur sur à la Piece à partir de l'origine (0,0,0)
+			std::cout<<"		-affichage de la Piece"<<std::endl;
+			pieceI->print();
+	}
+	
 
 	return 0;
 }

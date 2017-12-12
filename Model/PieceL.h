@@ -23,7 +23,7 @@ public:
 		}
 		c[0] = c[2] = c[4] = c[6] = c[7] = 1;
 		representation = new PieceRepresentation(2, 4, 1, c);
-		numPiece=1;
+		numPiece=7;
 	}
 	
 	Piece* Clone(){  
@@ -41,7 +41,6 @@ public:
 		if (z != 0) {
 			pr = pr->rotateZ(z);
 		}
-		
 		return pr;
 	}
 	
