@@ -1,114 +1,104 @@
 #include "piecep.h"
 
+
+#include <QVector2D>
+#include <QVector3D>
+
+struct VertexData
+{
+    QVector3D position;
+    QVector2D texCoord;
+};
 PieceP::PieceP()
+    : indexBuf(QOpenGLBuffer::IndexBuffer)
 {
+    initializeOpenGLFunctions();
 
-}
-void PieceP::dessinerP()
-     {
-
-    m_program->bind();m_program->setUniformValue(u_worldToCamera, m_camera.toMatrix());
-    m_program->setUniformValue(u_cameraToView, m_projection);
-    m_program->setUniformValue(u_worldToView, m_projection);
-         {
-           m_object.bind();
-           m_program->setUniformValue(u_modelToWorld, m_transform.toMatrix());
-           //texture[0]->bind();
-           glDrawArrays(GL_TRIANGLES, 0, sizeof(p) / sizeof(p[0]));
-           m_object.release();
-}
-     m_program->release();
-
-      }
-void PieceP::update()
-{
-  // Update input
-  Input::update();
-
-  // Camera Transformation
-  if (Input::buttonPressed(Qt::RightButton))
-  {
-
-    static const float rotSpeed   = 0.1f;
-
-
-    // Handle rotations
-    //m_camera.rotate(-rotSpeed * Input::mouseDelta().x(), Camera3D::LocalUp);
-    //m_camera.rotate(-rotSpeed * Input::mouseDelta().y(), m_camera.right());
-    //m_camera.rotate(1.0f, QVector3D(0.0f, 0.1f, 0.0f));
-    //m_camera.rotate(1.0f, QVector3D(0.1f, 0.0f, 0.0f));
-}  float fraction = 0.1f;
-  static const float transSpeed = 0.5f;
-    // Handle translations
-    QVector3D translation;
-    if (Input::keyPressed(Qt::Key_Up))
-    {
-      translation +=m_camera.forward();
-    }
-    if (Input::keyPressed(Qt::Key_Down))
-    {
-      translation -=m_camera.forward();
-    }
-    if (Input::keyPressed(Qt::Key_A))
-    {
-      translation -= m_camera.right();
-    }
-    if (Input::keyPressed(Qt::Key_D))
-    {
-        angle += 0.01f;
-        lx = sin(angle);
-        lz = -cos(angle);
-    }
-    if (Input::keyPressed(Qt::Key_Escape))
-    {
-        angle -= 0.01f;
-        lx = sin(angle);
-        lz = -cos(angle);
-    }
-   /* if (Input::keyPressed(Qt::Key_E))
-    {
-
-    }*/
-   m_camera.translate(transSpeed * translation);
-
-
-  // Update instance information
-  m_transform.rotate(1.0f, QVector3D(0.4f, 0.3f, 0.3f));
-  // Schedule a redraw
-  //QOpenGLWindow::update();
+    // Generate 2 VBOs
+    arrayBuf.create();
+    indexBuf.create();
 }
 
 
-void PieceP::keyPressEvent(QKeyEvent *event)
+void PieceP::initPieceP()
 {
-  if (event->isAutoRepeat())
-  {
-    event->ignore();
-  }
-  else
-  {
-    Input::registerKeyPress(event->key());
-  }
+
+    VertexData vertices[] = {
+        {QVector3D(1.0f, -1.0f, -1.0f), QVector2D(0.0f, 0.0f)},  // v0
+        {QVector3D(1.0f, -1.0f, 1.0f), QVector2D(0.0f, 0.0f)}, // v1
+        {QVector3D(-1.0f, -1.0f, 1.0f), QVector2D(0.0f, 0.0f)},  // v2
+        {QVector3D(-1.0f, -1.0f, -1.0f), QVector2D(0.0f, 0.0f)}, // v3
+        {QVector3D(1.0f, 1.0f, -1.0f), QVector2D(0.0f, 0.0f)}, // v4
+        {QVector3D(1.0f, 1.0f, 1.0f), QVector2D(0.0f, 0.0f)}, // v5
+        {QVector3D(-1.0f, 1.0f, 1.0f), QVector2D(0.0f, 0.0f)},  // v6
+        {QVector3D(-1.0f, 1.0f, -1.0f), QVector2D(0.0f, 0.0f)}, // v7
+        {QVector3D(1.0f,0.005f,-1.0f), QVector2D(0.0f, 0.0f)}, // v8
+        {QVector3D(1.0f,-0.005f,1.0f), QVector2D(0.0f, 0.0f)},  // v9
+        {QVector3D(2.0f,0.005f,-1.0f), QVector2D(0.0f, 0.0f)}, // v10
+        {QVector3D( 2.0f,1.0f,-1.0f), QVector2D(0.0f, 0.0f)},  // v11
+        {QVector3D( 2.0f,-0.005f,1.0f), QVector2D(0.0f, 0.0f)}, // v12
+        {QVector3D(2.0f,1.0f,1.0f), QVector2D(0.0f, 0.0f)}  // v13
+
+    };
+
+  GLushort indices[] = {
+        1,3,0,
+        7,5,4,
+        0,9,1,
+        9,6,2,
+        2,6,3,
+        8,3,7,
+        5,11,4,
+        10,13,12,
+        9,13,5,
+        4,10,8,
+        9,10,12,
+        1,2,3,
+        7,6,5,
+        0,8,9,
+        2,1,9,
+        9,5,6,
+        2,6,7,
+        7,4,8,
+        8,0,3,
+        5,13,11,
+        10,11,13,
+        9,12,13,
+        4,11,10,
+        9,8,10
+    };
+    // Transfer vertex data to VBO 0
+    arrayBuf.bind();
+    arrayBuf.allocate(vertices, 16* sizeof(VertexData));
+
+    // Transfer index data to VBO 1
+    indexBuf.bind();
+    indexBuf.allocate(indices, 72 * sizeof(GLushort));
 }
 
-void PieceP::keyReleaseEvent(QKeyEvent *event)
+void PieceP::drawPieceP(QOpenGLShaderProgram *program)
 {
-  if (event->isAutoRepeat())
-  {
-    event->ignore();
-  }
-  else
-  {
-    Input::registerKeyRelease(event->key());
-  }
-}
+    initPieceP();
+    // Tell OpenGL which VBOs to use
+    arrayBuf.bind();
+    indexBuf.bind();
 
-void PieceP::mousePressEvent(QMouseEvent *event)
-{
-  Input::registerMousePress(event->button());
-}
+    // Offset for position
+    quintptr offset = 0;
 
-void PieceP::mouseReleaseEvent(QMouseEvent *event)
-{
-  Input::registerMouseRelease(event->button());
+    // Tell OpenGL programmable pipeline how to locate vertex position data
+    int vertexLocation = program->attributeLocation("a_position");
+    program->enableAttributeArray(vertexLocation);
+    program->setAttributeBuffer(vertexLocation, GL_FLOAT, offset, 3, sizeof(VertexData));
+
+    // Offset for texture coordinate
+    offset += sizeof(QVector3D);
+
+    // Tell OpenGL programmable pipeline how to locate vertex texture coordinate data
+    int texcoordLocation = program->attributeLocation("a_texcoord");
+    program->enableAttributeArray(texcoordLocation);
+    program->setAttributeBuffer(texcoordLocation, GL_FLOAT, offset, 2, sizeof(VertexData));
+
+    // Draw cube geometry using indices from VBO 1
+    glDrawElements(GL_TRIANGLES, 72, GL_UNSIGNED_SHORT, 0);
 }

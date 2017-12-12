@@ -47,49 +47,75 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include <QApplication>
-#include "fenetre.h"
+
+#ifndef MAINWIDGET_H
+#define MAINWIDGET_H
+
+#include "piecep.h"
+#include "piecez.h"
+#include "piecet.h"
+#include "pieced.h"
+#include "pieceg.h"
+#include "piecel.h"
+#include "piecey.h"
+#include "pieceplus.h"
+#include "pieceangle.h"
+#include <QOpenGLWidget>
+#include <QOpenGLFunctions>
+#include <QMatrix4x4>
+#include <QQuaternion>
+#include <QVector2D>
+#include <QBasicTimer>
+#include <QOpenGLShaderProgram>
+#include <QOpenGLTexture>
 
 
 
-int main(int argc, char *argv[])
+class MainWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
+    Q_OBJECT
 
-           QApplication app(argc, argv);
-           Fenetre window;
-         //  window.setFormat(format);
-           window.resize(QSize(800, 600));
-           window.show();
+public:
+    explicit MainWidget(QWidget *parent = 0);
+    ~MainWidget();
 
-           return app.exec();
-}
+    float mAlpha = 0, mBeta = 0, mDistance = 10;
+    PieceP *pp;
+    PieceZ *pz;
+    PieceD *pd;
+    PieceG *pg;
+    PieceL *pl;
+    PieceT *pt;
+    PieceY *py;
+    PiecePlus *pplus;
+    PieceAngle *pangle;
+protected:
+    void mousePressEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void timerEvent(QTimerEvent *e) override;
 
-/*
-#include <QApplication>
-#include <QLabel>
-#include <QSurfaceFormat>
+    void initializeGL() override;
+    void resizeGL(int w, int h) override;
+    void paintGL() override;
 
-#ifndef QT_NO_OPENGL
-#include "mainwidget.h"
-#endif
+    void initShaders();
+    void initTextures();
 
-int main(int argc, char *argv[])
-{
-    QApplication app(argc, argv);
+private:
+    QBasicTimer timer;
+    QOpenGLShaderProgram program;
 
-    QSurfaceFormat format;
-    format.setDepthBufferSize(24);
-    QSurfaceFormat::setDefaultFormat(format);
 
-    app.setApplicationName("cube");
-    app.setApplicationVersion("0.1");
-#ifndef QT_NO_OPENGL
-    MainWidget widget;
-    widget.show();
-#else
-    QLabel note("OpenGL Support required");
-    note.show();
-#endif
-    return app.exec();
-}
-*/
+    QOpenGLTexture *texture;
+    QMatrix4x4 projection;
+
+    QVector2D mousePressPosition;
+    QVector3D rotationAxis;
+    qreal angularSpeed;
+    QQuaternion rotation;
+    float angle_de_rotation;
+    float X, Y, Z;
+};
+
+#endif // MAINWIDGET_H

@@ -23,17 +23,13 @@
 #include <QtDebug>
 #include <QIcon>
 #include <QApplication>
-#include "mywindow.h"
-//#include "../Model/main.cpp"
-//#include "../Model/Solution.h"
+#include "mainwidget.h"
 
 
-
-
-//class QAction;
+class QAction;
 class QLabel;
 class QFrame;
-//class QMenu;
+class QMenu;
 
 
 class Fenetre : public QMainWindow
@@ -56,10 +52,14 @@ private slots:
    void afficher7();
    void afficher8();
    void afficher9();
+   void rotationGauche();
+   void rotationDroite();
+   void zoomAvant();
+   void zoomArriere();
 private:
-
-   
-   mywindow *affichage;
+    void createActions();
+    void createMenus();
+   MainWidget *affichage;
 
 
 

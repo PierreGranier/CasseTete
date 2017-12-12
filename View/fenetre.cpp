@@ -1,5 +1,4 @@
 #include "fenetre.h"
-#include "glclass.h"
 #include <QFormLayout>
 #include <QGuiApplication>
 #include <QApplication>
@@ -10,30 +9,27 @@ Fenetre::Fenetre(QWidget *parent)
 {
 
 
-
-
-
     sideBar = new QFrame;
     camera = new QFrame;
     pieceBar = new QFrame;
-    affichage = new mywindow;
+    affichage = new MainWidget;
 
     //contentStack = new QStackedWidget;
 
 
 choix= new QComboBox;
-    
+
     page1label1 = new QLabel("Afficher");
      page1label1->setStyleSheet("background-color: grey;");
     page1radiobutton1 = new QRadioButton("Une solution", this);
     page1radiobutton2 = new QRadioButton("Toutes les solutions", this);
-     
+
     page1label2 = new QLabel("Calculer une piece deja positionee");
      page1label2->setStyleSheet("background-color: grey;");
     page1radiobutton3 = new QRadioButton("oui", this);
     page1radiobutton4 = new QRadioButton("non", this);
     page1pushbutton1 = new QPushButton(tr("Lancer la recherche"), this);
-    page1pushbutton1->setPalette(palette);
+    //page1pushbutton1->setPalette(palette);
     page1pushbutton1->setFixedSize(200,30);
     page1pushbutton1->setStyleSheet("background-color: blue;");
     page1label3 = new QLabel("Temps d'execution:");
@@ -46,7 +42,7 @@ choix= new QComboBox;
     list->setMaximumWidth(200);
 
 
-    
+
 
 
     QPushButton *page1WidgetA = new QPushButton("Zoom Avant", this);
@@ -198,8 +194,10 @@ choix= new QComboBox;
     QObject::connect(piece7, SIGNAL(clicked()),this,SLOT(afficher7()));
     QObject::connect(piece8, SIGNAL(clicked()),this,SLOT(afficher8()));
     QObject::connect(piece9, SIGNAL(clicked()),this,SLOT(afficher9()));
-
-
+    QObject::connect(page1WidgetB, SIGNAL(clicked()),this,SLOT(rotationGauche()));
+    QObject::connect(page1WidgetC, SIGNAL(clicked()),this,SLOT(rotationDroite()));
+    QObject::connect(page1WidgetA, SIGNAL(clicked()),this,SLOT(zoomAvant()));
+    QObject::connect(page1WidgetD, SIGNAL(clicked()),this,SLOT(zoomArriere()));
 
 
 
@@ -232,141 +230,150 @@ void Fenetre::createMenus()
 
 void Fenetre::afficher1()
 {
+    affichage->pp->visible = true ;
+    affichage->pplus->visible = false ;
+    affichage->pz->visible = false ;
+    affichage->pd->visible = false ;
+    affichage->pg->visible = false ;
+    affichage->pangle->visible = false ;
+    affichage->pl->visible = false ;
+    affichage->pt->visible = false ;
+    affichage->py->visible = false ;
 
-affichage->plus.visible=false;
-affichage->pangle.visible=false;
-affichage->pd.visible=false;
-affichage->pg.visible=false;
-affichage->pl.visible=false;
-affichage->pt.visible=false;
-affichage->py.visible=false;
-affichage->pz.visible=false;
-affichage->pp.m_transform.setTranslation(0.0f, 0.0f, -10.0f);
-affichage->paintGL();
 }
 
 
 void Fenetre::afficher2()
 {
-affichage->plus.visible=true;
-affichage->pp.visible=false;
-affichage->pangle.visible=false;
-affichage->pd.visible=false;
-affichage->pg.visible=false;
-affichage->pl.visible=false;
-affichage->pt.visible=false;
-affichage->py.visible=false;
-affichage->pz.visible=false;
-affichage->plus.m_transform.setTranslation(0.0f, 0.0f, -10.0f);
-affichage->paintGL();
+
+    affichage->pplus->visible = true ;
+    affichage->pp->visible = false ;
+    affichage->pz->visible = false ;
+    affichage->pangle->visible = false ;
+    affichage->pd->visible = false ;
+    affichage->pg->visible = false ;
+    affichage->pl->visible = false ;
+    affichage->pt->visible = false ;
+    affichage->py->visible = false ;
+
 }
 
 
 void Fenetre::afficher3()
 {
-affichage->pt.visible=true;
-affichage->plus.visible=false;
-affichage->pp.visible=false;
-affichage->pd.visible=false;
-affichage->pg.visible=false;
-affichage->pl.visible=false;
-affichage->pangle.visible=false;
-affichage->py.visible=false;
-affichage->pz.visible=false;
-affichage->pt.m_transform.setTranslation(0.0f, 0.0f, -10.0f);
-affichage->paintGL();
+
+    affichage->pz->visible = true ;
+    affichage->pp->visible = false ;
+    affichage->pplus->visible = false ;
+    affichage->pangle->visible = false ;
+    affichage->pd->visible = false ;
+    affichage->pg->visible = false ;
+    affichage->pl->visible = false ;
+    affichage->pt->visible = false ;
+    affichage->py->visible = false ;
 }
 
 
 void Fenetre::afficher4()
 {
-affichage->pl.visible=true;
-affichage->plus.visible=false;
-affichage->pangle.visible=false;
-affichage->pd.visible=false;
-affichage->pg.visible=false;
-affichage->pp.visible=false;
-affichage->pt.visible=false;
-affichage->py.visible=false;
-affichage->pz.visible=false;
-affichage->pl.m_transform.setTranslation(0.0f, 0.0f, -10.0f);
-affichage->paintGL();
+    affichage->pangle->visible = true ;
+    affichage->pp->visible = false ;
+    affichage->pplus->visible = false ;
+    affichage->pz->visible = false ;
+    affichage->pd->visible = false ;
+    affichage->pg->visible = false ;
+    affichage->pl->visible = false ;
+    affichage->pt->visible = false ;
+    affichage->py->visible = false ;
+
 }
 
 void Fenetre::afficher5()
 {
-affichage->pangle.visible=true;
-affichage->plus.visible=false;
-affichage->pp.visible=false;
-affichage->pd.visible=false;
-affichage->pg.visible=false;
-affichage->pl.visible=false;
-affichage->pt.visible=false;
-affichage->py.visible=false;
-affichage->pz.visible=false;
-affichage->pangle.m_transform.setTranslation(0.0f, 0.0f, -10.0f);
-affichage->paintGL();
+    affichage->pd->visible = true ;
+    affichage->pp->visible = false ;
+    affichage->pplus->visible = false ;
+    affichage->pz->visible = false ;
+    affichage->pangle->visible = false ;
+    affichage->pg->visible = false ;
+    affichage->pl->visible = false ;
+    affichage->pt->visible = false ;
+    affichage->py->visible = false ;
 }
 
 
 void Fenetre::afficher6()
-{
-affichage->py.visible=true;
-affichage->plus.visible=false;
-affichage->pangle.visible=false;
-affichage->pd.visible=false;
-affichage->pg.visible=false;
-affichage->pl.visible=false;
-affichage->pt.visible=false;
-affichage->pp.visible=false;
-affichage->pz.visible=false;
-affichage->py.m_transform.setTranslation(0.0f, 0.0f, -10.0f);
-affichage->paintGL();
+{   
+    affichage->pg->visible = true ;
+    affichage->pp->visible = false ;
+    affichage->pplus->visible = false ;
+    affichage->pz->visible = false ;
+    affichage->pangle->visible = false ;
+    affichage->pd->visible = false ;
+    affichage->pl->visible = false ;
+    affichage->pt->visible = false ;
+    affichage->py->visible = false ;
 }
 
 
 void Fenetre::afficher7()
 {
-affichage->pg.visible=true;
-affichage->plus.visible=false;
-affichage->pangle.visible=false;
-affichage->pd.visible=false;
-affichage->pp.visible=false;
-affichage->pl.visible=false;
-affichage->pt.visible=false;
-affichage->py.visible=false;
-affichage->pz.visible=false;
-affichage->pg.m_transform.setTranslation(0.0f, 0.0f, -10.0f);
-affichage->paintGL();
+    affichage->pl->visible = true ;
+    affichage->pp->visible = false ;
+    affichage->pplus->visible = false ;
+    affichage->pz->visible = false ;
+    affichage->pangle->visible = false ;
+    affichage->pd->visible = false ;
+    affichage->pg->visible = false ;
+    affichage->pt->visible = false ;
+    affichage->py->visible = false ;
 }
 
 
 void Fenetre::afficher8()
 {
-affichage->pd.visible=true;
-affichage->plus.visible=false;
-affichage->pangle.visible=false;
-affichage->pp.visible=false;
-affichage->pg.visible=false;
-affichage->pl.visible=false;
-affichage->pt.visible=false;
-affichage->py.visible=false;
-affichage->pz.visible=false;
-affichage->pd.m_transform.setTranslation(0.0f, 0.0f, -10.0f);
-affichage->paintGL();
+    affichage->pt->visible = true ;
+    affichage->pp->visible = false ;
+    affichage->pplus->visible = false ;
+    affichage->pz->visible = false ;
+    affichage->pangle->visible = false ;
+    affichage->pd->visible = false ;
+    affichage->pg->visible = false ;
+    affichage->pl->visible = false ;
+    affichage->py->visible = false ;
 }
 
 void Fenetre::afficher9()
 {
-affichage->pz.visible=true;
-affichage->plus.visible=false;
-affichage->pangle.visible=false;
-affichage->pd.visible=false;
-affichage->pg.visible=false;
-affichage->pl.visible=false;
-affichage->pt.visible=false;
-affichage->py.visible=false;
-affichage->pp.visible=false;
-affichage->pz.m_transform.setTranslation(0.0f, 0.0f, -10.0f);
-affichage->paintGL();
+    affichage->py->visible = true ;
+    affichage->pp->visible = false ;
+    affichage->pplus->visible = false ;
+    affichage->pz->visible = false ;
+    affichage->pangle->visible = false ;
+    affichage->pd->visible = false ;
+    affichage->pg->visible = false ;
+    affichage->pl->visible = false ;
+    affichage->pt->visible = false ;
+}
+
+
+void Fenetre::rotationGauche()
+{
+    affichage->mAlpha += 5;
+    update();
+}
+void Fenetre::rotationDroite()
+{
+    affichage->mAlpha -= 5;
+    update();
+}
+void Fenetre::zoomAvant()
+{
+    affichage->mDistance -= 2 ;
+    update();
+}
+void Fenetre::zoomArriere()
+{
+    affichage->mDistance += 2 ;
+    update();
 }
