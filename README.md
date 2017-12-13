@@ -1,4 +1,4 @@
-# CasseTete
+﻿# CasseTete
 Résolution de casse tête 3D en C++/Qt/OpenGl
 
 
@@ -36,4 +36,14 @@ Résolution de casse tête 3D en C++/Qt/OpenGl
 		
 		
 	
+
+-Pour la partie OpenGL : 
+	Il faut installer la version 5.9 Qt en suivant le lien : https://linuxhint.com/install-qt-5-9-1-qt-creator-4-3-1-ubuntu/
+	Ne pas oublier de forcer le bash à compiler sous la version 5.9
+	Ensuite il faut installer les librairies : 
+		LIBS   += -lopengl32
+		LIBS   += -lglu32
+		LIBS   += -lglut32
+
+
 		
