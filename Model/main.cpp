@@ -255,11 +255,7 @@ return liste_solutions;
 
 */
 
-<<<<<<< HEAD
-std::vector<Solution*> recherche_solution(PieceRepresentation* probleme,int* pieces_utiles){
-=======
 std::vector<Solution* > recrcherche_solution(PieceRepresentation* probleme,int* pieces_utiles){
->>>>>>> 300278c79124df8f2669efb5db6a7dcc6a5df44a
 
 	std::vector<Solution* > liste_solutions; // l'ensemble de solutions
 
@@ -336,81 +332,10 @@ int main (int argc, char *argv[]) {
 
 	std::cout << "*************************Test de la classe solution *****************" << std::endl;
 
+
 	/* Cretaion des problème Poblème */
 
-
-
-		/*---------------------Probleme 1: le cas 5*4*2, sans la piece Plus ---------------------------------*/
-
-	int* vect= new int[40];
-
-	for(int i=0;i<40;++i){
-		vect[i]=1;
-
-	}
-
-	PieceRepresentation *probleme= new PieceRepresentation(5,4,2,vect);
-
-
-		/*---------------------Probleme 2: Un cas simple : avec 2 pieces : ( Angle et T)  ou (G & Y) /  @Maxime-----------------------*/
-
-
-	/*
-	int* c = new int[18];
-	for (int i = 0; i < 18; ++i) {
-		c[i] = -1;
-	}
-	c[0] = c[1] = c[2] = c[4] = c[7] = c[9] = c[12] = c[15] = c[16] = c[17] = 1;
-
-	PieceRepresentation *probleme = new PieceRepresentation(3, 3, 2, c);
-
-	*/
-
-		/*--------------------- Probleme 9: le cas 5*5*2, avec l'une d'entre elle representrée en negatif-----------------------*/
-
-	/*
-	int* c= new int[50];
-
-	for(int i=0;i<50;++i){
-		c[i]=1;
-
-	}
-	
-	c[25]=c[26]=c[27]=c[28]=c[30]=-1;
-	PieceRepresentation *probleme= new PieceRepresentation(5,5,2,c);
-
-	probleme->print();
-	 */
-
-
-					/*---------------------Probleme 24: -----------------------*/
-
-	/*
-	
-	int* c= new int[84];
-
-	for(int i=0;i<42;++i){
-		c[i]=1;
-
-	}
-
-	for(int i=42;i<84;++i){
-		c[i]=-1;
-
-	}
-	
-	c[50]=c[52]=c[54]=1;
-	PieceRepresentation *probleme= new PieceRepresentation(7,6,2,c);
-
-	probleme->print();	
-
-	*/
-
-				/*************** recherche de Solution Pour un problème defini********************************** */
-
-
-
-	/**  Code representant les pieces dans le vecteur  d'utilité des Pièces
+		/** Chaque typde  pièces est representé par un indice dans l'ensemble du projet:
 		piecesplus -> 0
 		piecesangle -> 1
 		pieceZ -> 2
@@ -422,31 +347,168 @@ int main (int argc, char *argv[]) {
 		pieceT ->8
 	 */
 
+
+
+
+
+
+
+		/*---------------------Probleme 1: le cas 5*4*2, sans la piece Plus : 1ere solution trouvée après environ 4 min---------------------------------*/
+
+	
+	// 1- Creation du probleme ( forme à obtenir)
+	int* vect= new int[40];
+
+	for(int i=0;i<40;++i){
+		vect[i]=1;
+
+	}
+
+	PieceRepresentation *probleme= new PieceRepresentation(5,4,2,vect);
+
 	
 	int* pieces_utilisation = new int[9];
 	for(int i=0;i<9;++i){
 		pieces_utilisation[i]=1;
 	}
+	// 2- desactivation des Pièces non Utiulisés 
+	pieces_utilisation[0]=0;   // La Piece <plus> d'indice O est non utilisée dans ce probleme . 
 
-	/**
-		Pour les pieces nom utilisées dans la solution, il faut les desactiver dans la recherche de solution
-			 : ex: pieces_utilisation[0] desactive la pieces <<plus>>
+	// 3-Lancement de la recherche de solution
+	
+	std::cout<< "Probleme 1: le cas 5*4*2, sans la piece Plus"<<std::endl;
+	
+	
+	
+
+
+
+
+	/*---------------------Probleme 2: Un cas simple : avec 2 pieces : ( Angle et T)  ou (G & Y) /  @Maxime-----------------------*/
+	/*
+	
+	
+	// 1- Creation du probleme ( forme à obtenir)
+	int* vect= new int[40];
+	for (int i = 0; i < 18; ++i) {
+		vect[i] = -1;
+	}
+	vect[0] = vect[1] = vect[2] = vect[4] = vect[7] = vect[9] = vect[12] = vect[15] = vect[16] = vect[17] = 1;
+
+	PieceRepresentation *probleme = new PieceRepresentation(3, 3, 2, vect);
+
+	// 2- desactivation des Pièces non Utiulisés 
+	int* pieces_utilisation = new int[9];
+	for(int i=0;i<9;++i){
+		pieces_utilisation[i]=1;
+	}
+	pieces_utilisation[0]=0; // La Piece <plus> d'indice O est non utilisée dans ce probleme .
+	pieces_utilisation[2]=0; // La Piece <Z> d'indice 1 est non utilisée dans ce probleme .
+	pieces_utilisation[3]=0; // La Piece <Y> d'indice 2 est non utilisée dans ce probleme .
+	pieces_utilisation[4]=0; // La Piece <P> d'indice 3 est non utilisée dans ce probleme .
+	pieces_utilisation[5]=0; // La Piece <D>> d'indice 4 est non utilisée dans ce probleme .
+	pieces_utilisation[6]=0; // La Piece <G> d'indice 5 est non utilisée dans ce probleme .
+	pieces_utilisation[7]=0; // La Piece <L> d'indice 6 est non utilisée dans ce probleme .   
+	
+	// 3-Lancement de la recherche de solution
+	
+	std::cout<< "Probleme 2: Un cas simple : avec 2 pieces : ( Angle et T)"<<std::endl;	
+	
+	*/	
+
+
+
+
+
+
+		/*--------------------- Probleme 9: le cas 5*5*2, avec l'une d'entre elle representrée en negatif-----------------------*/
+	/*
+		
+
+	// 1- Creation du probleme ( forme à obtenir)
+	int* vect= new int[50];
+
+	for(int i=0;i<50;++i){
+		vect[i]=1;
+
+	}
+	
+	vect[25]=vect[26]=vect[27]=vect[28]=vect[30]=-1;
+	PieceRepresentation *probleme= new PieceRepresentation(5,5,2,vect);
+
+	
+	int* pieces_utilisation = new int[9];
+	for(int i=0;i<9;++i){
+		pieces_utilisation[i]=1;
+	}
+	// 2- activaction et/ou desactivation des Pièces non Utiulisés 
+		//Dans ce cas, toutes les Pièces ont étés utilisées
+
+	// 3-Lancement de la recherche de solution
+	
+	std::cout<< "Probleme 9: le cas 5*5*2, avec l'une d'entre elle representrée en negatif"<<std::endl;
+
+	
 	*/
 
-	pieces_utilisation[0]=0;  /** 
-				La Piece <plus> est non utilisée . 
-				En faire de meme si le probleme tester comporte d'autres et plusieurs pièces nom utilisées
-				 */
+
+
+
+
+
+
+					/*---------------------Probleme 24: (manuel "PLUS") -----------------------*/
+	/*
+	
+	
+	// 1- Creation du probleme ( forme à obtenir)
+	int* vect= new int[84];
+
+	for(int i=0;i<42;++i){
+		vect[i]=1;
+
+	}
+
+	for(int i=42;i<84;++i){
+		vect[i]=-1;
+
+	}
+	
+	vect[50]=vect[52]=vect[54]=1;
+	PieceRepresentation *probleme= new PieceRepresentation(7,6,2,vect);
+
+	// 2- activaction et/ou desactivation des Pièces non Utiulisés 
+	int* pieces_utilisation = new int[9];
+	for(int i=0;i<9;++i){
+		pieces_utilisation[i]=1;
+	}
+	
+	//Dans ce cas, toutes les Pièces ont étés utilisées
+
+	// 3-Lancement de la recherche de solution
+	std::cout<<"Probleme 24: (manuel <PLUS>)"<<std::endl;
+
+		
+	*/
+
+
+
+
+
+
+
+
+				/*************** recherche de Solution Pour un problème defini********************************** */
+
 
 		
 	time_t begin=time(NULL);
 
-<<<<<<< HEAD
-	std::vector<Solution*> liste_solutions=recherche_solution(probleme,pieces_utilisation);
-=======
 	
 	std::vector<Solution*> liste_solutions;
-	//liste_solutions=recrcherche_solution(probleme,pieces_utilisation);  // ( Appel de la recherche de solution)
+	liste_solutions=recrcherche_solution(probleme,pieces_utilisation);  // ( Appel de la recherche de solution)
+
+	
 	if (liste_solutions.size()>0){
 		Solution* s =liste_solutions.front();
 		std::map<int,Piece*> ensemblePiece=s->getListePiece();
@@ -464,75 +526,14 @@ int main (int argc, char *argv[]) {
 				pieceI->print();
 		}
 	}
->>>>>>> 300278c79124df8f2669efb5db6a7dcc6a5df44a
 
 	time_t end=time(NULL);
 
 	duree(begin,end);
 
-	//std::cout<<" Le nombre de Pieces trouvées est égal à "<<liste_solutions.size()<< std::endl;
+	std::cout<<" Le nombre de Pieces trouvées est égal à "<<liste_solutions.size()<< std::endl;
 
 
 	
-	std::cout << "**********Details et explications sur la classe <<Solution>> et le conteneur(Vecteur) de Solution renvoyés par l'ago de recherche ******" << std::endl;
-	
-
-	std::vector<Solution*> mon_vecteur_solution;   /* Creation de mon ensemble de solution ( Representé par un vector regroupant l'ensembled es solution */ 
-
-	Solution* ma_solution= new Solution (probleme); /*  Creation d'une solution ( qui ne contient aucune piece au depart ) */
-	std::cout<<"Affichage de la solution"<<std::endl;
-	ma_solution->print();
-	
-	Piece* pa =new PieceAngle();  /*   Creation d'une nouvele instance d'une pièce piece : de Position (0,0,0) et et rotation(0,0,0) au depart*/
-	
-	std::cout<<"Ajout de la piece Angle  dans la solution "<<std::endl;
-	
-	ma_solution->ajoutPiece(pa);
-	
-	std::cout<<"Reaffichage de la solution après l'ajout de la Piece dans la solution "<<std::endl;
-	ma_solution->print();
-
-
-	std::cout<<"Nombre d'element dans l'ensemble de solution= "<< mon_vecteur_solution.size()<<std::endl; 
-	std::cout<<"Ajout de la solution dans l'ensemble de solution"<< std::endl; 
-	mon_vecteur_solution.push_back(ma_solution);
-	std::cout<<"Nombre d'element dans l'ensemble de solution= "<< mon_vecteur_solution.size()<<std::endl; 
-
-	/**
-	  L'accès/recuperation à un element (1er element dans cet exemple) de  l'ensemble/vecteur de solution
-	  se fait via la methode "font()" de la class std::vector
-	*/
-	Solution* first_solution=mon_vecteur_solution.front();
-	std::cout<<"Reaffichage de la solution après l'ajout de la Piece dans la solution "<<std::endl;
-	first_solution->print();
-
-	std::cout<<"Nombre de Pieces dans la solution= "<< first_solution->getNbPiece() <<std::endl;
-
-	/**
-	  L'accès/recuperation à un element la Solution (exemple :piece Angle ajoutée dans la Solution)  se fait via la methode "getListePiece()" (cf. classe Soluton)
-	*/
-	
-	std::map<int,Piece*> enseblePiece=first_solution->getListePiece();
-
-	/**
-	  Parcours de l'ensemble des pieces de la solution et leur affichage
-	*/
-	
-	std::cout<<"Parours de l'ensemble des Pieces de la solution" <<std::endl;
-	int cpt_element=1;
-	for(std::map<int,Piece*>::iterator i=enseblePiece.begin(); i!=enseblePiece.end(); ++i) {
-			Piece* pieceI= i->second;	//recuperation de la Piece d'indice "i"
-			std::cout<<"	Piece " <<cpt_element<<":"<<std::endl;
-			std::cout<<"		-IdentifiantPiece= "<<i->first<<std::endl; //recuperation de la Piece d'indice se fait aussi par la methode "getType()" de la classe Piece
-			Position posI(0,0,0);
-			posI= pieceI->getPosition();  //recuperation de la position de la Piece: methode "getPosition()" de la classe Piece
-			std::cout<<"		-Coordonée = ("<<posI.getX()<<","<< posI.getY()<<","<<posI.getZ()<<")" <<std::endl; // affichage des position en X, Y et Z
-			Position rotI(0,0,0);
-			rotI= pieceI->getPosition();  //recuperation de la roatation effectué sur sur à la Piece à partir de l'origine (0,0,0)
-			std::cout<<"		-affichage de la Piece"<<std::endl;
-			pieceI->print();
-	}
-	
-
 	return 0;
 }
