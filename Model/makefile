@@ -1,7 +1,7 @@
-all: compil exec
+all: compil
 	
 compil:
 	g++ -Wall main.cpp -o main.exe -std=c++11
 	
-exec:
+launch:
 	./main.exe

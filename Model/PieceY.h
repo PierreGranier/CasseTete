@@ -26,8 +26,12 @@ public:
 	}
 
 	Piece* Clone(){ 
-       	 	return new PieceY( *this ); 
- 	  } 
+       	return new PieceY( *this ); 
+ 	} 
+
+	~PieceY() {
+		delete[] representation;
+	}
 	
 	PieceRepresentation* rotate(int x, int y, int z) {
 		PieceRepresentation* pr = representation;

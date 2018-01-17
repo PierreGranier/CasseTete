@@ -60,6 +60,10 @@ public:
 	
 		return numPiece;
 	}
+
+	~PieceAngle() {
+		delete[] representation;
+	}
 };
 
 #endif

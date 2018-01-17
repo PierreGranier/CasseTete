@@ -43,7 +43,7 @@ class Solution{
 		
 	public:
 		/**
-			Le contructeur de la classe prend en paramètre le problme à resoudre qui est de type "PieceRepresentation"
+			Le contructeur de la classe prend en paramètre le problème à resoudre qui est de type "PieceRepresentation"
 		*/
 
 		Solution(PieceRepresentation* probleme) {
@@ -70,6 +70,10 @@ class Solution{
 			listePiece=source->getListePiece();	
 		}
 
+		~Solution() {
+			delete[] representation;
+			// delete listePiece ?
+		}
 		
 		/*-------------------------- 	Getters et Setters---------------------------------------------------- */
 
@@ -227,7 +231,7 @@ class Solution{
 
 
 		/** Methode de suppression d'un Element dans la Solution:
-			Prend un paramère :
+			Prend un paramètre :
 				-une chaine de caractère: correspondant au type de la Pièce;
 			Supprime une Pièce de la Map si elle existe deja;			 
 

@@ -27,8 +27,12 @@ public:
 
 	Piece* Clone(){  
        	 	return new PieceG( *this ); 
- 	  } 
+ 	} 
 	
+	~PieceG() {
+		delete[] representation;
+	}
+
 	PieceRepresentation* rotate(int x, int y, int z) {
 		PieceRepresentation* pr = representation;
 		if (x !=0) {
