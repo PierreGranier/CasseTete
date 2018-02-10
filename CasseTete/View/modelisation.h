@@ -14,6 +14,7 @@
 #include "piecey.h"
 #include "pieced.h"
 #include "pieceg.h"
+#include "../Model/piecemodel.h"
 
 /**
  * @brief Classe Modelisation
@@ -43,6 +44,7 @@ public:
     void resizeGL(int width, int height);
     void paintGL();
     void keyPressEvent(QKeyEvent* keyEvent);
+    void setPieceInfo(PieceType t, bool used, Position* pos, Position* rot);
     void zoomIn();
     void zoomOut();
     void turnRight();

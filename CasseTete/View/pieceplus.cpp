@@ -5,7 +5,7 @@ PiecePlus::PiecePlus() : PieceView() {
 }
 
 void PiecePlus::show() {
-    if (display) {
+    if (is_used && display) {
         glTranslatef(position->getX(), position->getY(), position->getZ());
         glRotatef(90 * rotation->getX(), 1.0f, 0.0f, 0.0f);
         glRotatef(90 * rotation->getY(), 0.0f, 1.0f, 0.0f);

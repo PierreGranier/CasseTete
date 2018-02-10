@@ -4,15 +4,15 @@
 #include "../position.h"
 
 typedef enum PieceType {
-    PieceT,
-    PieceAngle,
-    PiecePlus,
-    PieceL,
-    PieceZ,
-    PieceP,
-    PieceY,
-    PieceD,
-    PieceG
+    TypePieceT,
+    TypePieceAngle,
+    TypePiecePlus,
+    TypePieceL,
+    TypePieceZ,
+    TypePieceP,
+    TypePieceY,
+    TypePieceD,
+    TypePieceG
 } PieceType;
 
 class PieceModel {

@@ -7,7 +7,7 @@ Solver::Solver() {
     v1->push_back(new Position(2, 0, 0));
     v1->push_back(new Position(1, 1, 0));
     v1->push_back(new Position(1, 2, 0));
-    getPieceRotation(PieceT, *v1);
+    getPieceRotation(TypePieceT, *v1);
 
     std::vector<Position*>* v2 = new std::vector<Position*>;
     v2->push_back(new Position(0, 0, 0));
@@ -15,7 +15,7 @@ Solver::Solver() {
     v2->push_back(new Position(0, 2, 0));
     v2->push_back(new Position(1, 2, 0));
     v2->push_back(new Position(2, 2, 0));
-    getPieceRotation(PieceAngle, *v2);
+    getPieceRotation(TypePieceAngle, *v2);
 
     std::vector<Position*>* v3 = new std::vector<Position*>;
     v3->push_back(new Position(1, 0, 0));
@@ -23,7 +23,7 @@ Solver::Solver() {
     v3->push_back(new Position(1, 1, 0));
     v3->push_back(new Position(2, 1, 0));
     v3->push_back(new Position(1, 2, 0));
-    getPieceRotation(PiecePlus, *v3);
+    getPieceRotation(TypePiecePlus, *v3);
 
     std::vector<Position*>* v4 = new std::vector<Position*>;
     v4->push_back(new Position(0, 0, 0));
@@ -31,7 +31,7 @@ Solver::Solver() {
     v4->push_back(new Position(0, 2, 0));
     v4->push_back(new Position(0, 3, 0));
     v4->push_back(new Position(1, 3, 0));
-    getPieceRotation(PieceL, *v4);
+    getPieceRotation(TypePieceL, *v4);
 
     std::vector<Position*>* v5 = new std::vector<Position*>;
     v5->push_back(new Position(0, 0, 0));
@@ -39,7 +39,7 @@ Solver::Solver() {
     v5->push_back(new Position(0, 2, 0));
     v5->push_back(new Position(1, 2, 0));
     v5->push_back(new Position(1, 3, 0));
-    getPieceRotation(PieceZ, *v5);
+    getPieceRotation(TypePieceZ, *v5);
 
     std::vector<Position*>* v6 = new std::vector<Position*>;
     v6->push_back(new Position(0, 0, 0));
@@ -47,7 +47,7 @@ Solver::Solver() {
     v6->push_back(new Position(1, 1, 0));
     v6->push_back(new Position(0, 2, 0));
     v6->push_back(new Position(1, 2, 0));
-    getPieceRotation(PieceP, *v6);
+    getPieceRotation(TypePieceP, *v6);
 
     std::vector<Position*>* v7 = new std::vector<Position*>;
     v7->push_back(new Position(0, 0, 0));
@@ -55,7 +55,7 @@ Solver::Solver() {
     v7->push_back(new Position(2, 0, 0));
     v7->push_back(new Position(1, 0, 1));
     v7->push_back(new Position(1, 1, 1));
-    getPieceRotation(PieceY, *v7);
+    getPieceRotation(TypePieceY, *v7);
 
     std::vector<Position*>* v8 = new std::vector<Position*>;
     v8->push_back(new Position(0, 0, 0));
@@ -63,7 +63,7 @@ Solver::Solver() {
     v8->push_back(new Position(1, 0, 1));
     v8->push_back(new Position(1, 1, 1));
     v8->push_back(new Position(1, 2, 1));
-    getPieceRotation(PieceD, *v8);
+    getPieceRotation(TypePieceD, *v8);
 
     std::vector<Position*>* v9 = new std::vector<Position*>;
     v9->push_back(new Position(0, 0, 0));
@@ -71,7 +71,7 @@ Solver::Solver() {
     v9->push_back(new Position(0, 0, 1));
     v9->push_back(new Position(0, 1, 1));
     v9->push_back(new Position(0, 2, 1));
-    getPieceRotation(PieceG, *v9);
+    getPieceRotation(TypePieceG, *v9);
 
     starting_time = time(0);
 }

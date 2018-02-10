@@ -98,6 +98,45 @@ void Modelisation::paintGL() {
     piece_g->show();
 }
 
+void Modelisation::setPieceInfo(PieceType t, bool used, Position* pos, Position* rot) {
+    PieceView* p;
+    switch (t) {
+        case 0:
+            p = piece_t;
+            break;
+        case 1:
+            p = piece_angle;
+            break;
+        case 2:
+            p = piece_plus;
+            break;
+        case 3:
+            p = piece_l;
+            break;
+        case 4:
+            p = piece_z;
+            break;
+        case 5:
+            p = piece_p;
+            break;
+        case 6:
+            p = piece_y;
+            break;
+        case 7:
+            p = piece_d;
+            break;
+        case 8:
+            p = piece_g;
+            break;
+        default:
+            break;
+    }
+    p->setIsUsed(used);
+    p->setPosition(pos->getX(), pos->getY(), pos->getZ());
+    p->setRotation(rot->getX(), rot->getY(), rot->getZ());
+    update();
+}
+
 /**
  * Zoom avant de la caméra
  */

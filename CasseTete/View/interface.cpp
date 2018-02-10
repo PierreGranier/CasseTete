@@ -79,6 +79,7 @@ Interface::Interface(QWidget* parent) : QMainWindow(parent), ui(new Ui::Interfac
 
     /** Connexion des slots **/
     QObject::connect(search, SIGNAL(clicked()), this, SLOT(solve()));
+    QObject::connect(list_of_solutions, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemSelected(QListWidgetItem*)));
     QObject::connect(zoom_in, SIGNAL(clicked()), this, SLOT(zoomIn()));
     QObject::connect(zoom_out, SIGNAL(clicked()), this, SLOT(zoomOut()));
     QObject::connect(turn_right, SIGNAL(clicked()), this, SLOT(turnRight()));
@@ -121,13 +122,29 @@ void Interface::calculFinished(int n_sol, int t, std::vector<Solution*>* sol) {
     int seconds = (t % 3600) % 60;
     std::string s = "Temps de recherche : " + ((hours > 0) ? std::to_string(hours) + " h" : "") + " " + ((hours > 0 || minutes > 0) ? std::to_string(minutes) + " min" : "") + " " + std::to_string(seconds) + " s";
     time->setText(s.c_str());
-    solutions = *sol;
+
+    solutions.clear();
+    list_of_solutions->clear();
+    for (unsigned int i = 0; i < sol->size(); ++i) {
+        std::string sol_name = "solution " + std::to_string(i + 1);
+        solutions[sol_name] = sol->at(i);
+        list_of_solutions->addItem(sol_name.c_str());
+    }
+
     search->setEnabled(true);
 }
 
 void Interface::solve() {
     comm->startSolving();
     search->setEnabled(false);
+}
+
+void Interface::itemSelected(QListWidgetItem* item) {
+    Solution* current_sol = solutions[item->text().toStdString()];
+    for (int i = 0; i < 9; ++i) {
+        PieceModel* pm = current_sol->getPiece((PieceType) i);
+        modelisation->setPieceInfo((PieceType) i, pm->isUsed(), pm->getPosition(), pm->getRotation());
+    }
 }
 
 /**

@@ -1,15 +1,15 @@
 #include "solution.h"
 
 Solution::Solution(Position* p, int* m) {
-    piece_t = new PieceModel(PieceT);
-    piece_angle = new PieceModel(PieceAngle);
-    piece_plus = new PieceModel(PiecePlus);
-    piece_l = new PieceModel(PieceL);
-    piece_z = new PieceModel(PieceZ);
-    piece_p = new PieceModel(PieceP);
-    piece_y = new PieceModel(PieceY);
-    piece_d = new PieceModel(PieceD);
-    piece_g = new PieceModel(PieceG);
+    piece_t = new PieceModel(TypePieceT);
+    piece_angle = new PieceModel(TypePieceAngle);
+    piece_plus = new PieceModel(TypePiecePlus);
+    piece_l = new PieceModel(TypePieceL);
+    piece_z = new PieceModel(TypePieceZ);
+    piece_p = new PieceModel(TypePieceP);
+    piece_y = new PieceModel(TypePieceY);
+    piece_d = new PieceModel(TypePieceD);
+    piece_g = new PieceModel(TypePieceG);
     size = new Position(p);
     matrix = new int[(int) size->getX() * (int) size->getY() * (int) size->getZ()];
     for (int i = 0; i < size->getX() * size->getY() * size->getZ(); ++i) {
@@ -23,15 +23,15 @@ Solution::Solution(Position* p, int* m) {
 }
 
 Solution::Solution(Solution* s) {
-    piece_t = new PieceModel(s->getPiece(PieceT));
-    piece_angle = new PieceModel(s->getPiece(PieceAngle));
-    piece_plus = new PieceModel(s->getPiece(PiecePlus));
-    piece_l = new PieceModel(s->getPiece(PieceL));
-    piece_z = new PieceModel(s->getPiece(PieceZ));
-    piece_p = new PieceModel(s->getPiece(PieceP));
-    piece_y = new PieceModel(s->getPiece(PieceY));
-    piece_d = new PieceModel(s->getPiece(PieceD));
-    piece_g = new PieceModel(s->getPiece(PieceG));
+    piece_t = new PieceModel(s->getPiece(TypePieceT));
+    piece_angle = new PieceModel(s->getPiece(TypePieceAngle));
+    piece_plus = new PieceModel(s->getPiece(TypePiecePlus));
+    piece_l = new PieceModel(s->getPiece(TypePieceL));
+    piece_z = new PieceModel(s->getPiece(TypePieceZ));
+    piece_p = new PieceModel(s->getPiece(TypePieceP));
+    piece_y = new PieceModel(s->getPiece(TypePieceY));
+    piece_d = new PieceModel(s->getPiece(TypePieceD));
+    piece_g = new PieceModel(s->getPiece(TypePieceG));
 
     size = new Position(s->getSize());
 
@@ -43,15 +43,15 @@ Solution::Solution(Solution* s) {
 }
 
 Solution::Solution(Problem* prob) {
-    piece_t = new PieceModel(PieceT);
-    piece_angle = new PieceModel(PieceAngle);
-    piece_plus = new PieceModel(PiecePlus);
-    piece_l = new PieceModel(PieceL);
-    piece_z = new PieceModel(PieceZ);
-    piece_p = new PieceModel(PieceP);
-    piece_y = new PieceModel(PieceY);
-    piece_d = new PieceModel(PieceD);
-    piece_g = new PieceModel(PieceG);
+    piece_t = new PieceModel(TypePieceT);
+    piece_angle = new PieceModel(TypePieceAngle);
+    piece_plus = new PieceModel(TypePiecePlus);
+    piece_l = new PieceModel(TypePieceL);
+    piece_z = new PieceModel(TypePieceZ);
+    piece_p = new PieceModel(TypePieceP);
+    piece_y = new PieceModel(TypePieceY);
+    piece_d = new PieceModel(TypePieceD);
+    piece_g = new PieceModel(TypePieceG);
 
     size = new Position(prob->getSize());
 
@@ -111,31 +111,31 @@ void Solution::removePiece(std::vector<Position *> p, PieceType t, Position ppos
 PieceModel* Solution::getPiece(PieceType t) {
     PieceModel* ret = piece_t;
     switch (t) {
-        case PieceT:
+        case TypePieceT:
             ret = piece_t;
             break;
-        case PieceAngle:
+        case TypePieceAngle:
             ret = piece_angle;
             break;
-        case PiecePlus:
+        case TypePiecePlus:
             ret = piece_plus;
             break;
-        case PieceL:
+        case TypePieceL:
             ret = piece_l;
             break;
-        case PieceZ:
+        case TypePieceZ:
             ret = piece_z;
             break;
-        case PieceP:
+        case TypePieceP:
             ret = piece_p;
             break;
-        case PieceY:
+        case TypePieceY:
             ret = piece_y;
             break;
-        case PieceD:
+        case TypePieceD:
             ret = piece_d;
             break;
-        case PieceG:
+        case TypePieceG:
             ret = piece_g;
             break;
         default:

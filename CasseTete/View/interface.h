@@ -1,6 +1,7 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
+#include <iostream>
 #include <QMainWindow>
 #include <vector>
 #include "modelisation.h"
@@ -19,7 +20,7 @@ class Interface : public QMainWindow {
     Q_OBJECT
 
 private:
-    std::vector<Solution*> solutions;
+    std::map<std::string, Solution*> solutions;
     InterfaceCommunication* comm;
 
     Ui::Interface* ui;
@@ -66,6 +67,7 @@ public:
 
 private slots:
     void solve();
+    void itemSelected(QListWidgetItem* item);
     void zoomIn();
     void zoomOut();
     void turnRight();
