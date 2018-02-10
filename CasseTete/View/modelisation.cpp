@@ -69,22 +69,6 @@ void Modelisation::paintGL() {
 
     glTranslatef(-2.5f, 2.0f, 0.0f);
 
-    /** Draw axes **/
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glBegin(GL_LINES);
-        glVertex3f(0.0f, 0.0f, 0.0f);
-        glVertex3f(10.0f, 0.0f, 0.0f);
-    glEnd();
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glBegin(GL_LINES);
-        glVertex3f(0.0f, 0.0f, 0.0f);
-        glVertex3f(0.0f, 10.0f, 0.0f);
-    glEnd();
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glBegin(GL_LINES);
-        glVertex3f(0.0f, 0.0f, 0.0f);
-        glVertex3f(0.0f, 0.0f, 10.0f);
-    glEnd();
     /** Draw pieces **/
     glColor3f(0.8f, 0.8f, 0.8f);
     piece_t->show();
@@ -133,7 +117,21 @@ void Modelisation::setPieceInfo(PieceType t, bool used, Position* pos, Position*
     }
     p->setIsUsed(used);
     p->setPosition(pos->getX(), pos->getY(), pos->getZ());
-    p->setRotation(rot->getX(), rot->getY(), rot->getZ());
+    int y_rot = rot->getY();
+    if (y_rot == 3) {
+        y_rot = 1;
+    }
+    else if (y_rot == 1) {
+        y_rot = 3;
+    }
+    int z_rot = rot->getZ();
+    if (z_rot == 3) {
+        z_rot = 1;
+    }
+    else if (z_rot == 1) {
+        z_rot = 3;
+    }
+    p->setRotation(rot->getX(), y_rot, z_rot);
     update();
 }
 

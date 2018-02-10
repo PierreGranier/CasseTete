@@ -72,8 +72,6 @@ Solver::Solver() {
     v9->push_back(new Position(0, 1, 1));
     v9->push_back(new Position(0, 2, 1));
     getPieceRotation(TypePieceG, *v9);
-
-    starting_time = time(0);
 }
 
 void Solver::setSolverCommunication(SolverCommunication* c) {
@@ -120,8 +118,6 @@ void Solver::solve(Solution* current, Problem* p, int n) {
                         if (current->compare(p)) {
                             Solution* new_solution = new Solution(current);
                             solutions.push_back(new_solution);
-                            time_t current_time = time(0);
-                            std::cout << "Time : " << (current_time - starting_time) << " solutions : " << solutions.size() << std::endl;
                         }
                         /** Sinon on continue la recherche **/
                         else {

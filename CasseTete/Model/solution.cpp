@@ -81,6 +81,12 @@ bool Solution::canAddPiece(std::vector<Position*> p, PieceType t, Position ppos)
         return false;
     }
     for (unsigned int i = 0; i < p.size(); ++i) {
+        if (p[i]->getX() + ppos.getX() >= size->getX() || p[i]->getY() + ppos.getY() >= size->getY() || p[i]->getZ() + ppos.getZ() >= size->getZ()) {
+            return false;
+        }
+        if (p[i]->getX() + ppos.getX() < 0 || p[i]->getY() + ppos.getY() < 0 || p[i]->getZ() + ppos.getZ() < 0) {
+            return false;
+        }
         int pos = p[i]->getX() + ppos.getX() + (p[i]->getY() + ppos.getY()) * size->getX() + (p[i]->getZ() +  ppos.getZ()) * size->getX() * size->getY();
         if (pos < 0 || pos > size->getX() * size->getY() * size->getZ() || matrix[pos] != 0) {
             return false;

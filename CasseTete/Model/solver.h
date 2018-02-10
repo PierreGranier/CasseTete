@@ -1,11 +1,9 @@
 #ifndef SOLVER_H
 #define SOLVER_H
 
-#include <ctime>
 #include <vector>
 #include <map>
 #include <thread>
-#include <iostream>
 #include "position.h"
 #include "piecemodel.h"
 #include "piecerotation.h"
@@ -23,7 +21,6 @@ private:
 
     std::map<PieceType, std::vector<PieceRotation*>*> pieces;
     std::vector<Solution*> solutions;
-    std::time_t starting_time;
     std::thread* thread;
 public:
     Solver();
