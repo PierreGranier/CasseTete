@@ -5,7 +5,7 @@ PieceZ::PieceZ() : PieceView() {
 
 void PieceZ::show() {
     if (is_used && display) {
-        glTranslatef(position->getX(), position->getY(), position->getZ());
+        glTranslatef(position->getX(), -position->getY(), -position->getZ());
         glRotatef(90 * rotation->getX(), 1.0f, 0.0f, 0.0f);
         glRotatef(90 * rotation->getY(), 0.0f, 1.0f, 0.0f);
         glRotatef(90 * rotation->getZ(), 0.0f, 0.0f, 1.0f);
@@ -103,6 +103,6 @@ void PieceZ::show() {
         glRotatef(-90 * rotation->getZ(), 0.0f, 0.0f, 1.0f);
         glRotatef(-90 * rotation->getY(), 0.0f, 1.0f, 0.0f);
         glRotatef(-90 * rotation->getX(), 1.0f, 0.0f, 0.0f);
-        glTranslatef(-position->getX(), -position->getY(), -position->getZ());
+        glTranslatef(-position->getX(), position->getY(), position->getZ());
     }
 }
