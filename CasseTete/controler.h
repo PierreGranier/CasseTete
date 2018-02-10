@@ -13,6 +13,7 @@ private:
     Solver* solver;
     time_t start_time;
     time_t end_time;
+    std::map<int, Problem*> problems;
 public:
     Controler();
     void startSolving();

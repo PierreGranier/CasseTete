@@ -1,7 +1,6 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
-#include <iostream>
 #include <QMainWindow>
 #include <vector>
 #include "modelisation.h"
@@ -20,6 +19,7 @@ class Interface : public QMainWindow {
     Q_OBJECT
 
 private:
+    std::vector<std::string> problems;
     std::map<std::string, Solution*> solutions;
     InterfaceCommunication* comm;
 
@@ -30,6 +30,7 @@ private:
     QHBoxLayout *bottom_layout;
     QGridLayout *bottom_left_layout;
 
+    QListWidget* list_of_problems;
     QLabel* get_solutions;
     QButtonGroup* number_of_solutions;
     QRadioButton* one_solution;
@@ -64,6 +65,7 @@ public:
     void keyPressEvent(QKeyEvent* event);
     bool getAllSolutions();
     void calculFinished(int n_sol, int t, std::vector<Solution*>* sol);
+    int getProblem();
 
 private slots:
     void solve();

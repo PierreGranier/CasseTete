@@ -1,7 +1,6 @@
 #ifndef MODELISATION_H
 #define MODELISATION_H
 
-#include <iostream>
 #include <QtOpenGL>
 #include <QGLWidget>
 #include <GL/glu.h>

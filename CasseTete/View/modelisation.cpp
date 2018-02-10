@@ -139,7 +139,7 @@ void Modelisation::setPieceInfo(PieceType t, bool used, Position* pos, Position*
  * Zoom avant de la caméra
  */
 void Modelisation::zoomIn() {
-    if (zoom < -10) {
+    if (zoom < -15) {
         ++zoom;
         update();
     }

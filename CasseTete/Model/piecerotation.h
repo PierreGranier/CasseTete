@@ -1,7 +1,6 @@
 #ifndef PIECEROTATION_H
 #define PIECEROTATION_H
 
-#include <iostream>
 #include <vector>
 #include "../position.h"
 

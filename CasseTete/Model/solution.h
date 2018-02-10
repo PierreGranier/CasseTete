@@ -1,7 +1,6 @@
 #ifndef SOLUTION_H
 #define SOLUTION_H
 
-#include <iostream>
 #include <vector>
 #include "piecemodel.h"
 #include "../position.h"

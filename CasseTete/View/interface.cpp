@@ -4,6 +4,12 @@
 Interface::Interface(QWidget* parent) : QMainWindow(parent), ui(new Ui::Interface) {
     ui->setupUi(this);
 
+    /** Liste des problèmes **/
+    problems.push_back("Exemple 1");
+    problems.push_back("Exemple 2");
+    problems.push_back("5*4*2");
+    problems.push_back("5*3*3");
+
     /** Création des layouts **/
     main_layout = new QGridLayout();
     left_layout = new QVBoxLayout();
@@ -11,6 +17,12 @@ Interface::Interface(QWidget* parent) : QMainWindow(parent), ui(new Ui::Interfac
     bottom_left_layout = new QGridLayout();
 
     /** Left Layout **/
+    list_of_problems = new QListWidget();
+    list_of_problems->setMaximumWidth(400);
+    for (unsigned int i = 0; i < problems.size(); ++i) {
+        list_of_problems->addItem(problems[i].c_str());
+    }
+    list_of_problems->setCurrentRow(0);
     get_solutions = new QLabel("Rechercher :");
     number_of_solutions = new QButtonGroup();
     one_solution = new QRadioButton("Une seule solution");
@@ -23,6 +35,7 @@ Interface::Interface(QWidget* parent) : QMainWindow(parent), ui(new Ui::Interfac
     solutions_found = new QLabel("Nombre de solutions : ");
     list_of_solutions = new QListWidget();
     list_of_solutions->setMaximumWidth(400);
+    left_layout->addWidget(list_of_problems);
     left_layout->addWidget(get_solutions);
     left_layout->addWidget(one_solution);
     left_layout->addWidget(all_solutions);
@@ -132,6 +145,16 @@ void Interface::calculFinished(int n_sol, int t, std::vector<Solution*>* sol) {
     }
 
     search->setEnabled(true);
+}
+
+int Interface::getProblem() {
+    std::string ss = list_of_problems->currentItem()->text().toStdString();
+    for (unsigned int i = 0; i < problems.size(); ++i) {
+        if (problems[i] == ss) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 void Interface::solve() {
