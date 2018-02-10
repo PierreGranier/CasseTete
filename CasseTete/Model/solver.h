@@ -31,6 +31,7 @@ public:
     void startSolving(bool all_sol, Problem* p);
     void solveThread(bool all_sol, Problem* p);
     void solve(Solution* current, Problem* p, int n);
+    bool solveOne(Solution* current, Problem* p, int n);
     void getPieceRotation(PieceType t, std::vector<Position*>& piece);
     float* getRotationMatrix(int x, int y, int z);
     float* multiplyMatrix(float* m1, float* m2);

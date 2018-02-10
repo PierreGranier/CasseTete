@@ -91,6 +91,11 @@ void Solver::solveThread(bool all_sol, Problem* p) {
     if (all_sol) {
         solve(current, p, 0);
     }
+    else {
+        if (solveOne(current, p, 0)) {
+            solutions.push_back(current);
+        }
+    }
     comm->finishSearch();
 }
 
@@ -129,6 +134,43 @@ void Solver::solve(Solution* current, Problem* p, int n) {
         }
     }
     solve(current, p, n + 1);
+}
+
+bool Solver::solveOne(Solution* current, Problem* p, int n) {
+    /** Si la solution est égale au probleme on retourne vrai **/
+    if (current->compare(p)) {
+        return true;
+    }
+    /** Si on a teste toutes les pieces on retourne faux **/
+    if (n >= 9) {
+        return false;
+    }
+    /** On test toutes les rotations de la piece courante **/
+    std::vector<PieceRotation*> vect = *(pieces[(PieceType) n]);
+    for (unsigned int i = 0; i < vect.size(); ++i) {
+        /** Pour toutes les positions du probleme **/
+        Position* size = p->getSize();
+        for (int x = 0; x < size->getX(); ++x) {
+            for (int y = 0; y < size->getY(); ++y) {
+                for (int z = 0; z < size->getZ(); ++z) {
+                    Position pos(x, y, z);
+                    if (current->canAddPiece(vect[i]->getPosition(), (PieceType) n, pos)) {
+                        current->addPiece(vect[i]->getPosition(), (PieceType) n, pos, vect[i]->getRotation());
+                        /** Si la solution courante mene a une bonne solution on retourne vrai **/
+                        if (solveOne(current, p, n + 1)) {
+                            return true;
+                        }
+                        /** Sinon on enleve la piece et on continue la recherche **/
+                        else {
+                            current->removePiece(vect[i]->getPosition(), (PieceType) n, pos);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    /** Si aucune solution avec la piece courante n'est trouvee, on continue la recherche **/
+    return solveOne(current, p, n + 1);
 }
 
 void Solver::getPieceRotation(PieceType t, std::vector<Position*>& piece) {

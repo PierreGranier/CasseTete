@@ -11,24 +11,18 @@ Controler::Controler() {
 
 void Controler::startSolving() {
     start_time = time(0);
-    /** Si on recherche toutes les solutions **/
-    if (interface->getAllSolutions()) {
-        int* matrix = new int[25];
-        for (int i = 0; i < 25; ++i) {
-            if (!(i == 3 || i == 4 || i == 13 || i == 23 || i == 24)) {
-                matrix[i] = 1;
-            }
-            else {
-                matrix[i] = -1;
-            }
+    /** On recupere les parametres et on lance la recherche **/
+    int* matrix = new int[25];
+    for (int i = 0; i < 25; ++i) {
+        if (!(i == 3 || i == 4 || i == 13 || i == 23 || i == 24)) {
+            matrix[i] = 1;
         }
-        Problem* problem = new Problem(new Position(5, 5, 1), matrix);
-        solver->startSolving(true, problem);
+        else {
+            matrix[i] = -1;
+        }
     }
-    else {
-        std::cout << "Je cherche une seule solution" << std::endl;
-    }
-
+    Problem* problem = new Problem(new Position(5, 5, 1), matrix);
+    solver->startSolving(interface->getAllSolutions(), problem);
 }
 
 void Controler::finishSearch() {

@@ -230,17 +230,47 @@ void Modelisation::keyPressEvent(QKeyEvent* keyEvent) {
         case Qt::Key_F1:
             switchPieceT();
             break;
+        case Qt::Key_F2:
+            switchPieceAngle();
+            break;
+        case Qt::Key_F3:
+            switchPiecePlus();
+            break;
+        case Qt::Key_F4:
+            switchPieceL();
+            break;
+        case Qt::Key_F5:
+            switchPieceZ();
+            break;
+        case Qt::Key_F6:
+            switchPieceP();
+            break;
+        case Qt::Key_F7:
+            switchPieceY();
+            break;
+        case Qt::Key_F8:
+            switchPieceD();
+            break;
+        case Qt::Key_F9:
+            switchPieceG();
+            break;
         case Qt::Key_Up:
-            zoomIn();
+            turnUp();
             break;
         case Qt::Key_Down:
-            zoomOut();
+            turnDown();
             break;
         case Qt::Key_Right:
             turnRight();
             break;
         case Qt::Key_Left:
             turnLeft();
+            break;
+        case Qt::Key_Plus:
+            zoomIn();
+            break;
+        case Qt::Key_Minus:
+            zoomOut();
             break;
         default:
             break;

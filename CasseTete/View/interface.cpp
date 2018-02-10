@@ -122,10 +122,12 @@ void Interface::calculFinished(int n_sol, int t, std::vector<Solution*>* sol) {
     std::string s = "Temps de recherche : " + ((hours > 0) ? std::to_string(hours) + " h" : "") + " " + ((hours > 0 || minutes > 0) ? std::to_string(minutes) + " min" : "") + " " + std::to_string(seconds) + " s";
     time->setText(s.c_str());
     solutions = *sol;
+    search->setEnabled(true);
 }
 
 void Interface::solve() {
     comm->startSolving();
+    search->setEnabled(false);
 }
 
 /**
