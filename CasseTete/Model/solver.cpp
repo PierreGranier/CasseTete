@@ -103,6 +103,11 @@ void Solver::solve(Solution* current, Problem* p, int n) {
         return;
     }
 
+    /** Si on a place trop peu de pieces pour creer une solution avec le nombre de pieces restantes **/
+    if (p->getNbOfPieces() > current->getNbOfPieces() + 9 - n) {
+        return;
+    }
+
     /** Pour toutes les rotations de la piece courante n **/
     std::vector<PieceRotation*> vect = *(pieces[(PieceType) n]);
     for (unsigned int i = 0; i < vect.size(); ++i) {
@@ -139,6 +144,10 @@ bool Solver::solveOne(Solution* current, Problem* p, int n) {
     }
     /** Si on a teste toutes les pieces on retourne faux **/
     if (n >= 9) {
+        return false;
+    }
+    /** Si on a place trop peu de pieces pour creer une solution avec le nombre de pieces restantes **/
+    if (p->getNbOfPieces() > current->getNbOfPieces() + 9 - n) {
         return false;
     }
     /** On test toutes les rotations de la piece courante **/

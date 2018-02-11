@@ -157,3 +157,13 @@ int* Solution::getMatrix() {
 Position* Solution::getSize() {
     return size;
 }
+
+int Solution::getNbOfPieces() {
+    int q = 0;
+    for (int i = 0; i < 9; ++i) {
+        if (getPiece((PieceType) i)->isUsed()) {
+            ++q;
+        }
+    }
+    return q;
+}

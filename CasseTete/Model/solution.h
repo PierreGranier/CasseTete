@@ -30,6 +30,7 @@ public:
     PieceModel* getPiece(PieceType t);
     int* getMatrix();
     Position* getSize();
+    int getNbOfPieces();
 };
 
 #endif // SOLUTION_H
