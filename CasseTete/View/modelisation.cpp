@@ -70,7 +70,6 @@ void Modelisation::paintGL() {
     glTranslatef(-2.5f, 2.0f, 0.0f);
 
     /** Draw pieces **/
-    glColor3f(0.8f, 0.8f, 0.8f);
     piece_t->show();
     piece_angle->show();
     piece_plus->show();

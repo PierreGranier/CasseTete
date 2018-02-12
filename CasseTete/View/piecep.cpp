@@ -11,6 +11,7 @@ void PieceP::show() {
         glRotatef(90 * rotation->getY(), 0.0f, 1.0f, 0.0f);
         glRotatef(90 * rotation->getZ(), 0.0f, 0.0f, 1.0f);
 
+        glColor3f(0.01f, 0.41f, 0.0f);
         /** Avant **/
         glBegin(GL_QUADS);
             glVertex3f(-0.5f, -0.5f, 0.5f);
